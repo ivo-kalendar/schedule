@@ -1,5 +1,14 @@
-const user = 'ivoUser';
-const password = '123ivo123';
-const db = 'CompassData';
+require('dotenv').config();
 
-module.exports = connectionString = `mongodb+srv://${user}:${password}@cluster0.shjby.mongodb.net/${db}?retryWrites=true&w=majority`;
+const {
+    DB_SRV: srv,
+    DB_USER: user,
+    DB_PASSWORD: pass,
+    DB_TITLE: db,
+    DB_CLUSTER: clus,
+    DB_OPTIONS: opt,
+} = process.env;
+
+const connectionString = `${srv}://${user}:${pass}@${clus}/${db}?${opt}`;
+
+module.exports = connectionString;

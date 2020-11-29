@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const TestData4 = require('../server').db().collection('TestData4');
-const vraboteni = require('../server').db().collection('vraboteni');
+const vraboteniController = require('../controllers/vraboteniController');
 
-router.get('/', async (req, res) => {
-    await TestData4.find({}).toArray((err, data) => {
-        res.json(data);
-    });
-});
-
-router.post('/', async (req, res) => {
-    await vraboteni.insertOne(req.body);
-    res.json({ insertedOne: true });
-});
+router.get('/', vraboteniController.seeAll);
+router.post('/', vraboteniController.addOne);
+router.put('/', vraboteniController.editOne);
+router.delete('/', vraboteniController.deleteOne);
 
 module.exports = router;
