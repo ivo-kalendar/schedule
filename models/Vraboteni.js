@@ -5,11 +5,12 @@ let Vraboteni = function (data) {
     this.errors = [];
 };
 
-Vraboteni.getAll = async () =>
-    await vraboteni.find().sort({ date: -1 }).toArray();
+Vraboteni.getAll = async () => {
+    return await vraboteni.find().sort({ date: -1 }).toArray();
+};
 
 Vraboteni.addNew = async (body) => {
-    body.date = Date();
+    body.date = new Date();
     body.pozicija = 'distributer';
     body.kategorija = '';
     body.grad = [];
