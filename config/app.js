@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 7788;
 
 app.use(express.json({ extended: false }));
-app.use('/', require('../routes/router'));
+app.use('/api', require('../routes/router'));
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
