@@ -9,7 +9,7 @@ Vraboteni.getAll = async () => {
     return await vraboteni.find().sort({ date: -1 }).toArray();
 };
 
-Vraboteni.addNew = async (body) => {
+Vraboteni.add = async (body) => {
     body.date = new Date();
     body.pozicija = 'distributer';
     body.kategorija = '';
@@ -18,11 +18,11 @@ Vraboteni.addNew = async (body) => {
     await vraboteni.insertOne(body);
 };
 
-Vraboteni.editNew = async (nameIn, nameOut) => {
+Vraboteni.edit = async (nameIn, nameOut) => {
     await vraboteni.updateOne({ ime: nameIn }, { $set: { ime: nameOut } });
 };
 
-Vraboteni.deleteNew = async (nameIn) => {
+Vraboteni.delete = async (nameIn) => {
     await vraboteni.deleteOne({ ime: nameIn });
 };
 

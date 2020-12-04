@@ -14,7 +14,7 @@ const VraboteniState = (props) => {
     // Get Vraboteni //
     const getVraboteni = async () => {
         try {
-            const res = await axios.get('/api');
+            const res = await axios.get('/api/vraboteni');
 
             dispatch({ type: GET_VRABOTENI, payload: res.data });
         } catch (error) {

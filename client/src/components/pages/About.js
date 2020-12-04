@@ -6,7 +6,7 @@ const About = () => {
                 This is a full stack React App for DataBase Testing.
             </p>
             <p className='bg-light p'>
-                <strong>Varsion: </strong> 1.0.0
+                <strong>Version: </strong> 1.0.0
             </p>
         </div>
     );
