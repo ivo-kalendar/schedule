@@ -358,8 +358,75 @@ table th {
     background: var(--light-color);
 }
 
+/* Timebar Footer */
+.timebar {
+    font-size: 0.8rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 1;
+    background-image: linear-gradient(
+        to right,
+        rgba(51, 51, 51, 0.5),
+        rgba(51, 51, 51, 0.5),
+        rgba(0, 54, 153, 0.3)
+    );
+    border-top: solid 1px rgba(0, 54, 153, 0.9);
+    opacity: 0.9;
+    transition: background-color 500ms;
+}
+
+.timebar:hover {
+    background-color: rgb(31, 31, 34);
+}
+
+.timebar p {
+    position: relative;
+    bottom: 0;
+    margin-right: 0.4rem;
+    text-align: right;
+}
+
+.go-home-span {
+    color: transparent;
+    transition: color 400ms ease-in;
+}
+
+.timebar div:hover .go-home-span {
+    color: #fff;
+    transition: color 1800ms ease-in 400ms;
+}
+
+.timebar p span {
+    color: rgba(255, 255, 255, 0);
+    transition: color 500ms ease-in-out;
+}
+
+.timebar p:hover span {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.timebar div a {
+    color: #fff;
+}
+
+.timebar div a:hover {
+    color: #ccc;
+}
+
+.timebar div a:hover .go-home-span {
+    color: #ccc;
+    transition: color 10ms;
+}
+
+.empty {
+    padding: 2.2rem;
+}
+
 /* Navbar */
 .navbar {
+    position: fixed;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -369,10 +436,25 @@ table th {
     border-bottom: solid 1px var(--primary-color);
     opacity: 0.9;
     margin-bottom: 1rem;
+    background-image: linear-gradient(
+        to right,
+        rgba(51, 51, 51, 0.5),
+        rgba(0, 54, 153, 0.3)
+    );
+    transition: background-color 500ms;
+}
+
+.navbar:hover {
+    background-color: rgba(31, 31, 34, 0.9);
 }
 
 .navbar ul {
     display: flex;
+}
+
+.navbar ul li a {
+    border-bottom: 7px solid rgba(255, 255, 255, 0);
+    transition: border-bottom 300ms;
 }
 
 .navbar a {
@@ -382,21 +464,11 @@ table th {
 }
 
 .navbar a:hover {
-    color: var(--light-color);
+    color: #ccc;
 }
 
 .navbar .welcome span {
     margin-right: 0.6rem;
-}
-
-/* Animation (Add After) */
-@keyframes activeLink {
-    from {
-        border-bottom: 7px solid rgba(255, 255, 255, 0);
-    }
-    to {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-    }
 }
 
 .item-enter {
