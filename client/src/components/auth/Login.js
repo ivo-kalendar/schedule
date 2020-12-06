@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AuthContext from '../../context/authContext';
 
 const Login = () => {
+    const authContext = useContext(AuthContext);
+    const { authenticateUser } = authContext;
+
     const [user, setUser] = useState({
         profileName: '',
         password: '',
@@ -13,6 +17,7 @@ const Login = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        authenticateUser(false);
         console.log(user);
     };
 
@@ -26,6 +31,7 @@ const Login = () => {
                     <label htmlFor='profileName'>Корисник</label>
                     <input
                         type='text'
+                        autoFocus
                         name='profileName'
                         value={profileName}
                         onChange={onChange}

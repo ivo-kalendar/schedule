@@ -1,3 +1,5 @@
 export const GET_VRABOTENI = 'GET_VRABOTENI';
 export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';
+export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
+export const REGISTER_USER = 'REGISTER_USER';

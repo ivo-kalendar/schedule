@@ -25,7 +25,7 @@ body {
 }
 
 a {
-    color: var(--primary-color);
+    color: #fff;
     text-decoration: none;
 }
 
