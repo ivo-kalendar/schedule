@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import AuthContext from '../../context/authContext';
 
 import Navbar from './Navbar';
+import Footer from './Footer';
 import Login from '../auth/Login';
 import Logout from '../auth/Logout';
 import Register from '../auth/Register';
@@ -32,6 +33,7 @@ const Permisions = () => {
                     <div className='container'>{user}</div>
                 </>
             )}
+            <Footer user={authUser} />
         </Router>
     );
 };
