@@ -1,12 +1,12 @@
 const Joi = require('joi');
 const korisnici = require('../server').db().collection('korisnici');
 
-let Korisnik = function (data) {
-    this.data = data;
-    this.errors = [];
-};
+// let Korisnik = function (data) {
+//     this.data = data;
+//     this.errors = [];
+// };
 
-// let Korisnik = {};
+let Korisnik = {};
 
 Korisnik.getAll = async () => {
     return await korisnici.find().sort({ date: -1 }).toArray();
@@ -21,24 +21,14 @@ Korisnik.add = async (body) => {
             .max(15)
             .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
             .required(),
+    });
 
-        access_token: [Joi.string(), Joi.number()],
-    }).xor('password', 'access_token');
+    const value = await schema.validateAsync(body);
 
-    // schema.validate(body);
-    // -> { value: {}, error: '"username" is required' }
-
-    const register = await schema.validate(body);
-    const { error, value } = register;
-
-    if (error) {
-        error.details.map((er) => console.log(er.message));
-        // console.log();
-    } else {
-        value.date = new Date();
-        value.pozicija = '';
-        await korisnici.insertOne(value);
-    }
+    value.date = new Date();
+    value.pozicija = '';
+    value.adminAprovel = false;
+    await korisnici.insertOne(value);
 };
 
 Korisnik.edit = async (nameIn, nameOut) => {

@@ -19,9 +19,9 @@ const Register = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (ime === '' || password === '') {
-            console.log('alert');
+            console.log('Сите полиња мора да бидат исполнети...');
         } else if (password !== password2) {
-            console.log('alert 2');
+            console.log('Лозинката не се совпаѓа...');
         } else {
             register({ ime, password });
             console.log('sucessfully registered a user');

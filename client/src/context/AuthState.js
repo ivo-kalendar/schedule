@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import { AUTHENTICATE_USER, REGISTER_USER } from './types';
+import { AUTHENTICATE_USER, REGISTER_USER, REGISTER_FAIL } from './types';
 
 const AuthState = (props) => {
     const initialState = {
@@ -31,8 +31,12 @@ const AuthState = (props) => {
             const res = await axios.post('/api/korisnik', formData, config);
 
             dispatch({ type: REGISTER_USER, payload: res.data });
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err.response.data.message);
+            dispatch({
+                type: REGISTER_FAIL,
+                payload: err.response.data.message,
+            });
         }
     };
 

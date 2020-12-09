@@ -14,8 +14,8 @@ exports.addOne = async (req, res) => {
     try {
         await Korisnik.add(req.body);
         res.json(req.body);
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        res.status(400).json(err.details[0]);
     }
 };
 
