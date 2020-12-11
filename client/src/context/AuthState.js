@@ -7,6 +7,7 @@ import { AUTHENTICATE_USER, REGISTER_USER, REGISTER_FAIL } from './types';
 const AuthState = (props) => {
     const initialState = {
         authUser: true,
+        error: null,
         token: localStorage.getItem('token'),
     };
 
@@ -32,7 +33,6 @@ const AuthState = (props) => {
 
             dispatch({ type: REGISTER_USER, payload: res.data });
         } catch (err) {
-            console.log(err.response.data.message);
             dispatch({
                 type: REGISTER_FAIL,
                 payload: err.response.data.message,
@@ -45,6 +45,7 @@ const AuthState = (props) => {
             value={{
                 authUser: state.authUser,
                 token: state.token,
+                error: state.error,
                 authenticateUser,
                 register,
             }}>

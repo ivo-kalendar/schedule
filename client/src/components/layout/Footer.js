@@ -6,16 +6,16 @@ const Footer = ({ user }) => {
     const { pathname } = useLocation();
 
     const goBackBtn = (
-        <Link
-            to='/'
-            style={{
-                fontSize: '1rem',
-                marginLeft: '.3rem',
-                marginTop: '.2rem',
-            }}>
-            <RiArrowGoBackLine />{' '}
-            <span className='go-home-span'>{user ? 'login ' : 'home '}</span>
-        </Link>
+        <>
+            <Link className='go-home-icon' to='/'>
+                <RiArrowGoBackLine />{' '}
+            </Link>
+            <Link className='go-home-span-link' to='/'>
+                <span className='go-home-span'>
+                    {user ? 'login ' : 'home '}
+                </span>
+            </Link>
+        </>
     );
 
     return (

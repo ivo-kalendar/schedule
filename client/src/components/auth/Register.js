@@ -3,13 +3,15 @@ import AuthContext from '../../context/authContext';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
-    const { register } = authContext;
+    const { register, error } = authContext;
 
     const [user, setUser] = useState({
         ime: '',
         password: '',
         password2: '',
     });
+
+    if (error) console.log(`The error message from server: ${error}`);
 
     const { ime, password, password2 } = user;
 
@@ -24,7 +26,7 @@ const Register = () => {
             console.log('Лозинката не се совпаѓа...');
         } else {
             register({ ime, password });
-            console.log('sucessfully registered a user');
+            console.log('sucessfully passed info to server');
             setUser({
                 ime: '',
                 password: '',
@@ -35,9 +37,20 @@ const Register = () => {
 
     return (
         <div className='form-container'>
-            <h1>
-                Account <span className='text-primary'>Register..</span>.
-            </h1>
+            {!error ? (
+                <h1>
+                    Регистирај <span className='text-primary'>се..</span>.
+                </h1>
+            ) : (
+                <p
+                    className='text-center text-danger'
+                    style={{
+                        border: '1px solid rgba(255,50,50,.2)',
+                        borderRadius: '5px',
+                    }}>
+                    {error}
+                </p>
+            )}
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
                     <label htmlFor='ime'>Name</label>
