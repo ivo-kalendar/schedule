@@ -11,7 +11,11 @@ const Register = () => {
         password2: '',
     });
 
-    if (error) console.log(`The error message from server: ${error}`);
+    if (error) {
+        error.map((err) =>
+            console.log(`The error message from server: ${err}`)
+        );
+    }
 
     const { ime, password, password2 } = user;
 
@@ -37,23 +41,15 @@ const Register = () => {
 
     return (
         <div className='form-container'>
-            {!error ? (
-                <h1>
-                    Регистирај <span className='text-primary'>се..</span>.
-                </h1>
-            ) : (
-                <p
-                    className='text-center text-danger'
-                    style={{
-                        border: '1px solid rgba(255,50,50,.2)',
-                        borderRadius: '5px',
-                    }}>
-                    {error}
-                </p>
-            )}
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
-                    <label htmlFor='ime'>Name</label>
+                    <label htmlFor='ime'>
+                        {!error ? (
+                            <p>Корисничко Име</p>
+                        ) : (
+                            <p className='alert'>{error}</p>
+                        )}
+                    </label>
                     <input
                         type='text'
                         name='ime'
@@ -62,7 +58,7 @@ const Register = () => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label htmlFor='password'>Password</label>
+                    <label htmlFor='password'>Лозинка</label>
                     <input
                         type='password'
                         name='password'
@@ -71,7 +67,7 @@ const Register = () => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label htmlFor='password2'>Confirm Password</label>
+                    <label htmlFor='password2'>Потврди Лозинка</label>
                     <input
                         type='password'
                         name='password2'
@@ -81,7 +77,7 @@ const Register = () => {
                 </div>
                 <input
                     type='submit'
-                    value='Register'
+                    value='Регистрирај се...'
                     className='btn btn-primary btn-block'
                 />
             </form>

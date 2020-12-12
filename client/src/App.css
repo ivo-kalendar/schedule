@@ -232,12 +232,24 @@ img {
     border-radius: 5px;
 }
 
-.alert {
+/* .alert {
     padding: 0.7rem;
     margin: 1rem 0;
     opacity: 0.9;
     background: var(--light-color);
     color: #333;
+} */
+
+.alert {
+    padding: 0.2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid #f5c6cb;
+    border-left: 1px solid #f5c6cb;
+    border-right: 1px solid #f5c6cb;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    color: #721c24;
+    background-color: rgba(248, 215, 218, 1);
 }
 
 .btn-primary,
@@ -321,7 +333,7 @@ select,
 textarea {
     display: block;
     width: 100%;
-    padding: 0.4rem;
+    padding: 0.3rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
 }
@@ -336,7 +348,8 @@ button {
 }
 
 .form-group input {
-    margin: 0.2rem 0;
+    /* margin: 0.2rem 0; */
+    margin: 0;
 }
 
 .form-container {
