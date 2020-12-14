@@ -31,6 +31,7 @@ const AuthState = (props) => {
         try {
             const res = await axios.post('/api/korisnik', formData, config);
 
+            authenticateUser(false);
             dispatch({ type: REGISTER_USER, payload: res.data });
         } catch (err) {
             dispatch({

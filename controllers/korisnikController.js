@@ -20,14 +20,11 @@ exports.seeAll = async (req, res) => {
 // };
 
 exports.addOne = async (req, res) => {
-    let korisnik = new Korisnik(req.body);
+    let korisnik = await new Korisnik(req.body);
     korisnik
         .add()
         .then(() => {
-            req.session.user = { username: user.data.ime, _id: user.data._id };
-            req.session.save(() => {
-                res.redirect('/');
-            });
+            res.status(200).json({ korisnik: korisnik.data });
         })
         .catch((err) => {
             res.status(422).json(err);

@@ -15,7 +15,7 @@ Korisnik.prototype.cleanUp = function () {
     }
 
     this.data = {
-        ime: this.data.ime.trim().toLowerCase(),
+        ime: this.data.ime,
         password: this.data.password,
         date: new Date(),
         pozicija: 'работник',
@@ -79,6 +79,7 @@ Korisnik.prototype.add = function () {
 
         if (!this.errors.length) {
             await korisnici.insertOne(this.data);
+            resolve();
         } else {
             reject(this.errors);
         }

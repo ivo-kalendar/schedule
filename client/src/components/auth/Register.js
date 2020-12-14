@@ -3,7 +3,7 @@ import AuthContext from '../../context/authContext';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
-    const { register, error } = authContext;
+    const { error, register } = authContext;
 
     const [user, setUser] = useState({
         ime: '',
@@ -12,9 +12,7 @@ const Register = () => {
     });
 
     if (error) {
-        error.map((err) =>
-            console.log(`The error message from server: ${err}`)
-        );
+        console.log(`The error message from server: ${error}`);
     }
 
     const { ime, password, password2 } = user;
