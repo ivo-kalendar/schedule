@@ -241,15 +241,13 @@ img {
 } */
 
 .alert {
-    padding: 0.2rem;
+    margin-top: 0.1rem;
+    padding: 0.4rem;
     font-size: 0.9rem;
-    border-top: 1px solid #f5c6cb;
-    border-left: 1px solid #f5c6cb;
-    border-right: 1px solid #f5c6cb;
+    border: 1px solid #f5c6cb;
     text-align: center;
-    border-radius: 10px 10px 0 0;
     color: #721c24;
-    background-color: rgba(248, 215, 218, 1);
+    background-color: rgba(248, 215, 218, 0.8);
 }
 
 .btn-primary,
@@ -468,6 +466,11 @@ table th {
         rgba(0, 54, 153, 0.3)
     );
     transition: background-color 500ms;
+}
+
+.navbar-alerts {
+    display: block;
+    margin-bottom: 0;
 }
 
 .navbar:hover {

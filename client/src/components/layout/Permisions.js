@@ -18,13 +18,13 @@ import About from '../pages/About';
 
 const Permisions = () => {
     const authContext = useContext(AuthContext);
-    const { authUser } = authContext;
+    const { error, authUser } = authContext;
 
     return (
         <Router>
             {authUser ? (
                 <>
-                    <Navbar user={authUser} />
+                    <Navbar user={authUser} errors={error} />
                     <div className='container'>{guest}</div>
                 </>
             ) : (

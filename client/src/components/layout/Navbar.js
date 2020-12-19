@@ -1,10 +1,26 @@
 import { NavLink } from 'react-router-dom';
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, errors }) => {
     return (
         <div>
-            <div className='navbar'>{user ? guestLinks : userLinks}</div>
-            <div className='empty'></div>
+            {errors ? (
+                <div className='navbar-alert'>
+                    <ul>
+                        {errors.map((err, i) => (
+                            <li key={`error ${i}`} className='alert'>
+                                {err}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <>
+                    <div className='navbar'>
+                        {user ? guestLinks : userLinks}
+                    </div>
+                    <div className='empty'></div>
+                </>
+            )}
         </div>
     );
 };

@@ -2,13 +2,18 @@ import { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import { AUTHENTICATE_USER, REGISTER_USER, REGISTER_FAIL } from './types';
+import {
+    AUTHENTICATE_USER,
+    REGISTER_USER,
+    REGISTER_FAIL,
+    CLEAR_ERRORS,
+} from './types';
 
 const AuthState = (props) => {
     const initialState = {
         authUser: true,
         error: null,
-        token: localStorage.getItem('token'),
+        // token: localStorage.getItem('token'),
     };
 
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -32,6 +37,7 @@ const AuthState = (props) => {
             const res = await axios.post('/api/korisnik', formData, config);
 
             authenticateUser(false);
+            console.log(res.data);
             dispatch({ type: REGISTER_USER, payload: res.data });
         } catch (err) {
             dispatch({
@@ -41,6 +47,12 @@ const AuthState = (props) => {
         }
     };
 
+    const clientErr = (err) =>
+        dispatch({ type: REGISTER_FAIL, payload: [err] });
+
+    // Clear Errors
+    const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
     return (
         <AuthContext.Provider
             value={{
@@ -49,6 +61,8 @@ const AuthState = (props) => {
                 error: state.error,
                 authenticateUser,
                 register,
+                clientErr,
+                clearErrors,
             }}>
             {props.children}
         </AuthContext.Provider>

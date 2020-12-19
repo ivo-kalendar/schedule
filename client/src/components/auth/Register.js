@@ -1,39 +1,45 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/authContext';
+import Copyright from '../layout/Copyright';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
-    const { error, register } = authContext;
+    let { register, error, clientErr, clearErrors } = authContext;
 
     const [user, setUser] = useState({
         ime: '',
         password: '',
         password2: '',
     });
+    const { ime, password, password2 } = user;
+    let timeout;
+
+    const startTimer = () => (timeout = setTimeout(() => clearErrors(), 5000));
+    const stopTimer = () => clearTimeout(timeout);
+
+    const onChange = (e) => {
+        stopTimer();
+        setUser({ ...user, [e.target.name]: e.target.value });
+
+        if (error) {
+            clearErrors();
+        }
+    };
 
     if (error) {
-        console.log(`The error message from server: ${error}`);
+        startTimer();
     }
-
-    const { ime, password, password2 } = user;
-
-    const onChange = (e) =>
-        setUser({ ...user, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
         e.preventDefault();
+        stopTimer();
+
         if (ime === '' || password === '') {
-            console.log('Сите полиња мора да бидат исполнети...');
+            clientErr('Сите полиња мора да бидат исполнети...');
         } else if (password !== password2) {
-            console.log('Лозинката не се совпаѓа...');
+            clientErr('Лозинката не се совпаѓа...');
         } else {
             register({ ime, password });
-            console.log('sucessfully passed info to server');
-            setUser({
-                ime: '',
-                password: '',
-                password2: '',
-            });
         }
     };
 
@@ -42,11 +48,7 @@ const Register = () => {
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
                     <label htmlFor='ime'>
-                        {!error ? (
-                            <p>Корисничко Име</p>
-                        ) : (
-                            <p className='alert'>{error}</p>
-                        )}
+                        <p>Корисничко Име</p>
                     </label>
                     <input
                         type='text'
@@ -79,6 +81,7 @@ const Register = () => {
                     className='btn btn-primary btn-block'
                 />
             </form>
+            <Copyright />
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/authContext';
+import Copyright from '../layout/Copyright';
 
 const Logout = () => {
     const authContext = useContext(AuthContext);
@@ -34,6 +35,7 @@ const Logout = () => {
                     </NavLink>
                 </li>
             </ul>
+            <Copyright />
         </div>
     );
 };

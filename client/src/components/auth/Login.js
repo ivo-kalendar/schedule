@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/authContext';
+import Copyright from '../layout/Copyright';
 
 const Login = () => {
     const authContext = useContext(AuthContext);
@@ -54,6 +55,7 @@ const Login = () => {
                     className='btn btn-primary btn-block'
                 />
             </form>
+            <Copyright />
         </div>
     );
 };
