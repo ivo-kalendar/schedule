@@ -1,10 +1,18 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import AuthContext from '../../context/authContext';
 import Copyright from '../layout/Copyright';
 
-const Login = () => {
+const Login = (props) => {
     const authContext = useContext(AuthContext);
-    const { authenticateUser } = authContext;
+    const { login, authUser } = authContext;
+
+    useEffect(() => {
+        if (!authUser) {
+            props.history.push('/');
+        }
+
+        // eslint-disable-next-line
+    }, [props.history]);
 
     const [user, setUser] = useState({
         profileName: '',
@@ -18,7 +26,7 @@ const Login = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        authenticateUser(false);
+        login({ profileName, password });
         console.log(user);
     };
 

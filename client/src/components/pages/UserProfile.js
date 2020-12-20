@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/mk';
 import KorisnikContext from '../../context/korisnikContext';
+import Spinner from '../layout/Spinner';
 
 const UserProfile = () => {
     const korisnikContext = useContext(KorisnikContext);
@@ -16,7 +17,7 @@ const UserProfile = () => {
     return (
         <div>
             {!userID ? (
-                <p>You dont have info provided...</p>
+                <Spinner />
             ) : (
                 <div>
                     <p>

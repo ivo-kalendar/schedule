@@ -1,4 +1,7 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const jwtSecret = require('../config/jwtSecret');
 const korisnici = require('../server').db().collection('korisnici');
 
 let Korisnik = function (data) {
@@ -68,6 +71,23 @@ Korisnik.prototype.validate = function () {
     });
 };
 
+Korisnik.prototype.passwordHash = async function () {
+    const salt = await bcrypt.genSalt(10);
+
+    this.data.password = await bcrypt.hash(this.data.password, salt);
+
+    // await this.data.save();
+
+    const payload = { data: { id: this.data.id } };
+
+    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        // res.json({ token });
+        this.data.token = token;
+        // console.log(token);
+    });
+};
+
 Korisnik.getAll = async () => {
     return await korisnici.find().sort({ date: -1 }).toArray();
 };
@@ -76,6 +96,7 @@ Korisnik.prototype.add = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp();
         await this.validate();
+        await this.passwordHash();
 
         if (!this.errors.length) {
             await korisnici.insertOne(this.data);

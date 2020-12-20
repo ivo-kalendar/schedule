@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
 import VraboteniContext from '../../context/vraboteniContext';
+import Spinner from '../layout/Spinner';
 
 const Home = () => {
     const korisnikContext = useContext(KorisnikContext);
@@ -24,7 +25,7 @@ const Home = () => {
                         </p>
                     ))
                 ) : (
-                    <p>There's no workers</p>
+                    <Spinner />
                 )}
             </div>
             <div>
@@ -35,7 +36,7 @@ const Home = () => {
                         </p>
                     ))
                 ) : (
-                    <p>You're not logedin :)</p>
+                    <Spinner />
                 )}
             </div>
         </div>

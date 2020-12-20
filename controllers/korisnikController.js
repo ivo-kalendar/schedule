@@ -10,25 +10,12 @@ exports.seeAll = async (req, res) => {
     }
 };
 
-// exports.addOne = async (req, res) => {
-//     try {
-//         await Korisnik.add(req.body);
-//         res.json(req.body);
-//     } catch (err) {
-//         res.status(422).json(err.details[0]);
-//     }
-// };
-
 exports.addOne = async (req, res) => {
     let korisnik = await new Korisnik(req.body);
     korisnik
         .add()
-        .then(() => {
-            res.status(200).json({ korisnik: korisnik.data });
-        })
-        .catch((err) => {
-            res.status(422).json(err);
-        });
+        .then(() => res.status(200).json(korisnik.data))
+        .catch((err) => res.status(422).json(err));
 };
 
 exports.editOne = async (req, res) => {

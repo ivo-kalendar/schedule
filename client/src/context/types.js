@@ -5,3 +5,6 @@ export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const LOGOUT = 'LOGOUT';
+export const USER_LOADED = 'USER_LOADED';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

@@ -5,7 +5,12 @@ import Copyright from '../layout/Copyright';
 
 const Logout = () => {
     const authContext = useContext(AuthContext);
-    const { authenticateUser } = authContext;
+    const { logout, authenticateUser } = authContext;
+
+    const logOutUser = () => {
+        authenticateUser(true);
+        logout();
+    };
 
     return (
         <div>
@@ -19,10 +24,7 @@ const Logout = () => {
                     fontSize: '1.5rem',
                 }}>
                 <li>
-                    <NavLink
-                        onClick={() => authenticateUser(true)}
-                        exact
-                        to='/'>
+                    <NavLink onClick={logOutUser} exact to='/'>
                         Yes
                     </NavLink>
                 </li>

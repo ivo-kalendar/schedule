@@ -1,46 +1,34 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/authContext';
+import ClientRegister from '../../models/ClientRegister';
 import Copyright from '../layout/Copyright';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
     let { register, error, clientErr, clearErrors } = authContext;
 
-    const [user, setUser] = useState({
-        ime: '',
-        password: '',
-        password2: '',
-    });
-    const { ime, password, password2 } = user;
-    let timeout;
+    const [user, setUser] = useState({ ime: '', password: '', password2: '' });
 
+    let timeout;
     const startTimer = () => (timeout = setTimeout(() => clearErrors(), 5000));
     const stopTimer = () => clearTimeout(timeout);
+    if (error) startTimer();
 
     const onChange = (e) => {
         stopTimer();
+        if (error) clearErrors();
         setUser({ ...user, [e.target.name]: e.target.value });
-
-        if (error) {
-            clearErrors();
-        }
     };
 
-    if (error) {
-        startTimer();
-    }
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         stopTimer();
+        let newUserRegister = await new ClientRegister(user);
 
-        if (ime === '' || password === '') {
-            clientErr('Сите полиња мора да бидат исполнети...');
-        } else if (password !== password2) {
-            clientErr('Лозинката не се совпаѓа...');
-        } else {
-            register({ ime, password });
-        }
+        newUserRegister
+            .sendToServer()
+            .then(() => register(newUserRegister.data))
+            .catch((err) => clientErr(err));
     };
 
     return (
@@ -53,7 +41,7 @@ const Register = () => {
                     <input
                         type='text'
                         name='ime'
-                        value={ime}
+                        value={user.ime}
                         onChange={onChange}
                     />
                 </div>
@@ -62,7 +50,7 @@ const Register = () => {
                     <input
                         type='password'
                         name='password'
-                        value={password}
+                        value={user.password}
                         onChange={onChange}
                     />
                 </div>
@@ -71,7 +59,7 @@ const Register = () => {
                     <input
                         type='password'
                         name='password2'
-                        value={password2}
+                        value={user.password2}
                         onChange={onChange}
                     />
                 </div>
