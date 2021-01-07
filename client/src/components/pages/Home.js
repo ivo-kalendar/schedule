@@ -32,7 +32,7 @@ const Home = () => {
                 {korisnici !== null ? (
                     korisnici.map((user) => (
                         <p key={user._id}>
-                            {user.pozicija}: {user.ime}
+                            {user.position || user.pozicija}: {user.ime}
                         </p>
                     ))
                 ) : (

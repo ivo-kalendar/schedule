@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const jwtSecret = require('../config/jwtSecret');
 const korisnici = require('../server').db().collection('korisnici');
 
 let Korisnik = function (data) {
@@ -17,13 +15,13 @@ Korisnik.prototype.cleanUp = function () {
         this.data.password = '';
     }
 
-    this.data = {
-        ime: this.data.ime,
-        password: this.data.password,
-        date: new Date(),
-        pozicija: 'работник',
-        adminAprovel: false,
-    };
+    this.data = { ime: this.data.ime, password: this.data.password };
+};
+
+Korisnik.prototype.extraData = function () {
+    this.data.date = new Date();
+    this.data.position = 'unknown';
+    this.data.adminAprovel = false;
 };
 
 Korisnik.prototype.validate = function () {
@@ -56,6 +54,12 @@ Korisnik.prototype.validate = function () {
             );
         }
 
+        resolve();
+    });
+};
+
+Korisnik.prototype.dbValidate = function () {
+    return new Promise(async (resolve, reject) => {
         if (
             this.data.ime.length > 2 &&
             this.data.ime.length < 15 &&
@@ -73,33 +77,20 @@ Korisnik.prototype.validate = function () {
 
 Korisnik.prototype.passwordHash = async function () {
     const salt = await bcrypt.genSalt(10);
-
     this.data.password = await bcrypt.hash(this.data.password, salt);
-
-    // await this.data.save();
-
-    const payload = { data: { id: this.data.id } };
-
-    jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
-        if (err) throw err;
-        // res.json({ token });
-        this.data.token = token;
-        // console.log(token);
-    });
-};
-
-Korisnik.getAll = async () => {
-    return await korisnici.find().sort({ date: -1 }).toArray();
 };
 
 Korisnik.prototype.add = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp();
-        await this.validate();
+        this.extraData();
+        this.validate();
+        await this.dbValidate();
         await this.passwordHash();
 
         if (!this.errors.length) {
             await korisnici.insertOne(this.data);
+
             resolve();
         } else {
             reject(this.errors);
@@ -107,12 +98,52 @@ Korisnik.prototype.add = function () {
     });
 };
 
-Korisnik.edit = async (nameIn, nameOut) => {
-    await korisnici.updateOne({ ime: nameIn }, { $set: { ime: nameOut } });
+Korisnik.prototype.authenticate = function () {
+    return new Promise(async (resolve, reject) => {
+        this.cleanUp();
+        this.validate();
+
+        if (!this.errors.length) {
+            try {
+                let authUser = await korisnici
+                    .find({ ime: this.data.ime })
+                    .toArray();
+
+                let isMatch;
+
+                if (authUser) {
+                    isMatch = await bcrypt.compare(
+                        this.data.password,
+                        authUser[0].password
+                    );
+                }
+
+                if (!isMatch) {
+                    this.errors.push('bcrypt: Не се совпаѓаат лозинките.');
+                } else {
+                    this.data = authUser[0];
+                }
+            } catch (error) {
+                this.errors.push('Тоа корисничко име не постои.');
+            }
+
+            resolve();
+        } else {
+            reject(this.errors);
+        }
+    });
 };
 
-Korisnik.delete = async (nameIn) => {
-    await korisnici.deleteOne({ ime: nameIn });
+Korisnik.getAll = async () => {
+    return await korisnici.find().sort({ date: -1 }).toArray();
 };
+
+// Korisnik.edit = async (nameIn, nameOut) => {
+//     await korisnici.updateOne({ ime: nameIn }, { $set: { ime: nameOut } });
+// };
+
+// Korisnik.delete = async (nameIn) => {
+//     await korisnici.deleteOne({ ime: nameIn });
+// };
 
 module.exports = Korisnik;

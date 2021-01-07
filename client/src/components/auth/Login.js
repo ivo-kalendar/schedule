@@ -15,18 +15,18 @@ const Login = (props) => {
     }, [props.history]);
 
     const [user, setUser] = useState({
-        profileName: '',
+        ime: '',
         password: '',
     });
 
-    const { profileName, password } = user;
+    const { ime, password } = user;
 
     const onChange = (e) =>
         setUser({ ...user, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
         e.preventDefault();
-        login({ profileName, password });
+        login({ ime, password });
         console.log(user);
     };
 
@@ -37,12 +37,12 @@ const Login = (props) => {
             </h1>
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
-                    <label htmlFor='profileName'>Корисник</label>
+                    <label htmlFor='ime'>Корисник</label>
                     <input
                         type='text'
                         autoFocus
-                        name='profileName'
-                        value={profileName}
+                        name='ime'
+                        value={ime}
                         onChange={onChange}
                         required
                     />

@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
     try {
         const decoded = jwt.verify(token, jwtSecret);
 
-        req.user = decoded.user;
+        req.id = decoded.id;
         next();
     } catch (err) {
         res.status(401).json({ msg: 'Невалиден Токен' });

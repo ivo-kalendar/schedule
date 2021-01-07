@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
@@ -37,6 +37,10 @@ const AuthState = (props) => {
         }
     };
 
+    useEffect(() => {
+        loadUser();
+    }, []);
+
     // Authenticate User //
     const authenticateUser = (bol) => {
         try {
@@ -65,10 +69,9 @@ const AuthState = (props) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
         try {
-            const res = await axios.post('/api/korisnik', formData, config);
+            const res = await axios.post('/api/login', formData, config);
 
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-
             loadUser();
         } catch (err) {
             console.log(err);

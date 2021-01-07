@@ -7,6 +7,7 @@ import {
 import { useContext } from 'react';
 import AuthContext from '../../context/authContext';
 
+import Spinner from './Spinner';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Login from '../auth/Login';
@@ -22,15 +23,22 @@ const Permisions = () => {
 
     return (
         <Router>
-            {authUser ? (
+            {!localStorage.token ? (
                 <>
                     <Navbar user={authUser} errors={error} />
                     <div className='container'>{guest}</div>
                 </>
-            ) : (
+            ) : localStorage.token && !authUser ? (
                 <>
                     <Navbar user={authUser} />
                     <div className='container'>{user}</div>
+                </>
+            ) : (
+                <>
+                    <Navbar />
+                    <div className='container'>
+                        <Spinner />
+                    </div>
                 </>
             )}
             <Footer user={authUser} />
