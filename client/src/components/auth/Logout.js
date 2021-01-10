@@ -29,10 +29,7 @@ const Logout = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink
-                        onClick={() => console.log('Decided not to Logout...')}
-                        exact
-                        to='/'>
+                    <NavLink exact to='/'>
                         No
                     </NavLink>
                 </li>

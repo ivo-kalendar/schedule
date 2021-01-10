@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAuthToken from '../utils/setAuthToken';
@@ -11,6 +12,8 @@ import {
     LOGOUT,
     USER_LOADED,
     LOGIN_SUCCESS,
+    DECODED_TOKEN,
+    // EXPIRED_TOKEN,
 } from './types';
 
 const AuthState = (props) => {
@@ -18,14 +21,23 @@ const AuthState = (props) => {
         authUser: true,
         error: null,
         token: localStorage.getItem('token'),
+        decoded: null,
     };
 
     const [state, dispatch] = useReducer(authReducer, initialState);
+
+    const decodedToken = () => {
+        if (localStorage.token) {
+            let decodedPayload = jwt_decode(localStorage.token);
+            dispatch({ type: DECODED_TOKEN, payload: decodedPayload });
+        }
+    };
 
     // load User
     const loadUser = async () => {
         if (localStorage.token) {
             setAuthToken(localStorage.token);
+            decodedToken();
         }
 
         try {
@@ -36,10 +48,6 @@ const AuthState = (props) => {
             console.log(err);
         }
     };
-
-    useEffect(() => {
-        loadUser();
-    }, []);
 
     // Authenticate User //
     const authenticateUser = (bol) => {
@@ -87,12 +95,35 @@ const AuthState = (props) => {
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+    useEffect(() => {
+        if (localStorage.token) {
+            loadUser();
+        }
+        // eslint-disable-next-line
+    }, []);
+    // const checkExpiredToken = () => {
+    //     console.log(state.decode);
+    //     console.log(new Date().getTime());
+    //     state.decoded
+    //         ? console.log(state.decoded.exp * 1000)
+    //         : console.log('nothing yet');
+
+    //     const presentTime = new Date().getTime();
+
+    //     if (state.decoded && state.decoded.exp * 1000 < presentTime) {
+    //         // dispatch({ type: EXPIRED_TOKEN });
+    //         console.log('biger the time');
+    //     }
+    // };
+
     return (
         <AuthContext.Provider
             value={{
+                decoded: state.decoded,
                 authUser: state.authUser,
                 token: state.token,
                 error: state.error,
+                // checkExpiredToken,
                 authenticateUser,
                 loadUser,
                 register,

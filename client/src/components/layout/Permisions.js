@@ -19,7 +19,13 @@ import About from '../pages/About';
 
 const Permisions = () => {
     const authContext = useContext(AuthContext);
-    const { error, authUser } = authContext;
+    const { error, authUser, decoded, logout, authenticateUser } = authContext;
+
+    if (decoded && decoded.exp * 1000 < new Date().getTime()) {
+        // authenticateUser(true);
+        // logout();
+        console.log('i am out');
+    }
 
     return (
         <Router>

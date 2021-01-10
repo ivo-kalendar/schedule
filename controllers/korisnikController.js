@@ -22,15 +22,10 @@ exports.addOne = async (req, res) => {
             // const payload = { korisnik: { id: korisnik.data._id } };
             const payload = { id: korisnik.data._id };
 
-            jwt.sign(
-                payload,
-                jwtSecret,
-                { expiresIn: 360000 },
-                (err, token) => {
-                    if (err) throw err;
-                    res.status(200).json({ token, id: payload.id });
-                }
-            );
+            jwt.sign(payload, jwtSecret, { expiresIn: 10 }, (err, token) => {
+                if (err) throw err;
+                res.status(200).json({ token, id: payload.id });
+            });
         })
         .catch((err) => res.status(422).json(err));
 };
@@ -46,7 +41,7 @@ exports.login = async (req, res) => {
                 jwt.sign(
                     payload,
                     jwtSecret,
-                    { expiresIn: 360000 },
+                    { expiresIn: 10 },
                     (err, token) => {
                         if (err) throw err;
                         res.status(200).json({ token, id: payload.id });

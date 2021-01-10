@@ -27,7 +27,6 @@ const Login = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         login({ ime, password });
-        console.log(user);
     };
 
     return (
