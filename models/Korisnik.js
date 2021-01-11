@@ -119,12 +119,14 @@ Korisnik.prototype.authenticate = function () {
                 }
 
                 if (!isMatch) {
-                    this.errors.push('bcrypt: Не се совпаѓаат лозинките.');
+                    this.errors.push('Погрешна Лозинка, Обидете се Повторно.');
+                    reject(this.errors);
                 } else {
                     this.data = authUser[0];
                 }
             } catch (error) {
                 this.errors.push('Тоа корисничко име не постои.');
+                reject(this.errors);
             }
 
             resolve();

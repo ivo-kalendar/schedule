@@ -1,16 +1,20 @@
 import { useContext, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/mk';
+
 import KorisnikContext from '../../context/korisnikContext';
+import AuthContext from '../../context/authContext';
 import Spinner from '../layout/Spinner';
 
 const UserProfile = () => {
     const korisnikContext = useContext(KorisnikContext);
+    const authContext = useContext(AuthContext);
     const { userID, getUser } = korisnikContext;
+    const { decoded, checkExpiredToken } = authContext;
 
     useEffect(() => {
-        getUser('5fcaa7d111edec2d44ed8258');
-
+        getUser(decoded.id);
+        checkExpiredToken();
         // eslint-disable-next-line
     }, []);
 

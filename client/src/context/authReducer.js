@@ -2,6 +2,7 @@ import {
     AUTHENTICATE_USER,
     CLEAR_ERRORS,
     REGISTER_FAIL,
+    LOGIN_FAIL,
     REGISTER_USER,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -29,10 +30,12 @@ export default (state, action) => {
                 // userID: action.payload.id,
             };
         case LOGOUT:
+        case LOGIN_FAIL:
         case REGISTER_FAIL:
             localStorage.removeItem('token');
             return {
                 ...state,
+                authUser: true,
                 decoded: null,
                 error: action.payload,
             };
@@ -49,8 +52,9 @@ export default (state, action) => {
         // case EXPIRED_TOKEN:
         //     localStorage.removeItem('token');
         //     return {
-        //         ...state,
+        //         // ...state,
         //         decoded: null,
+        //         authUser: true,
         //     };
         case CLEAR_ERRORS:
             return {

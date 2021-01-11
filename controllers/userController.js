@@ -6,6 +6,6 @@ exports.getUser = async (req, res) => {
 
         res.json(user);
     } catch (error) {
-        console.log(error);
+        res.json(error);
     }
 };

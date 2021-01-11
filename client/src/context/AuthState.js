@@ -7,6 +7,7 @@ import setAuthToken from '../utils/setAuthToken';
 import {
     AUTHENTICATE_USER,
     REGISTER_USER,
+    LOGIN_FAIL,
     REGISTER_FAIL,
     CLEAR_ERRORS,
     LOGOUT,
@@ -33,6 +34,22 @@ const AuthState = (props) => {
         }
     };
 
+    const checkExpiredToken = () => {
+        //     console.log(state.decode);
+        //     console.log(new Date().getTime());
+        //     state.decoded
+        //         ? console.log(state.decoded.exp * 1000)
+        //         : console.log('nothing yet');
+
+        const presentTime = new Date().getTime();
+
+        if (state.decoded && state.decoded.exp * 1000 < presentTime) {
+            //         // dispatch({ type: EXPIRED_TOKEN });
+            dispatch({ type: LOGOUT });
+            // localStorage.removeItem('token');
+        }
+    };
+
     // load User
     const loadUser = async () => {
         if (localStorage.token) {
@@ -41,7 +58,7 @@ const AuthState = (props) => {
         }
 
         try {
-            const res = await axios.get('/api/korisnik');
+            const res = await axios.get('/api/sitekorisnici');
 
             dispatch({ type: USER_LOADED, payload: res.data });
         } catch (err) {
@@ -65,8 +82,8 @@ const AuthState = (props) => {
         try {
             const res = await axios.post('/api/korisnik', formData, config);
 
-            loadUser();
             dispatch({ type: REGISTER_USER, payload: res.data });
+            loadUser();
         } catch (err) {
             dispatch({ type: REGISTER_FAIL, payload: err.response.data });
         }
@@ -82,7 +99,7 @@ const AuthState = (props) => {
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             loadUser();
         } catch (err) {
-            console.log(err);
+            dispatch({ type: LOGIN_FAIL, payload: err.response.data });
         }
     };
 
@@ -101,20 +118,8 @@ const AuthState = (props) => {
         }
         // eslint-disable-next-line
     }, []);
-    // const checkExpiredToken = () => {
-    //     console.log(state.decode);
-    //     console.log(new Date().getTime());
-    //     state.decoded
-    //         ? console.log(state.decoded.exp * 1000)
-    //         : console.log('nothing yet');
 
-    //     const presentTime = new Date().getTime();
-
-    //     if (state.decoded && state.decoded.exp * 1000 < presentTime) {
-    //         // dispatch({ type: EXPIRED_TOKEN });
-    //         console.log('biger the time');
-    //     }
-    // };
+    // const checkExpiredToken = () => dispatch({ type: EXPIRED_TOKEN });
 
     return (
         <AuthContext.Provider
@@ -123,7 +128,7 @@ const AuthState = (props) => {
                 authUser: state.authUser,
                 token: state.token,
                 error: state.error,
-                // checkExpiredToken,
+                checkExpiredToken,
                 authenticateUser,
                 loadUser,
                 register,

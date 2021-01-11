@@ -5,12 +5,15 @@ const Korisnik = require('../models/Korisnik');
 exports.seeAll = async (req, res) => {
     try {
         // let korisnik = await new Korisnik(req.body);
-        console.log(req.id);
-        let all = await Korisnik.getAll();
+        // console.log(req.id);
+        let siteKorisnici;
+        if (req.id) {
+            siteKorisnici = await Korisnik.getAll();
+        }
 
-        res.json(all);
+        res.json(siteKorisnici);
     } catch (error) {
-        console.log(error);
+        res.json(error);
     }
 };
 
@@ -48,10 +51,12 @@ exports.login = async (req, res) => {
                     }
                 );
             } else {
-                res.status(400).json(korisnik.errors[0]);
+                res.status(422).json(korisnik.errors[0]);
             }
         })
-        .catch((err) => res.json(err));
+        .catch((err) => {
+            res.status(422).json(err);
+        });
 };
 
 // exports.editOne = async (req, res) => {

@@ -7,9 +7,7 @@ module.exports = function (req, res, next) {
 
     // Check if not Token
     if (!token) {
-        return res
-            .status(401)
-            .json({ msg: 'Нема Токен, Авторизацијата е одбиена' });
+        return res.status(401).json({ msg: 'Нема Токен' });
     }
 
     try {
