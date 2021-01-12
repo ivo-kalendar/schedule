@@ -10,11 +10,10 @@ const UserProfile = () => {
     const korisnikContext = useContext(KorisnikContext);
     const authContext = useContext(AuthContext);
     const { userID, getUser } = korisnikContext;
-    const { decoded, checkExpiredToken } = authContext;
+    const { user } = authContext;
 
     useEffect(() => {
-        getUser(decoded.id);
-        checkExpiredToken();
+        getUser(user);
         // eslint-disable-next-line
     }, []);
 

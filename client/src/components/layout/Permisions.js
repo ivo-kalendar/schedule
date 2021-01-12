@@ -19,36 +19,36 @@ import About from '../pages/About';
 
 const Permisions = () => {
     const authContext = useContext(AuthContext);
-    const { error, authUser, checkExpiredToken } = authContext;
-
-    checkExpiredToken();
+    const { error, user, checkExpiredToken } = authContext;
 
     return (
-        <Router>
-            {!localStorage.token ? (
-                <>
-                    <Navbar user={authUser} errors={error} />
-                    <div className='container'>{guest}</div>
-                </>
-            ) : localStorage.token && !authUser ? (
-                <>
-                    <Navbar user={authUser} />
-                    <div className='container'>{user}</div>
-                </>
-            ) : (
-                <>
-                    <Navbar />
-                    <div className='container'>
-                        <Spinner />
-                    </div>
-                </>
-            )}
-            <Footer user={authUser} />
-        </Router>
+        <div onLoad={checkExpiredToken}>
+            <Router>
+                {!localStorage.token ? (
+                    <>
+                        <Navbar user={user} errors={error} />
+                        <div className='container'>{guestRoutes}</div>
+                    </>
+                ) : localStorage.token && user ? (
+                    <>
+                        <Navbar user={user} />
+                        <div className='container'>{userRoutes}</div>
+                    </>
+                ) : (
+                    <>
+                        <Navbar />
+                        <div className='container'>
+                            <Spinner />
+                        </div>
+                    </>
+                )}
+                <Footer user={user} />
+            </Router>
+        </div>
     );
 };
 
-const guest = (
+const guestRoutes = (
     <Switch>
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
@@ -57,7 +57,7 @@ const guest = (
     </Switch>
 );
 
-const user = (
+const userRoutes = (
     <Switch>
         <Route exact path='/home' component={Home} />
         <Route exact path='/user-profile' component={UserProfile} />

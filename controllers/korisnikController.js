@@ -25,7 +25,7 @@ exports.addOne = async (req, res) => {
             // const payload = { korisnik: { id: korisnik.data._id } };
             const payload = { id: korisnik.data._id };
 
-            jwt.sign(payload, jwtSecret, { expiresIn: 10 }, (err, token) => {
+            jwt.sign(payload, jwtSecret, { expiresIn: 36000 }, (err, token) => {
                 if (err) throw err;
                 res.status(200).json({ token, id: payload.id });
             });
@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
                 jwt.sign(
                     payload,
                     jwtSecret,
-                    { expiresIn: 10 },
+                    { expiresIn: 36000 },
                     (err, token) => {
                         if (err) throw err;
                         res.status(200).json({ token, id: payload.id });

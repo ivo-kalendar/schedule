@@ -12,7 +12,7 @@ const Footer = ({ user }) => {
             </Link>
             <Link className='go-home-span-link' to='/'>
                 <span className='go-home-span'>
-                    {user ? 'login ' : 'home '}
+                    {!user ? 'login ' : 'home '}
                 </span>
             </Link>
         </>

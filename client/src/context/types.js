@@ -1,7 +1,6 @@
 export const GET_VRABOTENI = 'GET_VRABOTENI';
 export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';
-export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
@@ -10,4 +9,3 @@ export const LOGOUT = 'LOGOUT';
 export const USER_LOADED = 'USER_LOADED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const DECODED_TOKEN = 'DECODED_TOKEN';
-export const EXPIRED_TOKEN = 'EXPIRED_TOKEN';

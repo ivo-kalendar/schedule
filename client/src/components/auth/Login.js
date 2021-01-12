@@ -2,16 +2,9 @@ import { useState, useContext } from 'react';
 import AuthContext from '../../context/authContext';
 import Copyright from '../layout/Copyright';
 
-const Login = (props) => {
+const Login = () => {
     const authContext = useContext(AuthContext);
     const { login } = authContext;
-
-    // useEffect(() => {
-    //     if (!authUser) {
-    //         props.history.push('/');
-    //     }
-    //     // eslint-disable-next-line
-    // }, [props.history]);
 
     const [user, setUser] = useState({ ime: '', password: '' });
 

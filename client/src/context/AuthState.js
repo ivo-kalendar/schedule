@@ -5,7 +5,6 @@ import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAuthToken from '../utils/setAuthToken';
 import {
-    AUTHENTICATE_USER,
     REGISTER_USER,
     LOGIN_FAIL,
     REGISTER_FAIL,
@@ -14,19 +13,19 @@ import {
     USER_LOADED,
     LOGIN_SUCCESS,
     DECODED_TOKEN,
-    // EXPIRED_TOKEN,
 } from './types';
 
 const AuthState = (props) => {
     const initialState = {
-        authUser: true,
         error: null,
         token: localStorage.getItem('token'),
         decoded: null,
+        user: false,
     };
 
     const [state, dispatch] = useReducer(authReducer, initialState);
 
+    // get Token Payload Info
     const decodedToken = () => {
         if (localStorage.token) {
             let decodedPayload = jwt_decode(localStorage.token);
@@ -34,23 +33,20 @@ const AuthState = (props) => {
         }
     };
 
+    // Logout user if the token is expired
     const checkExpiredToken = () => {
-        //     console.log(state.decode);
-        //     console.log(new Date().getTime());
-        //     state.decoded
-        //         ? console.log(state.decoded.exp * 1000)
-        //         : console.log('nothing yet');
-
         const presentTime = new Date().getTime();
 
-        if (state.decoded && state.decoded.exp * 1000 < presentTime) {
-            //         // dispatch({ type: EXPIRED_TOKEN });
+        if (
+            localStorage.token &&
+            state.decoded &&
+            state.decoded.exp * 1000 < presentTime
+        ) {
             dispatch({ type: LOGOUT });
-            // localStorage.removeItem('token');
         }
     };
 
-    // load User
+    // Authenticate User
     const loadUser = async () => {
         if (localStorage.token) {
             setAuthToken(localStorage.token);
@@ -66,16 +62,7 @@ const AuthState = (props) => {
         }
     };
 
-    // Authenticate User //
-    const authenticateUser = (bol) => {
-        try {
-            dispatch({ type: AUTHENTICATE_USER, payload: bol });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Register User //
+    // Register User
     const register = async (formData) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
@@ -112,6 +99,7 @@ const AuthState = (props) => {
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+    // Load User
     useEffect(() => {
         if (localStorage.token) {
             loadUser();
@@ -119,17 +107,14 @@ const AuthState = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    // const checkExpiredToken = () => dispatch({ type: EXPIRED_TOKEN });
-
     return (
         <AuthContext.Provider
             value={{
                 decoded: state.decoded,
-                authUser: state.authUser,
+                user: state.user,
                 token: state.token,
                 error: state.error,
                 checkExpiredToken,
-                authenticateUser,
                 loadUser,
                 register,
                 login,

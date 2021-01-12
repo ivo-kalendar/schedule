@@ -16,7 +16,7 @@ const Navbar = ({ user, errors }) => {
             ) : (
                 <>
                     <div className='navbar'>
-                        {user ? guestLinks : userLinks}
+                        {!user ? guestLinks : userLinks}
                     </div>
                     <div className='empty'></div>
                 </>

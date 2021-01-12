@@ -1,19 +1,15 @@
 import { useContext, useEffect } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
 import VraboteniContext from '../../context/vraboteniContext';
-import AuthContext from '../../context/authContext';
 import Spinner from '../layout/Spinner';
 
 const Home = () => {
     const korisnikContext = useContext(KorisnikContext);
     const vraboteniContext = useContext(VraboteniContext);
-    const authContext = useContext(AuthContext);
     const { korisnici, getKorisnici } = korisnikContext;
     const { vraboteni, getVraboteni } = vraboteniContext;
-    const { checkExpiredToken } = authContext;
 
     useEffect(() => {
-        checkExpiredToken();
         getKorisnici();
         getVraboteni();
         // eslint-disable-next-line
