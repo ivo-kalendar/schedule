@@ -26,7 +26,7 @@ const KorisnikState = (props) => {
     // Get Korisnici //
     const getKorisnici = async () => {
         try {
-            const res = await axios.get('/api/sitekorisnici');
+            const res = await axios.get('/api/allusers');
 
             dispatch({ type: GET_KORISNICI, payload: res.data });
         } catch (error) {

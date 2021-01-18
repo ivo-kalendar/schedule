@@ -80,7 +80,7 @@ Korisnik.prototype.passwordHash = async function () {
     this.data.password = await bcrypt.hash(this.data.password, salt);
 };
 
-Korisnik.prototype.add = function () {
+Korisnik.prototype.registerUser = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp();
         this.extraData();

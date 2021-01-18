@@ -2,10 +2,21 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = require('../config/jwtSecret');
 const Korisnik = require('../models/Korisnik');
 
-exports.seeAll = async (req, res) => {
+// const signJWT = (user, response) => {
+//     const payload = { id: user.data._id };
+
+//     if (payload.id) {
+//         jwt.sign(payload, jwtSecret, { expiresIn: 36000 }, (err, token) => {
+//             if (err) throw err;
+//             response.status(200).json({ token, id: payload.id });
+//         });
+//     } else {
+//         response.status(422).json(user.errors[0]);
+//     }
+// };
+
+exports.allUsers = async (req, res) => {
     try {
-        // let korisnik = await new Korisnik(req.body);
-        // console.log(req.id);
         let siteKorisnici;
         if (req.id) {
             siteKorisnici = await Korisnik.getAll();
@@ -17,12 +28,11 @@ exports.seeAll = async (req, res) => {
     }
 };
 
-exports.addOne = async (req, res) => {
+exports.register = async (req, res) => {
     let korisnik = await new Korisnik(req.body);
     korisnik
-        .add()
+        .registerUser()
         .then(() => {
-            // const payload = { korisnik: { id: korisnik.data._id } };
             const payload = { id: korisnik.data._id };
 
             jwt.sign(payload, jwtSecret, { expiresIn: 36000 }, (err, token) => {

@@ -54,7 +54,7 @@ const AuthState = (props) => {
         }
 
         try {
-            const res = await axios.get('/api/sitekorisnici');
+            const res = await axios.get('/api/allusers');
 
             dispatch({ type: USER_LOADED, payload: res.data });
         } catch (err) {
@@ -67,7 +67,7 @@ const AuthState = (props) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
         try {
-            const res = await axios.post('/api/korisnik', formData, config);
+            const res = await axios.post('/api/register', formData, config);
 
             dispatch({ type: REGISTER_USER, payload: res.data });
             loadUser();
