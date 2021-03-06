@@ -1,27 +1,40 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/authContext';
+import ClientRegister from '../../models/ClientRegister';
 import Copyright from '../layout/Copyright';
 
 const Login = () => {
     const authContext = useContext(AuthContext);
-    const { login } = authContext;
+    const { login, error, clientErr, clearErrors } = authContext;
 
     const [user, setUser] = useState({ ime: '', password: '' });
 
-    const { ime, password } = user;
+    let timeout;
+    const startTimer = () => (timeout = setTimeout(() => clearErrors(), 5000));
+    const stopTimer = () => clearTimeout(timeout);
+    if (error) startTimer();
 
-    const onChange = (e) =>
+    const onChange = (e) => {
+        stopTimer();
+        if (error) clearErrors();
         setUser({ ...user, [e.target.name]: e.target.value });
+    };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        login({ ime, password });
+        stopTimer();
+        let newUserLogin = await new ClientRegister(user);
+
+        newUserLogin
+            .authenticationSendToServer()
+            .then(() => login(newUserLogin.data))
+            .catch((err) => clientErr(err));
     };
 
     return (
         <div className='form-container'>
             <h1>
-                Account <span className='text-primary'>Login..</span>.
+                Најави <span className='text-primary'>се..</span>.
             </h1>
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
@@ -30,9 +43,8 @@ const Login = () => {
                         type='text'
                         autoFocus
                         name='ime'
-                        value={ime}
+                        value={user.ime}
                         onChange={onChange}
-                        required
                     />
                 </div>
                 <div className='form-group'>
@@ -40,9 +52,8 @@ const Login = () => {
                     <input
                         type='password'
                         name='password'
-                        value={password}
+                        value={user.password}
                         onChange={onChange}
-                        required
                     />
                 </div>
                 <input

@@ -31,17 +31,17 @@ const guestLinks = (
     <ul className='list'>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/login'>
-                Login
+                Најавa
             </NavLink>
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/register'>
-                Register
+                Регистрација
             </NavLink>
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/about'>
-                About
+                Контакт
             </NavLink>
         </li>
     </ul>
@@ -51,7 +51,7 @@ const userLinks = (
     <ul className='list'>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/home'>
-                Home
+                Дома
             </NavLink>
         </li>
         <li>
@@ -61,12 +61,12 @@ const userLinks = (
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/about'>
-                About
+                За Нас
             </NavLink>
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/logout'>
-                Logout
+                Одјави Се
             </NavLink>
         </li>
     </ul>

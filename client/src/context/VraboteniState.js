@@ -18,7 +18,7 @@ const VraboteniState = (props) => {
 
             dispatch({ type: GET_VRABOTENI, payload: res.data });
         } catch (error) {
-            console.log(error);
+            console.log(error, 'од овде е еророт...04');
         }
     };
 

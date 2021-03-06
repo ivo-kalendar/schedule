@@ -26,7 +26,7 @@ const Register = () => {
         let newUserRegister = await new ClientRegister(user);
 
         newUserRegister
-            .sendToServer()
+            .registrationSendToServer()
             .then(() => register(newUserRegister.data))
             .catch((err) => clientErr(err));
     };

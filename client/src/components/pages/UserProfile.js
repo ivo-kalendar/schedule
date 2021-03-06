@@ -32,22 +32,26 @@ const UserProfile = () => {
                         {userID.ime}
                     </h1>
                     <p>
-                        <span className='text-primary'>password од DB: </span>
-                        {userID.password}
-                    </p>
-                    <p>
                         <span className='text-primary'>позиција: </span>
                         {userID.pozicija}
                     </p>
-                    <p>
-                        <span className='text-primary'>профил креиран на </span>
-                        {moment(userID.date)
-                            .locale('mk')
-                            .format('Do MMMM YYYYгод. dddd')}
-                        <span className='text-primary'> во </span>
-                        {moment(userID.date).locale('mk').format('HH:mm:ss')}
-                        <span className='text-primary'> часот.</span>
-                    </p>
+                    {!userID.date ? (
+                        <></>
+                    ) : (
+                        <p>
+                            <span className='text-primary'>
+                                профил креиран на{' '}
+                            </span>
+                            {moment(userID.date)
+                                .locale('mk')
+                                .format('Do MMMM YYYYгод. dddd')}
+                            <span className='text-primary'> во </span>
+                            {moment(userID.date)
+                                .locale('mk')
+                                .format('HH:mm:ss')}
+                            <span className='text-primary'> часот.</span>
+                        </p>
+                    )}
                 </div>
             )}
         </div>

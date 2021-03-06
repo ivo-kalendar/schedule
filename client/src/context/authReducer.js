@@ -22,6 +22,7 @@ export default (state, action) => {
             localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
+                token: action.payload.token,
                 user: state.decoded ? state.decoded.id : false,
             };
         case LOGOUT:
@@ -30,9 +31,10 @@ export default (state, action) => {
             localStorage.removeItem('token');
             return {
                 ...state,
+                token: null,
                 user: false,
                 decoded: null,
-                error: action.payload,
+                error: action.payload ? action.payload : null,
             };
         case DECODED_TOKEN:
             return {

@@ -58,7 +58,7 @@ const AuthState = (props) => {
 
             dispatch({ type: USER_LOADED, payload: res.data });
         } catch (err) {
-            console.log(err);
+            console.log(err, 'од овде е еророт...03');
         }
     };
 

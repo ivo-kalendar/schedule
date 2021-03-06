@@ -29,18 +29,21 @@ ClientRegister.prototype.validate = function () {
                 'Лозинката не смее да надмине повеќе од 15 букви...'
             );
         }
-        if (this.data.password2 === '') {
-            this.errors.push('Мора да ја потврдите лозинката...');
-        }
-        if (
-            this.data.password2.length > 0 &&
-            this.data.password !== this.data.password2
-        ) {
-            this.errors.push('Лозинката не се совпаѓа...');
-        }
 
         resolve();
     });
+};
+
+ClientRegister.prototype.confirmPassword = function () {
+    if (this.data.password2 === '') {
+        this.errors.push('Мора да ја потврдите лозинката...');
+    }
+    if (
+        this.data.password2.length > 0 &&
+        this.data.password !== this.data.password2
+    ) {
+        this.errors.push('Лозинката не се совпаѓа...');
+    }
 };
 
 ClientRegister.prototype.cleanUp = function () {
@@ -50,9 +53,6 @@ ClientRegister.prototype.cleanUp = function () {
     if (typeof this.data.password != 'string') {
         this.data.password = '';
     }
-    if (typeof this.data.password2 != 'string') {
-        this.data.password2 = '';
-    }
 
     this.data = {
         ime: this.data.ime,
@@ -60,7 +60,21 @@ ClientRegister.prototype.cleanUp = function () {
     };
 };
 
-ClientRegister.prototype.sendToServer = function () {
+ClientRegister.prototype.registrationSendToServer = function () {
+    return new Promise(async (resolve, reject) => {
+        await this.validate();
+        await this.confirmPassword();
+        this.cleanUp();
+
+        if (!this.errors.length) {
+            resolve();
+        } else {
+            reject(this.errors);
+        }
+    });
+};
+
+ClientRegister.prototype.authenticationSendToServer = function () {
     return new Promise(async (resolve, reject) => {
         await this.validate();
         this.cleanUp();

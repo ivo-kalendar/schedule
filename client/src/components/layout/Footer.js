@@ -1,9 +1,18 @@
 import { Link, useLocation } from 'react-router-dom';
 import { RiArrowGoBackLine } from 'react-icons/ri';
 import LocaleTime from './LocaleTime';
+import { useContext } from 'react';
+import KorisnikContext from '../../context/korisnikContext';
 
 const Footer = ({ user }) => {
+    const korisnikContext = useContext(KorisnikContext);
+    const {
+        userID: { ime },
+    } = korisnikContext;
+
     const { pathname } = useLocation();
+
+    document.title = `${ime ? ime : 'MERN App'} | ${pathname.slice(1)}`;
 
     const goBackBtn = (
         <>

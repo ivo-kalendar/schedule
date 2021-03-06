@@ -8,8 +8,10 @@ let User = function (data) {
 };
 
 User.getOneByID = async (reqID) => {
-    return await korisnici.findOne({ _id: ObjectId(reqID) });
-    // return await korisnici.findById(req.korisnik.id).select('-password');
+    const query = { _id: ObjectId(reqID) };
+    const options = { projection: { password: 0, token: 0 } };
+
+    return await korisnici.findOne(query, options);
 };
 
 module.exports = User;
