@@ -1,16 +1,16 @@
 import { useContext, useEffect } from 'react';
-import KorisnikContext from '../../context/korisnikContext';
+// import KorisnikContext from '../../context/korisnikContext';
 import VraboteniContext from '../../context/vraboteniContext';
 import Spinner from '../layout/Spinner';
 
 const Home = () => {
-    const korisnikContext = useContext(KorisnikContext);
+    // const korisnikContext = useContext(KorisnikContext);
     const vraboteniContext = useContext(VraboteniContext);
-    const { korisnici, getKorisnici } = korisnikContext;
+    // const { korisnici, getKorisnici } = korisnikContext;
     const { vraboteni, getVraboteni } = vraboteniContext;
 
     useEffect(() => {
-        getKorisnici();
+        // getKorisnici();
         getVraboteni();
         // eslint-disable-next-line
     }, []);
@@ -28,7 +28,7 @@ const Home = () => {
                     <Spinner />
                 )}
             </div>
-            <div>
+            {/* <div>
                 {korisnici !== null ? (
                     korisnici.map((user) => (
                         <p key={user._id}>
@@ -38,7 +38,7 @@ const Home = () => {
                 ) : (
                     <Spinner />
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };

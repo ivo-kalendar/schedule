@@ -2,14 +2,40 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = require('../config/jwtSecret');
 const Korisnik = require('../models/Korisnik');
 
-exports.allUsers = async (req, res) => {
+// exports.allUsers = async (req, res) => {
+//     try {
+//         let siteKorisnici;
+//         if (req.id) {
+//             siteKorisnici = await Korisnik.getAll();
+//         }
+
+//         res.json(siteKorisnici);
+//     } catch (error) {
+//         res.json(error);
+//     }
+// };
+
+exports.clientRoutes = async (req, res) => {
     try {
-        let siteKorisnici;
-        if (req.id) {
-            siteKorisnici = await Korisnik.getAll();
+        let admin = req.id === '601d1b63d4e3e204d0e67ade';
+
+        let routes = [
+            { link: '/home', content: 'Дома', name: 'Home' },
+            { link: '/about', content: 'За Нас', name: 'About' },
+            { link: '/logout', content: 'Одјави Се', name: 'Logout' },
+        ];
+
+        let adminRoutes = {
+            link: '/user-profile',
+            content: 'Профил',
+            name: 'UserProfile',
+        };
+
+        if (req.id && admin) {
+            routes.splice(1, 0, adminRoutes);
         }
 
-        res.json(siteKorisnici);
+        res.json(routes);
     } catch (error) {
         res.json(error);
     }

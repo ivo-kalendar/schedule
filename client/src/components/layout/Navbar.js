@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import GuestLinks from '../links/GuestLinks';
+import UserLinks from '../links/UserLinks';
 
 const Navbar = ({ user, errors }) => {
     return (
@@ -16,7 +17,7 @@ const Navbar = ({ user, errors }) => {
             ) : (
                 <>
                     <div className='navbar'>
-                        {!user ? guestLinks : userLinks}
+                        {!user ? <GuestLinks /> : <UserLinks />}
                     </div>
                     <div className='empty'></div>
                 </>
@@ -24,52 +25,5 @@ const Navbar = ({ user, errors }) => {
         </div>
     );
 };
-
-const activeStyle = { borderBottom: '1px solid rgba(255,255,255,.7)' };
-
-const guestLinks = (
-    <ul className='list'>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/login'>
-                Најавa
-            </NavLink>
-        </li>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/register'>
-                Регистрација
-            </NavLink>
-        </li>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/about'>
-                Контакт
-            </NavLink>
-        </li>
-    </ul>
-);
-
-const userLinks = (
-    <ul className='list'>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/home'>
-                Дома
-            </NavLink>
-        </li>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/user-profile'>
-                Профил
-            </NavLink>
-        </li>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/about'>
-                За Нас
-            </NavLink>
-        </li>
-        <li>
-            <NavLink activeStyle={activeStyle} exact to='/logout'>
-                Одјави Се
-            </NavLink>
-        </li>
-    </ul>
-);
 
 export default Navbar;

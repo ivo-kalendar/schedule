@@ -54,11 +54,9 @@ const AuthState = (props) => {
         }
 
         try {
-            const res = await axios.get('/api/allusers');
-
-            dispatch({ type: USER_LOADED, payload: res.data });
+            dispatch({ type: USER_LOADED });
         } catch (err) {
-            console.log(err, 'од овде е еророт...03');
+            dispatch({ type: LOGIN_FAIL });
         }
     };
 
@@ -103,6 +101,7 @@ const AuthState = (props) => {
     useEffect(() => {
         if (localStorage.token) {
             loadUser();
+            checkExpiredToken();
         }
         // eslint-disable-next-line
     }, []);
@@ -114,8 +113,6 @@ const AuthState = (props) => {
                 user: state.user,
                 token: state.token,
                 error: state.error,
-                checkExpiredToken,
-                loadUser,
                 register,
                 login,
                 logout,

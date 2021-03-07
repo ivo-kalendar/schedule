@@ -1,11 +1,10 @@
-import { Fragment } from 'react';
 import spinner from './spinner.svg';
 
 const Spinner = () => {
     return (
-        <Fragment>
+        <div className='container'>
             <img src={spinner} style={spinnerStyle} alt='Loading...' />
-        </Fragment>
+        </div>
     );
 };
 
