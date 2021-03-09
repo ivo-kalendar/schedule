@@ -7,7 +7,6 @@ const {
     register,
     login,
     allUsers,
-    clientRoutes,
 } = require('../controllers/korisnikController');
 const { getUser } = require('../controllers/userController');
 
@@ -16,8 +15,7 @@ router.post('/register', register);
 router.post('/login', login);
 
 // Protected Routes
-// router.get('/allusers', auth, allUsers);
-router.get('/clientroutes', auth, clientRoutes);
+router.get('/allusers', auth, allUsers);
 router.get('/user/:id', auth, getUser);
 router.get('/vraboteni', auth, seeAll);
 

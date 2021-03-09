@@ -1,25 +1,37 @@
-import { NavLink } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
+import { NavLink } from 'react-router-dom';
 
 const UserLinks = () => {
     const korisnikContext = useContext(KorisnikContext);
-    const { getRoutes, routes } = korisnikContext;
-
-    useEffect(() => {
-        getRoutes();
-        // eslint-disable-next-line
-    }, []);
+    const { user } = korisnikContext;
 
     return (
         <ul className='list'>
-            {routes.map(({ link, content }, i) => (
-                <li key={i}>
-                    <NavLink activeStyle={activeStyle} exact to={link}>
-                        {content}
+            <li>
+                <NavLink activeStyle={activeStyle} exact to='/home'>
+                    Дома
+                </NavLink>
+            </li>
+            {user.ime !== 'admin' ? (
+                <></>
+            ) : (
+                <li>
+                    <NavLink activeStyle={activeStyle} exact to='/user-profile'>
+                        Профил
                     </NavLink>
                 </li>
-            ))}
+            )}
+            <li>
+                <NavLink activeStyle={activeStyle} exact to='/about'>
+                    За Сајтот
+                </NavLink>
+            </li>
+            <li>
+                <NavLink activeStyle={activeStyle} exact to='/logout'>
+                    Одјави Се
+                </NavLink>
+            </li>
         </ul>
     );
 };

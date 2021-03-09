@@ -9,9 +9,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const DECODED_TOKEN = 'DECODED_TOKEN';
 
 // Korisnik Types //
-export const GET_ROUTES = 'GET_ROUTES';
+export const GET_KORISNICI = 'GET_KORISNICI';
+export const GET_USER = 'GET_USER';
 
 //  //
 export const GET_VRABOTENI = 'GET_VRABOTENI';
-export const GET_KORISNICI = 'GET_KORISNICI';
-export const GET_USER = 'GET_USER';

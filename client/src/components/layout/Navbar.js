@@ -1,9 +1,9 @@
 import GuestLinks from '../links/GuestLinks';
 import UserLinks from '../links/UserLinks';
 
-const Navbar = ({ user, errors }) => {
+const Navbar = ({ userID, errors }) => {
     return (
-        <div>
+        <>
             {errors ? (
                 <div className='navbar-alert'>
                     <ul>
@@ -17,12 +17,12 @@ const Navbar = ({ user, errors }) => {
             ) : (
                 <>
                     <div className='navbar'>
-                        {!user ? <GuestLinks /> : <UserLinks />}
+                        {!userID ? <GuestLinks /> : <UserLinks />}
                     </div>
                     <div className='empty'></div>
                 </>
             )}
-        </div>
+        </>
     );
 };
 

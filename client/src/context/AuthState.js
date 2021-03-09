@@ -20,7 +20,7 @@ const AuthState = (props) => {
         error: null,
         token: localStorage.getItem('token'),
         decoded: null,
-        user: false,
+        userID: false,
     };
 
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -110,7 +110,7 @@ const AuthState = (props) => {
         <AuthContext.Provider
             value={{
                 decoded: state.decoded,
-                user: state.user,
+                userID: state.userID,
                 token: state.token,
                 error: state.error,
                 register,

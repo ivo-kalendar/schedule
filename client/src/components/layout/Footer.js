@@ -4,10 +4,10 @@ import LocaleTime from './LocaleTime';
 import { useContext } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
 
-const Footer = ({ user }) => {
+const Footer = ({ userID }) => {
     const korisnikContext = useContext(KorisnikContext);
     const {
-        userID: { ime },
+        user: { ime },
     } = korisnikContext;
 
     const { pathname } = useLocation();
@@ -21,7 +21,7 @@ const Footer = ({ user }) => {
             </Link>
             <Link className='go-home-span-link' to='/'>
                 <span className='go-home-span'>
-                    {!user ? 'login ' : 'home '}
+                    {!userID ? 'login ' : 'home '}
                 </span>
             </Link>
         </>

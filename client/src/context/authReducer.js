@@ -15,7 +15,7 @@ export default (state, action) => {
         case USER_LOADED:
             return {
                 ...state,
-                user: state.decoded ? state.decoded.id : false,
+                userID: state.decoded ? state.decoded.id : false,
             };
         case REGISTER_USER:
         case LOGIN_SUCCESS:
@@ -23,7 +23,7 @@ export default (state, action) => {
             return {
                 ...state,
                 token: action.payload.token,
-                user: state.decoded ? state.decoded.id : false,
+                userID: state.decoded ? state.decoded.id : false,
             };
         case LOGOUT:
         case LOGIN_FAIL:
@@ -32,7 +32,7 @@ export default (state, action) => {
             return {
                 ...state,
                 token: null,
-                user: false,
+                userID: false,
                 decoded: null,
                 error: action.payload ? action.payload : null,
             };

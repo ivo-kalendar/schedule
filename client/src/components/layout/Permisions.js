@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AuthContext from '../../context/authContext';
+import KorisnikContext from '../../context/korisnikContext';
 
 import Spinner from './Spinner';
 import Navbar from './Navbar';
@@ -10,18 +11,25 @@ import UserRoutes from '../links/UserRoutes';
 
 const Permisions = () => {
     const authContext = useContext(AuthContext);
-    const { error, user } = authContext;
+    const korisnikContext = useContext(KorisnikContext);
+    const { error, userID } = authContext;
+    const { getUser } = korisnikContext;
+
+    useEffect(() => {
+        if (userID) getUser(userID);
+        // eslint-disable-next-line
+    }, [userID]);
 
     return (
         <Router>
             {!localStorage.token ? (
                 <>
-                    <Navbar user={user} errors={error} />
+                    <Navbar userID={userID} errors={error} />
                     <GuestRoutes />
                 </>
-            ) : localStorage.token && user ? (
+            ) : localStorage.token && userID ? (
                 <>
-                    <Navbar user={user} />
+                    <Navbar userID={userID} />
                     <UserRoutes />
                 </>
             ) : (
@@ -30,7 +38,7 @@ const Permisions = () => {
                     <Spinner />
                 </>
             )}
-            <Footer user={user} />
+            <Footer userID={userID} />
         </Router>
     );
 };

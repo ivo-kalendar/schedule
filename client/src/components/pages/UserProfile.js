@@ -1,54 +1,48 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import moment from 'moment';
 import 'moment/locale/mk';
 
 import KorisnikContext from '../../context/korisnikContext';
-import AuthContext from '../../context/authContext';
 import Spinner from '../layout/Spinner';
 
 const UserProfile = () => {
     const korisnikContext = useContext(KorisnikContext);
-    const authContext = useContext(AuthContext);
-    const { userID, getUser } = korisnikContext;
-    const { user } = authContext;
-
-    useEffect(() => {
-        getUser(user);
-        // eslint-disable-next-line
-    }, []);
+    const { user } = korisnikContext;
 
     return (
         <div>
-            {!userID ? (
+            {!user ? (
                 <Spinner />
+            ) : user.ime !== 'admin' ? (
+                <div className='container'>
+                    <h1>Немате пристап до оваа страна</h1>
+                </div>
             ) : (
                 <div>
                     <p>
                         <span className='text-primary'>_id: </span>
-                        {userID._id}
+                        {user._id}
                     </p>
                     <h1>
                         <span className='text-primary lead'>име: </span>
-                        {userID.ime}
+                        {user.ime}
                     </h1>
                     <p>
                         <span className='text-primary'>позиција: </span>
-                        {userID.pozicija}
+                        {user.pozicija}
                     </p>
-                    {!userID.date ? (
+                    {!user.date ? (
                         <></>
                     ) : (
                         <p>
                             <span className='text-primary'>
                                 профил креиран на{' '}
                             </span>
-                            {moment(userID.date)
+                            {moment(user.date)
                                 .locale('mk')
                                 .format('Do MMMM YYYYгод. dddd')}
                             <span className='text-primary'> во </span>
-                            {moment(userID.date)
-                                .locale('mk')
-                                .format('HH:mm:ss')}
+                            {moment(user.date).locale('mk').format('HH:mm:ss')}
                             <span className='text-primary'> часот.</span>
                         </p>
                     )}
