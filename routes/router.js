@@ -15,8 +15,8 @@ router.post('/register', register);
 router.post('/login', login);
 
 // Protected Routes
-router.get('/allusers', auth, allUsers);
 router.get('/user/:id', auth, getUser);
+router.get('/allusers', auth, allUsers);
 router.get('/vraboteni', auth, seeAll);
 
 // router.post('/vraboteni', vraboteniController.addOne);

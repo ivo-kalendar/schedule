@@ -7,13 +7,14 @@ import Spinner from './Spinner';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import GuestRoutes from '../links/GuestRoutes';
+import AdminRoutes from '../links/AdminRoutes';
 import UserRoutes from '../links/UserRoutes';
 
 const Permisions = () => {
     const authContext = useContext(AuthContext);
     const korisnikContext = useContext(KorisnikContext);
     const { error, userID } = authContext;
-    const { getUser } = korisnikContext;
+    const { getUser, user } = korisnikContext;
 
     useEffect(() => {
         if (userID) getUser(userID);
@@ -27,7 +28,12 @@ const Permisions = () => {
                     <Navbar userID={userID} errors={error} />
                     <GuestRoutes />
                 </>
-            ) : localStorage.token && userID ? (
+            ) : user.ime === 'admin' ? (
+                <>
+                    <Navbar userID={userID} />
+                    <AdminRoutes />
+                </>
+            ) : user ? (
                 <>
                     <Navbar userID={userID} />
                     <UserRoutes />

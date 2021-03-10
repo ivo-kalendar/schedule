@@ -15,7 +15,7 @@ const GuestLinks = () => {
             </li>
             <li>
                 <NavLink activeStyle={activeStyle} exact to='/about'>
-                    Контакт
+                    За Сајтот
                 </NavLink>
             </li>
         </ul>
