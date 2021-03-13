@@ -1,25 +1,25 @@
 import { useContext, useEffect } from 'react';
-import VraboteniContext from '../../context/vraboteniContext';
+import KorisnikContext from '../../context/korisnikContext';
 import CardList from '../layout/CardList';
 import Spinner from '../layout/Spinner';
 
-const Home = () => {
-    const vraboteniContext = useContext(VraboteniContext);
-    const { vraboteni, getVraboteni } = vraboteniContext;
+const KorisniciView = () => {
+    const korisnikContext = useContext(KorisnikContext);
+    const { korisnici, getKorisnici } = korisnikContext;
 
     useEffect(() => {
-        getVraboteni();
+        getKorisnici();
         // eslint-disable-next-line
     }, []);
 
     return (
         <div>
-            {vraboteni !== null ? (
+            {korisnici !== null ? (
                 <>
                     <h3 className='card-list'>
-                        Вработени ({vraboteni.length})
+                        Корисници ({korisnici.length})
                     </h3>
-                    {vraboteni.map((user) => (
+                    {korisnici.map((user) => (
                         <CardList key={user._id} user={user} />
                     ))}
                 </>
@@ -30,4 +30,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default KorisniciView;

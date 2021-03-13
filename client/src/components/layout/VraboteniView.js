@@ -3,7 +3,7 @@ import VraboteniContext from '../../context/vraboteniContext';
 import CardList from '../layout/CardList';
 import Spinner from '../layout/Spinner';
 
-const Home = () => {
+const VraboteniView = () => {
     const vraboteniContext = useContext(VraboteniContext);
     const { vraboteni, getVraboteni } = vraboteniContext;
 
@@ -30,4 +30,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default VraboteniView;

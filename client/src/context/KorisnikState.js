@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import axios from 'axios';
 import KorisnikContext from './korisnikContext';
 import korisnikReducer from './korisnikReducer';
-import { GET_KORISNICI, GET_USER } from './types';
+import { CLEAR_USER, GET_KORISNICI, GET_USER } from './types';
 
 const KorisnikState = (props) => {
     const initialState = {
@@ -34,6 +34,9 @@ const KorisnikState = (props) => {
         }
     };
 
+    // Logout //
+    const clearUser = () => dispatch({ type: CLEAR_USER });
+
     return (
         <KorisnikContext.Provider
             value={{
@@ -41,6 +44,7 @@ const KorisnikState = (props) => {
                 korisnici: state.korisnici,
                 getKorisnici,
                 getUser,
+                clearUser,
             }}>
             {props.children}
         </KorisnikContext.Provider>

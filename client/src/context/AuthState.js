@@ -28,8 +28,12 @@ const AuthState = (props) => {
     // get Token Payload Info
     const decodedToken = () => {
         if (localStorage.token) {
-            let decodedPayload = jwt_decode(localStorage.token);
-            dispatch({ type: DECODED_TOKEN, payload: decodedPayload });
+            try {
+                let decodedPayload = jwt_decode(localStorage.token);
+                dispatch({ type: DECODED_TOKEN, payload: decodedPayload });
+            } catch (error) {
+                dispatch({ type: LOGOUT });
+            }
         }
     };
 
@@ -101,7 +105,6 @@ const AuthState = (props) => {
     useEffect(() => {
         if (localStorage.token) {
             loadUser();
-            checkExpiredToken();
         }
         // eslint-disable-next-line
     }, []);
@@ -118,6 +121,7 @@ const AuthState = (props) => {
                 logout,
                 clientErr,
                 clearErrors,
+                checkExpiredToken,
             }}>
             {props.children}
         </AuthContext.Provider>

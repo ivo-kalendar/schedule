@@ -137,7 +137,8 @@ Korisnik.prototype.authenticate = function () {
 };
 
 Korisnik.getAll = async () => {
-    return await korisnici.find().sort({ date: -1 }).toArray();
+    const options = { projection: { password: 0 } };
+    return await korisnici.find({}, options).sort({ date: -1 }).toArray();
 };
 
 // Korisnik.edit = async (nameIn, nameOut) => {

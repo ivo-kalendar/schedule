@@ -11,6 +11,7 @@ export const DECODED_TOKEN = 'DECODED_TOKEN';
 // Korisnik Types //
 export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';
+export const CLEAR_USER = 'CLEAR_USER';
 
 //  //
 export const GET_VRABOTENI = 'GET_VRABOTENI';

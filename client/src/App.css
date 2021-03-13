@@ -460,6 +460,7 @@ table th {
     border-bottom: solid 1px var(--primary-color);
     opacity: 0.9;
     margin-bottom: 1rem;
+    backdrop-filter: blur(3px);
     background-image: linear-gradient(
         to right,
         rgba(51, 51, 51, 0.5),
@@ -484,6 +485,7 @@ table th {
 .navbar ul li a {
     border-bottom: 7px solid rgba(255, 255, 255, 0);
     transition: border-bottom 300ms;
+    white-space: nowrap;
 }
 
 .navbar a {
@@ -519,6 +521,18 @@ table th {
     position: absolute;
     height: 70vh;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-list {
+    margin: 0.5em;
+    padding: 1em 1.5em;
+    border-radius: 15px 0 0 15px;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.8),
+        transparent,
+        transparent
+    );
 }
 
 /* Mobile Styles */
