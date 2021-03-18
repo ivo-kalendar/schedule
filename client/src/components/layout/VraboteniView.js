@@ -13,20 +13,13 @@ const VraboteniView = () => {
     }, []);
 
     return (
-        <div>
+        <>
             {vraboteni !== null ? (
-                <>
-                    <h3 className='card-list'>
-                        Вработени ({vraboteni.length})
-                    </h3>
-                    {vraboteni.map((user) => (
-                        <CardList key={user._id} user={user} />
-                    ))}
-                </>
+                vraboteni.map((user) => <CardList key={user._id} user={user} />)
             ) : (
                 <Spinner />
             )}
-        </div>
+        </>
     );
 };
 

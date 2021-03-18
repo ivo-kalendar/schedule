@@ -16,7 +16,7 @@ const Home = () => {
         <div>
             {vraboteni !== null ? (
                 <>
-                    <h3 className='card-list'>
+                    <h3 className='card-list-title'>
                         Вработени ({vraboteni.length})
                     </h3>
                     {vraboteni.map((user) => (

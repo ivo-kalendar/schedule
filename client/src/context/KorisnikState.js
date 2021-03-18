@@ -19,7 +19,7 @@ const KorisnikState = (props) => {
 
             dispatch({ type: GET_USER, payload: res.data });
         } catch (error) {
-            console.log(error, 'од овде е еророт...01');
+            dispatch({ type: CLEAR_USER });
         }
     };
 

@@ -17,10 +17,8 @@ const Permisions = () => {
     const { getUser, user, clearUser } = korisnikContext;
 
     useEffect(() => {
-        if (userID) {
-            getUser(userID);
-            checkExpiredToken();
-        }
+        if (userID) checkExpiredToken();
+        if (userID && localStorage.token) getUser(userID);
         if (!userID) clearUser();
         // eslint-disable-next-line
     }, [userID]);

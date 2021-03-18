@@ -27,9 +27,15 @@ const Footer = ({ userID }) => {
         </>
     );
 
+    const noBlur =
+        pathname === '/login' ||
+        pathname === '/logout' ||
+        pathname === '/about' ||
+        pathname === '/register';
+
     return (
         <div
-            className='timebar grid-2'
+            className={`timebar grid-2 ${noBlur ? '' : 'blur'}`}
             style={{
                 gridTemplateColumns: '3fr auto',
             }}>

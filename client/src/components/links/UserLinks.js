@@ -2,6 +2,10 @@ import { useContext } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
 import { NavLink } from 'react-router-dom';
 
+import { FaRegUser, FaRegListAlt } from 'react-icons/fa';
+import { FiHome, FiLogOut } from 'react-icons/fi';
+import { ImInfo } from 'react-icons/im';
+
 const UserLinks = () => {
     const korisnikContext = useContext(KorisnikContext);
     const { user } = korisnikContext;
@@ -15,12 +19,14 @@ const UserLinks = () => {
     );
 };
 
+const phone = window.innerWidth < 700;
 const activeStyle = { borderBottom: '1px solid rgba(255,255,255,.7)' };
+const icons = { height: '1.5em', width: '1.5em' };
 
 const homeLink = (
     <li>
         <NavLink activeStyle={activeStyle} exact to='/home'>
-            Дома
+            {phone ? <FiHome style={icons} /> : 'Дома'}
         </NavLink>
     </li>
 );
@@ -29,12 +35,12 @@ const aboutAndLogout = (
     <>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/about'>
-                За Сајтот
+                {phone ? <ImInfo style={icons} /> : 'За Сајтот'}
             </NavLink>
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/logout'>
-                Одјави Се
+                {phone ? <FiLogOut style={icons} /> : 'Одјави Се'}
             </NavLink>
         </li>
     </>
@@ -44,12 +50,12 @@ const adminLinks = (
     <>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/user-profile'>
-                Профил
+                {phone ? <FaRegUser style={icons} /> : 'Профил'}
             </NavLink>
         </li>
         <li>
             <NavLink activeStyle={activeStyle} exact to='/lists'>
-                Листи
+                {phone ? <FaRegListAlt style={icons} /> : 'Листи'}
             </NavLink>
         </li>
     </>

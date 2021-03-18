@@ -13,20 +13,13 @@ const KorisniciView = () => {
     }, []);
 
     return (
-        <div>
+        <>
             {korisnici !== null ? (
-                <>
-                    <h3 className='card-list'>
-                        Корисници ({korisnici.length})
-                    </h3>
-                    {korisnici.map((user) => (
-                        <CardList key={user._id} user={user} />
-                    ))}
-                </>
+                korisnici.map((user) => <CardList key={user._id} user={user} />)
             ) : (
                 <Spinner />
             )}
-        </div>
+        </>
     );
 };
 
