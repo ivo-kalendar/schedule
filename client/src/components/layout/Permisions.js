@@ -13,11 +13,14 @@ import UserRoutes from '../links/UserRoutes';
 const Permisions = () => {
     const authContext = useContext(AuthContext);
     const korisnikContext = useContext(KorisnikContext);
-    const { checkExpiredToken, error, userID } = authContext;
+    const { loadUser, checkExpiredToken, error, userID } = authContext;
     const { getUser, user, clearUser } = korisnikContext;
 
     useEffect(() => {
-        if (userID) checkExpiredToken();
+        if (localStorage.token) {
+            checkExpiredToken();
+            loadUser();
+        }
         if (userID && localStorage.token) getUser(userID);
         if (!userID) clearUser();
         // eslint-disable-next-line

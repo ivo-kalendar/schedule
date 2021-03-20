@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react';
-import {
-    BrowserRouter as Router,
-    NavLink,
-    Switch,
-    Route,
-} from 'react-router-dom';
-import KorisniciView from '../layout/KorisniciView';
-import VraboteniView from '../layout/VraboteniView';
+import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import ListsRoutes from '../links/ListsRoutes';
 
 const Lists = () => {
-    const [scrollDown, setScrollDown] = useState(listLinks);
+    const [scrollDown, setScrollDown] = useState('list-links');
     let position = 0;
 
     const handleScrollDown = (event) => {
@@ -17,10 +11,10 @@ const Lists = () => {
             window.pageYOffset > position &&
             position > window.innerHeight / 4
         ) {
-            setScrollDown(listLinksScrollDown);
+            setScrollDown('list-links-scrolled-down');
         }
         if (window.pageYOffset < position) {
-            setScrollDown(listLinks);
+            setScrollDown('list-links');
         }
         position = window.pageYOffset;
     };
@@ -34,64 +28,26 @@ const Lists = () => {
         };
         // eslint-disable-next-line
     }, []);
+
     return (
         <Router>
-            <div className={'navbar'} style={scrollDown}>
-                <ul className='list' style={ulLinks}>
-                    <li style={liLinks}>
-                        <NavLink
-                            activeStyle={activeStyle}
-                            exact
-                            to='/lists/korisnici'>
+            <div className={`navbar ${scrollDown}`}>
+                <ul className='list' style={{ flexWrap: 'wrap' }}>
+                    <li style={{ padding: '.5em 1em' }}>
+                        <NavLink exact to='/lists/korisnici'>
                             Корисници
                         </NavLink>
                     </li>
-                    <li style={liLinks}>
-                        <NavLink
-                            activeStyle={activeStyle}
-                            exact
-                            to='/lists/vraboteni'>
+                    <li style={{ padding: '.5em 1em' }}>
+                        <NavLink exact to='/lists/vraboteni'>
                             Вработени
                         </NavLink>
                     </li>
                 </ul>
             </div>
-            <div style={phone ? phoneRoutes : pcRoutes}>
-                <Switch>
-                    <Route
-                        exact
-                        path='/lists/korisnici'
-                        component={KorisniciView}
-                    />
-                    <Route
-                        exact
-                        path='/lists/vraboteni'
-                        component={VraboteniView}
-                    />
-                </Switch>
-            </div>
+            <ListsRoutes />
         </Router>
     );
-};
-const activeStyle = { borderBottom: '1px solid rgba(255,255,255,.7)' };
-const phone = window.innerWidth < 700;
-const listLinks = {
-    top: phone ? '3.3em' : '4.35em',
-    left: '0',
-};
-const listLinksScrollDown = {
-    top: '-5rem',
-    left: '0',
-    transition: 'top 1s ease-in',
-};
-const ulLinks = { flexWrap: 'wrap' };
-const liLinks = { padding: '.5em 1em' };
-
-const phoneRoutes = { marginTop: '5em' };
-const pcRoutes = {
-    marginTop: '6em',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr',
 };
 
 export default Lists;

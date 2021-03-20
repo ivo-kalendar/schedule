@@ -22,6 +22,8 @@ const Login = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         stopTimer();
         let newUserLogin = await new ClientRegister(user);
 

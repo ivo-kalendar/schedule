@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import AuthContext from './authContext';
@@ -101,14 +101,6 @@ const AuthState = (props) => {
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
-    // Load User
-    useEffect(() => {
-        if (localStorage.token) {
-            loadUser();
-        }
-        // eslint-disable-next-line
-    }, []);
-
     return (
         <AuthContext.Provider
             value={{
@@ -116,6 +108,7 @@ const AuthState = (props) => {
                 userID: state.userID,
                 token: state.token,
                 error: state.error,
+                loadUser,
                 register,
                 login,
                 logout,

@@ -27,6 +27,7 @@ const KorisnikState = (props) => {
     const getKorisnici = async () => {
         try {
             const res = await axios.get('/api/allusers');
+            // res.data.length = 50;
 
             dispatch({ type: GET_KORISNICI, payload: res.data });
         } catch (error) {

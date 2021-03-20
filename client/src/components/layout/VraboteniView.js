@@ -8,7 +8,7 @@ const VraboteniView = () => {
     const { vraboteni, getVraboteni } = vraboteniContext;
 
     useEffect(() => {
-        getVraboteni();
+        if (!vraboteni) getVraboteni();
         // eslint-disable-next-line
     }, []);
 
@@ -17,7 +17,11 @@ const VraboteniView = () => {
             {vraboteni !== null ? (
                 vraboteni.map((user) => <CardList key={user._id} user={user} />)
             ) : (
-                <Spinner />
+                <>
+                    <Spinner />
+                    <Spinner />
+                    <Spinner />
+                </>
             )}
         </>
     );

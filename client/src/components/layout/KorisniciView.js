@@ -8,7 +8,7 @@ const KorisniciView = () => {
     const { korisnici, getKorisnici } = korisnikContext;
 
     useEffect(() => {
-        getKorisnici();
+        if (!korisnici) getKorisnici();
         // eslint-disable-next-line
     }, []);
 
@@ -17,7 +17,11 @@ const KorisniciView = () => {
             {korisnici !== null ? (
                 korisnici.map((user) => <CardList key={user._id} user={user} />)
             ) : (
-                <Spinner />
+                <>
+                    <Spinner />
+                    <Spinner />
+                    <Spinner />
+                </>
             )}
         </>
     );
