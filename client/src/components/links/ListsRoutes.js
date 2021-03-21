@@ -1,22 +1,12 @@
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import KorisniciView from '../layout/KorisniciView';
 import VraboteniView from '../layout/VraboteniView';
 
 const ListsRoutes = () => {
     return (
         <div style={phone ? phoneRoutes : pcRoutes}>
-            <Switch>
-                <Route
-                    exact
-                    path='/lists/korisnici'
-                    component={KorisniciView}
-                />
-                <Route
-                    exact
-                    path='/lists/vraboteni'
-                    component={VraboteniView}
-                />
-            </Switch>
+            <Route exact path='/lists/korisnici' component={KorisniciView} />
+            <Route exact path='/lists/vraboteni' component={VraboteniView} />
         </div>
     );
 };

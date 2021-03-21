@@ -490,7 +490,7 @@ table th {
 
 .navbar ul li a {
     border-bottom: 7px solid rgba(255, 255, 255, 0);
-    transition: border-bottom 300ms;
+    transition: border 300ms;
     white-space: nowrap;
 }
 
@@ -501,7 +501,7 @@ table th {
 
 .navbar a {
     color: #fff;
-    padding: 0 0 0.15rem 0;
+    padding: 0.15rem 0 0.15rem 0;
     margin: 0.55rem;
 }
 

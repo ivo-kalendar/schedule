@@ -20,7 +20,6 @@ const UserLinks = () => {
 };
 
 const phone = window.innerWidth < 700;
-// const activeStyle = { borderBottom: '1px solid rgba(255,255,255,.7)' };
 const icons = { height: '1.5em', width: '1.5em' };
 
 const homeLink = (

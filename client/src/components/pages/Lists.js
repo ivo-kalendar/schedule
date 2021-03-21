@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import ListsRoutes from '../links/ListsRoutes';
 
 const Lists = () => {
@@ -30,7 +30,7 @@ const Lists = () => {
     }, []);
 
     return (
-        <Router>
+        <>
             <div className={`navbar ${scrollDown}`}>
                 <ul className='list' style={{ flexWrap: 'wrap' }}>
                     <li style={{ padding: '.5em 1em' }}>
@@ -46,7 +46,7 @@ const Lists = () => {
                 </ul>
             </div>
             <ListsRoutes />
-        </Router>
+        </>
     );
 };
 
