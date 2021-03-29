@@ -3,6 +3,9 @@ import { FiLogIn, FiLock } from 'react-icons/fi';
 import { ImInfo } from 'react-icons/im';
 
 const GuestLinks = () => {
+    const phone = window.innerWidth < 700;
+    const icons = { height: '1.5em', width: '1.5em' };
+
     return (
         <ul className='list'>
             <li>
@@ -23,8 +26,5 @@ const GuestLinks = () => {
         </ul>
     );
 };
-
-const phone = window.innerWidth < 700;
-const icons = { height: '1.5em', width: '1.5em' };
 
 export default GuestLinks;

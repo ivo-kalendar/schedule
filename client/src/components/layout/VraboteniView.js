@@ -8,7 +8,7 @@ const VraboteniView = () => {
     const { vraboteni, getVraboteni } = vraboteniContext;
 
     useEffect(() => {
-        if (!vraboteni) getVraboteni();
+        getVraboteni();
         // eslint-disable-next-line
     }, []);
 

@@ -20,30 +20,30 @@ const UserProfile = () => {
             ) : (
                 <div>
                     <p>
-                        <span className='text-primary'>_id: </span>
+                        <span className='text-secondary'>_id: </span>
                         {user._id}
                     </p>
                     <h1>
-                        <span className='text-primary lead'>име: </span>
+                        <span className='text-secondary lead'>име: </span>
                         {user.ime}
                     </h1>
                     <p>
-                        <span className='text-primary'>позиција: </span>
+                        <span className='text-secondary'>позиција: </span>
                         {user.pozicija}
                     </p>
                     {!user.date ? (
                         <></>
                     ) : (
                         <p>
-                            <span className='text-primary'>
+                            <span className='text-secondary'>
                                 профил креиран на{' '}
                             </span>
                             {moment(user.date)
                                 .locale('mk')
                                 .format('Do MMMM YYYYгод. dddd')}
-                            <span className='text-primary'> во </span>
+                            <span className='text-secondary'> во </span>
                             {moment(user.date).locale('mk').format('HH:mm:ss')}
-                            <span className='text-primary'> часот.</span>
+                            <span className='text-secondary'> часот.</span>
                         </p>
                     )}
                 </div>

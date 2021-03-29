@@ -7,6 +7,8 @@ import About from '../pages/About';
 import Logout from '../auth/Logout';
 
 const AdminRoutes = () => {
+    const listPathNames = ['/lists', '/lists/korisnici', '/lists/vraboteni'];
+
     return (
         <div className='container'>
             <Switch>
@@ -21,6 +23,5 @@ const AdminRoutes = () => {
         </div>
     );
 };
-const listPathNames = ['/lists', '/lists/korisnici', '/lists/vraboteni'];
 
 export default AdminRoutes;

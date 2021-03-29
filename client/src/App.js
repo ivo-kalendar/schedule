@@ -1,3 +1,4 @@
+import EventsState from './context/EventsState';
 import AuthState from './context/AuthState';
 import KorisnikState from './context/KorisnikState';
 import VraboteniState from './context/VraboteniState';
@@ -6,13 +7,15 @@ import './App.css';
 
 const App = () => {
     return (
-        <AuthState>
-            <KorisnikState>
-                <VraboteniState>
-                    <Permisions />
-                </VraboteniState>
-            </KorisnikState>
-        </AuthState>
+        <EventsState>
+            <AuthState>
+                <KorisnikState>
+                    <VraboteniState>
+                        <Permisions />
+                    </VraboteniState>
+                </KorisnikState>
+            </AuthState>
+        </EventsState>
     );
 };
 

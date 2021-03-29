@@ -8,7 +8,7 @@ const KorisniciView = () => {
     const { korisnici, getKorisnici } = korisnikContext;
 
     useEffect(() => {
-        if (!korisnici) getKorisnici();
+        getKorisnici();
         // eslint-disable-next-line
     }, []);
 

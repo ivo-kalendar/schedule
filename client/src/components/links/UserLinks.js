@@ -10,6 +10,47 @@ const UserLinks = () => {
     const korisnikContext = useContext(KorisnikContext);
     const { user } = korisnikContext;
 
+    const phone = window.innerWidth < 700;
+    const icons = { height: '1.5em', width: '1.5em' };
+
+    const homeLink = (
+        <li>
+            <NavLink exact to='/home'>
+                {phone ? <FiHome style={icons} /> : 'Дома'}
+            </NavLink>
+        </li>
+    );
+
+    const aboutAndLogout = (
+        <>
+            <li>
+                <NavLink exact to='/about'>
+                    {phone ? <ImInfo style={icons} /> : 'За Сајтот'}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink exact to='/logout'>
+                    {phone ? <FiLogOut style={icons} /> : 'Одјави Се'}
+                </NavLink>
+            </li>
+        </>
+    );
+
+    const adminLinks = (
+        <>
+            <li>
+                <NavLink exact to='/user-profile'>
+                    {phone ? <FaRegUser style={icons} /> : 'Профил'}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink exact to='/lists'>
+                    {phone ? <FaRegListAlt style={icons} /> : 'Листи'}
+                </NavLink>
+            </li>
+        </>
+    );
+
     return (
         <ul className='list'>
             {homeLink}
@@ -18,46 +59,5 @@ const UserLinks = () => {
         </ul>
     );
 };
-
-const phone = window.innerWidth < 700;
-const icons = { height: '1.5em', width: '1.5em' };
-
-const homeLink = (
-    <li>
-        <NavLink exact to='/home'>
-            {phone ? <FiHome style={icons} /> : 'Дома'}
-        </NavLink>
-    </li>
-);
-
-const aboutAndLogout = (
-    <>
-        <li>
-            <NavLink exact to='/about'>
-                {phone ? <ImInfo style={icons} /> : 'За Сајтот'}
-            </NavLink>
-        </li>
-        <li>
-            <NavLink exact to='/logout'>
-                {phone ? <FiLogOut style={icons} /> : 'Одјави Се'}
-            </NavLink>
-        </li>
-    </>
-);
-
-const adminLinks = (
-    <>
-        <li>
-            <NavLink exact to='/user-profile'>
-                {phone ? <FaRegUser style={icons} /> : 'Профил'}
-            </NavLink>
-        </li>
-        <li>
-            <NavLink exact to='/lists'>
-                {phone ? <FaRegListAlt style={icons} /> : 'Листи'}
-            </NavLink>
-        </li>
-    </>
-);
 
 export default UserLinks;

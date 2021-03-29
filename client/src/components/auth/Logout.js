@@ -9,20 +9,20 @@ const Logout = () => {
 
     return (
         <div>
-            <p className='text-primary p-2' style={{ textAlign: 'center' }}>
-                Are you shore you want to logout?
+            <p className='text-secondary p-2' style={{ textAlign: 'center' }}>
+                Дали си сигурен дека сакаш да се одјавиш?
             </p>
             <ul
                 className='grid-2'
                 style={{ textAlign: 'center', fontSize: '1.5rem' }}>
                 <li>
                     <NavLink onClick={logout} exact to='/'>
-                        Yes
+                        Да
                     </NavLink>
                 </li>
                 <li>
                     <NavLink exact to='/'>
-                        No
+                        Не
                     </NavLink>
                 </li>
             </ul>

@@ -1,24 +1,9 @@
-import { useContext, useEffect } from 'react';
-import AuthContext from '../../context/authContext';
+import { useEffect, useContext } from 'react';
+import EventsContext from '../../context/eventsContext';
 
 const Scroll = () => {
-    const authContext = useContext(AuthContext);
-    const { handleScrollDown } = authContext;
-    // const [scrollDown, setScrollDown] = useState('');
-    // let position = 0;
-
-    // const handleScrollDown = (event) => {
-    //     if (
-    //         window.pageYOffset > position &&
-    //         position > window.innerHeight / 4
-    //     ) {
-    //         setScrollDown('navbar-scroll-down');
-    //     }
-    //     if (window.pageYOffset < position) {
-    //         setScrollDown('');
-    //     }
-    //     position = window.pageYOffset;
-    // };
+    const eventsContext = useContext(EventsContext);
+    const { scrollDown, handleScrollDown } = eventsContext;
 
     useEffect(() => {
         window.addEventListener('scroll', handleScrollDown);
@@ -28,7 +13,7 @@ const Scroll = () => {
             window.removeEventListener('scroll', handleScrollDown);
         };
         // eslint-disable-next-line
-    }, []);
+    }, [scrollDown]);
 
     return <></>;
 };
