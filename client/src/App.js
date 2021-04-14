@@ -1,21 +1,21 @@
-import EventsState from './context/EventsState';
 import AuthState from './context/AuthState';
 import KorisnikState from './context/KorisnikState';
 import VraboteniState from './context/VraboteniState';
+import EventsState from './context/EventsState';
 import Permisions from './components/layout/Permisions';
 import './App.css';
 
 const App = () => {
     return (
-        <EventsState>
-            <AuthState>
-                <KorisnikState>
-                    <VraboteniState>
+        <AuthState>
+            <KorisnikState>
+                <VraboteniState>
+                    <EventsState>
                         <Permisions />
-                    </VraboteniState>
-                </KorisnikState>
-            </AuthState>
-        </EventsState>
+                    </EventsState>
+                </VraboteniState>
+            </KorisnikState>
+        </AuthState>
     );
 };
 

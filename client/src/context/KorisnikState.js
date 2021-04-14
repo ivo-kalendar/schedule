@@ -2,12 +2,14 @@ import { useReducer } from 'react';
 import axios from 'axios';
 import KorisnikContext from './korisnikContext';
 import korisnikReducer from './korisnikReducer';
-import { CLEAR_USER, GET_KORISNICI, GET_USER } from './types';
+import { CLEAR_USER, GET_KORISNICI, GET_USER, EDIT_USER } from './types';
 
 const KorisnikState = (props) => {
     const initialState = {
         korisnici: null,
         user: '',
+        errorKorisnik: null,
+        editKorisnik: null,
     };
 
     const [state, dispatch] = useReducer(korisnikReducer, initialState);
@@ -19,7 +21,7 @@ const KorisnikState = (props) => {
 
             dispatch({ type: GET_USER, payload: res.data });
         } catch (error) {
-            dispatch({ type: CLEAR_USER });
+            dispatch({ type: CLEAR_USER, payload: error.response.data });
         }
     };
 
@@ -35,14 +37,20 @@ const KorisnikState = (props) => {
         }
     };
 
+    // Edit Korisnik //
+    const editUser = (user) => dispatch({ type: EDIT_USER, payload: user });
+
     // Logout //
     const clearUser = () => dispatch({ type: CLEAR_USER });
 
     return (
         <KorisnikContext.Provider
             value={{
+                editKorisnik: state.editKorisnik,
                 user: state.user,
                 korisnici: state.korisnici,
+                errorKorisnik: state.errorKorisnik,
+                editUser,
                 getKorisnici,
                 getUser,
                 clearUser,

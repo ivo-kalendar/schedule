@@ -1,8 +1,11 @@
 import moment from 'moment';
 import 'moment/locale/mk';
+import Card from './Card';
 
 const CardList = ({ user }) => {
     let userArr = [];
+
+    // Change the default valuas for one user that might crash the app //
     for (let [key, value] of Object.entries(user)) {
         if (value === true) value = <span className='text-success'>true</span>;
         if (value === false) value = <span className='text-danger'>false</span>;
@@ -28,18 +31,7 @@ const CardList = ({ user }) => {
         userArr.push({ key, value });
     }
 
-    return (
-        <div
-            onClick={() => console.log('This should open edit modal...')}
-            className='card-list'>
-            {userArr.map((el, i) => (
-                <p style={{ wordBreak: 'break-all' }} key={i}>
-                    <span className='text-secondary'>{el.key}: </span>
-                    <span>{el.value}</span>
-                </p>
-            ))}
-        </div>
-    );
+    return <Card userArr={userArr} />;
 };
 
 export default CardList;

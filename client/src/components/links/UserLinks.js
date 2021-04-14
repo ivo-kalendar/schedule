@@ -39,7 +39,7 @@ const UserLinks = () => {
     const adminLinks = (
         <>
             <li>
-                <NavLink exact to='/user-profile'>
+                <NavLink to='/profile'>
                     {phone ? <FaRegUser style={icons} /> : 'Профил'}
                 </NavLink>
             </li>

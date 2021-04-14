@@ -16,6 +16,7 @@ export const SCROLLED_UP = 'SCROLLED_UP';
 export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'CLEAR_USER';
+export const EDIT_USER = 'EDIT_USER';
 
 //  //
 export const GET_VRABOTENI = 'GET_VRABOTENI';
