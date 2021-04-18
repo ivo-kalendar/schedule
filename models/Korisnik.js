@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const korisnici = require('../server').db().collection('korisnici');
+const { ObjectId } = require('mongodb');
 
 let Korisnik = function (data) {
     this.data = data;
@@ -21,7 +22,8 @@ Korisnik.prototype.cleanUp = function () {
 Korisnik.prototype.extraData = function () {
     this.data.date = new Date();
     this.data.position = 'unknown';
-    this.data.adminAprovel = false;
+    this.data.adminApproval = false;
+    this.data.poslednaPromena = new Date();
 };
 
 Korisnik.prototype.validate = function () {
@@ -138,15 +140,34 @@ Korisnik.prototype.authenticate = function () {
 
 Korisnik.getAll = async () => {
     const options = { projection: { password: 0 } };
-    return await korisnici.find({}, options).sort({ date: -1 }).toArray();
+    return await korisnici
+        .find({}, options)
+        .sort({ poslednaPromena: -1, date: -1 })
+        .toArray();
 };
 
-// Korisnik.edit = async (nameIn, nameOut) => {
-//     await korisnici.updateOne({ ime: nameIn }, { $set: { ime: nameOut } });
-// };
+Korisnik.edit = async (req) => {
+    let filter = { _id: ObjectId(req.params.id) };
+    let exists = await korisnici.findOne(filter);
 
-// Korisnik.delete = async (nameIn) => {
-//     await korisnici.deleteOne({ ime: nameIn });
-// };
+    if (exists) {
+        let { password } = exists;
+        if (password && password.length > 15) req.body.password = password;
+
+        if ((!password || password.length < 15) && req.body.password) {
+            const salt = await bcrypt.genSalt(10);
+            req.body.password = await bcrypt.hash(req.body.password, salt);
+        }
+
+        req.body.date = new Date(req.body.date);
+        req.body.poslednaPromena = new Date();
+
+        await korisnici.replaceOne(filter, req.body);
+    }
+};
+
+Korisnik.delete = async (id) => {
+    await korisnici.deleteOne({ _id: ObjectId(id) });
+};
 
 module.exports = Korisnik;

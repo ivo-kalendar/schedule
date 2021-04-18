@@ -17,6 +17,10 @@ export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'CLEAR_USER';
 export const EDIT_USER = 'EDIT_USER';
+export const UPDATE_KORISNIK = 'UPDATE_KORISNIK';
+export const DELETE_KORISNIK = 'DELETE_KORISNIK';
+export const ERROR_SUBMIT = 'ERROR_SUBMIT';
+export const CLEANUP = 'CLEANUP';
 
 //  //
 export const GET_VRABOTENI = 'GET_VRABOTENI';

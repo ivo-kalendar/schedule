@@ -17,7 +17,7 @@ const CardList = ({ user }) => {
         if (value === null) value = <span className='text-danger'>null</span>;
         if (value.length === 0)
             value = <span className='text-danger'>[ ]</span>;
-        if (key === 'date') {
+        if (key === 'date' || key === 'poslednaPromena') {
             value = (
                 <span className='text-success'>
                     {moment(value).locale('mk').format('Do MMMM YYYY во HH:mm')}
@@ -27,6 +27,7 @@ const CardList = ({ user }) => {
         if (key === '_id' || key === 'ime') {
             value = <span className='text-success'>{value}</span>;
         }
+        value = <span className='text-orange'>{value}</span>;
 
         userArr.push({ key, value });
     }

@@ -61,20 +61,20 @@ exports.login = async (req, res) => {
         });
 };
 
-// exports.editOne = async (req, res) => {
-//     try {
-//         await Korisnik.edit(req.body.nameIn, req.body.nameOut);
-//         res.json(req.body);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+exports.editOne = async (req, res) => {
+    try {
+        await Korisnik.edit(req);
+        res.status(200).json('Успешно променет корисник.');
+    } catch (err) {
+        res.status(400).json({ msg: 'Тоа корисничко име не постои!' });
+    }
+};
 
-// exports.deleteOne = async (req, res) => {
-//     try {
-//         await Korisnik.delete(req.body.name);
-//         res.json(req.body.name);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+exports.deleteOne = async (req, res) => {
+    try {
+        await Korisnik.delete(req.params.id);
+        res.status(200).json('Успешно избришан корисник.');
+    } catch (err) {
+        res.status(400).json({ msg: 'Тоа корисничко име не постои!' });
+    }
+};

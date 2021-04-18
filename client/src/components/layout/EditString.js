@@ -46,7 +46,7 @@ const EditString = ({ el }) => {
                     }}
                     className='btn btn-danger'
                     type='button'
-                    value='Х'
+                    value='Избриши'
                 />
             ) : null}
         </div>

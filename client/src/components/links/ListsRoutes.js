@@ -5,7 +5,11 @@ import MainListView from '../layout/MainListView';
 
 const ListsRoutes = () => {
     const phone = window.innerWidth < 700;
-    const phoneRoutes = { marginTop: '5em' };
+    const phoneRoutes = {
+        marginTop: '5em',
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+    };
     const pcRoutes = {
         marginTop: '6em',
         display: 'grid',

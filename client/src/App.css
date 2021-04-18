@@ -9,6 +9,7 @@
     --danger-color: #dc3545;
     --success-color: #28a745;
     --bg-react-color: #282c34;
+    --orange-color: #f55507;
 }
 
 * {
@@ -68,6 +69,10 @@ img {
     margin-bottom: 1rem;
 }
 
+.small {
+    font-size: 0.8rem;
+}
+
 .text-center {
     text-align: center;
 }
@@ -82,6 +87,10 @@ img {
 
 .text-secondary {
     color: var(--secondary-color);
+}
+
+.text-orange {
+    color: var(--orange-color);
 }
 
 .text-success {
@@ -106,6 +115,17 @@ img {
 
 .text-left {
     text-align: left;
+}
+
+.origin {
+    font-weight: 100;
+    position: fixed;
+    color: rgba(255, 255, 255, 0.4);
+    bottom: 0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    white-space: nowrap;
 }
 
 /* Cards */
@@ -399,6 +419,12 @@ table th {
     background: var(--light-color);
 }
 
+.fixed-btns {
+    position: fixed;
+    bottom: 2rem;
+    z-index: 1;
+}
+
 /* Timebar Footer */
 .timebar {
     padding-top: 0.3em;
@@ -614,8 +640,8 @@ table th {
     }
 
     .card-list {
-        padding: 1em 2.5em;
-        margin: 0.5em 2.5em;
+        padding: 1.5em 2.5em;
+        /* margin: 0.5em 2.5em; */
     }
 
     .container {

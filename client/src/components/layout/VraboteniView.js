@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import VraboteniContext from '../../context/vraboteniContext';
 import CardList from '../layout/CardList';
 import Spinner from '../layout/Spinner';
@@ -15,7 +16,15 @@ const VraboteniView = () => {
     return (
         <>
             {vraboteni !== null ? (
-                vraboteni.map((user) => <CardList key={user._id} user={user} />)
+                vraboteni.map((user) => (
+                    <Link
+                        // onClick={() => editUser(user)}
+                        className='card-list'
+                        to='/profile/edit'
+                        key={user._id}>
+                        <CardList user={user} />
+                    </Link>
+                ))
             ) : (
                 <>
                     <Spinner />
