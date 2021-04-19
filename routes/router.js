@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-const { seeAll } = require('../controllers/vraboteniController');
+const { getUser } = require('../controllers/userController');
 const {
     register,
     login,
@@ -11,7 +11,12 @@ const {
     editOne,
     deleteOne,
 } = require('../controllers/korisnikController');
-const { getUser } = require('../controllers/userController');
+const {
+    seeAll,
+    editOneWorker,
+    deleteOneWorker,
+    addOneWorker,
+} = require('../controllers/vraboteniController');
 
 // Guest Routes
 router.post('/register', register);
@@ -21,10 +26,15 @@ router.post('/login', login);
 router.get('/user/:id', auth, getUser);
 router.get('/vraboteni', auth, seeAll);
 
-// Protected Routes -- Admin //
+// Protected Routes -- Admin // - // Korisnici //
 router.get('/allusers', auth, admin, allUsers);
 router.put('/korisnik/:id', auth, admin, editOne);
 router.delete('/korisnik/:id', auth, admin, deleteOne);
+
+// Protected Routes -- Admin // - // Vraboteni //
+router.post('/vraboten/nov', auth, admin, addOneWorker);
+router.put('/vraboten/:id', auth, admin, editOneWorker);
+router.delete('/vraboten/:id', auth, admin, deleteOneWorker);
 
 // router.post('/vraboteni', vraboteniController.addOne);
 // router.put('/vraboteni', vraboteniController.editOne);

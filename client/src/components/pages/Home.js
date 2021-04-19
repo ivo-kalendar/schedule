@@ -1,32 +1,24 @@
-import { useContext, useEffect } from 'react';
-import VraboteniContext from '../../context/vraboteniContext';
-import CardList from '../layout/CardList';
-import Spinner from '../layout/Spinner';
+import { useContext } from 'react';
+import KorisnikContext from '../../context/korisnikContext';
 
 const Home = () => {
-    const vraboteniContext = useContext(VraboteniContext);
-    const { vraboteni, getVraboteni } = vraboteniContext;
+    const korisnikContext = useContext(KorisnikContext);
+    const {
+        user: { adminApproval },
+    } = korisnikContext;
 
-    useEffect(() => {
-        getVraboteni();
-        // eslint-disable-next-line
-    }, []);
-
-    return (
-        <div>
-            {vraboteni !== null ? (
-                <>
-                    <h3 className='card-list-title'>
-                        Вработени ({vraboteni.length})
-                    </h3>
-                    {vraboteni.map((user) => (
-                        <CardList key={user._id} user={user} />
-                    ))}
-                </>
-            ) : (
-                <Spinner />
-            )}
-        </div>
+    return adminApproval ? (
+        <h2
+            style={{ fontWeight: '100' }}
+            className='text-secondary text-center'>
+            Имаш Пристап Тука иде Екселот...
+        </h2>
+    ) : (
+        <h2
+            style={{ fontWeight: '100' }}
+            className='text-secondary text-center'>
+            Побарајте пристап од Администраторот...
+        </h2>
     );
 };
 

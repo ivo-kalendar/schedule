@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import KorisnikContext from '../../context/korisnikContext';
+import VraboteniContext from '../../context/vraboteniContext';
 import EditString from './EditString';
 import TextString from './TextString';
 
@@ -11,6 +12,7 @@ const EditCard = ({ userArr }) => {
     const [submited, setSubmited] = useState(false);
     const [deleteDecision, setDeleteDecision] = useState(false);
     const korisnikContext = useContext(KorisnikContext);
+    const vraboteniContext = useContext(VraboteniContext);
     const {
         errorUpdate,
         editUser,
@@ -19,6 +21,14 @@ const EditCard = ({ userArr }) => {
         updateUser,
         korisnikOperation,
     } = korisnikContext;
+    const {
+        errorUpdateVraboten,
+        editWorker,
+        deleteWorker,
+        editVraboten,
+        updateWorker,
+        vrabotenOperation,
+    } = vraboteniContext;
 
     const toTop = () => {
         document.body.scrollTop = 0;
@@ -44,9 +54,37 @@ const EditCard = ({ userArr }) => {
         // eslint-disable-next-line
     }, [korisnikOperation, errorUpdate]);
 
+    useEffect(() => {
+        if (
+            vrabotenOperation === 'внесен' ||
+            vrabotenOperation === 'избришан'
+        ) {
+            setSubmited(true);
+            toTop();
+            setTimeout(() => history.push('/lists/vraboteni'), 1000);
+        }
+
+        if (errorUpdateVraboten) {
+            setSubmited(false);
+            toTop();
+            setTimeout(() => history.push('/lists/vraboteni'), 1000);
+        }
+
+        // eslint-disable-next-line
+    }, [vrabotenOperation, errorUpdateVraboten]);
+
+    const novPodatok = () => {
+        // eslint-disable-next-line
+        if (editKorisnik) editUser({ ...editKorisnik, ['']: '' });
+        // eslint-disable-next-line
+        if (editVraboten) editWorker({ ...editVraboten, ['']: '' });
+        setAddBtn(false);
+    };
+
     const onDelete = () => {
         setDeleteDecision(false);
-        deleteUser(editKorisnik._id);
+        if (editKorisnik) deleteUser(editKorisnik._id);
+        if (editVraboten) deleteWorker(editVraboten._id);
     };
 
     const onSubmit = (e) => {
@@ -60,15 +98,25 @@ const EditCard = ({ userArr }) => {
             if (value === 'undefined') value = undefined;
             if (value === 'null') value = null;
             // eslint-disable-next-line
-            if (value === 'Array') value = new Array();
+            if (value.toString().includes('[')) {
+                let newValue = value.slice(1).slice(0, -1);
+                value = newValue.split(',');
+            }
             // eslint-disable-next-line
-            if (value === 'Object') value = new Object();
+            if (value.toString().includes('{')) value = JSON.parse(value);
 
             userObj[key] = value;
         }
 
-        editUser(userObj);
-        if (addBtn) updateUser(editKorisnik);
+        if (editKorisnik) {
+            editUser(userObj);
+            if (addBtn) updateUser(editKorisnik);
+        }
+
+        if (editVraboten) {
+            editWorker(userObj);
+            if (addBtn) updateWorker(editVraboten);
+        }
     };
 
     return deleteDecision ? (
@@ -105,9 +153,14 @@ const EditCard = ({ userArr }) => {
                         padding: '1rem',
                         margin: '1rem',
                     }}>
-                    Корисникот е успешно {korisnikOperation}!
+                    {editKorisnik
+                        ? `Корисникот е успешно ${korisnikOperation}!`
+                        : ''}
+                    {editVraboten
+                        ? `Вработениот е успешно ${vrabotenOperation}!`
+                        : ''}
                 </h3>
-            ) : errorUpdate ? (
+            ) : errorUpdate || errorUpdateVraboten ? (
                 <h3
                     className='text-danger'
                     style={{
@@ -115,7 +168,7 @@ const EditCard = ({ userArr }) => {
                         padding: '1rem',
                         margin: '1rem',
                     }}>
-                    {errorUpdate}
+                    {errorUpdate || errorUpdateVraboten}
                 </h3>
             ) : (
                 <div
@@ -166,11 +219,7 @@ const EditCard = ({ userArr }) => {
                                 gridTemplateColumns: '1fr',
                             }}>
                             <input
-                                onClick={() => {
-                                    // eslint-disable-next-line
-                                    editUser({ ...editKorisnik, ['']: '' });
-                                    setAddBtn(false);
-                                }}
+                                onClick={novPodatok}
                                 className='btn btn-success btn-block'
                                 type='button'
                                 value='Нов Податок'

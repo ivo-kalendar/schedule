@@ -1,9 +1,12 @@
 import { useState, useContext } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
+import VraboteniContext from '../../context/vraboteniContext';
 
 const EditString = ({ el }) => {
     const korisnikContext = useContext(KorisnikContext);
+    const vraboteniContext = useContext(VraboteniContext);
     const { editUser, editKorisnik } = korisnikContext;
+    const { editWorker, editVraboten } = vraboteniContext;
 
     const [element, setElement] = useState({
         key: el.key,
@@ -38,16 +41,31 @@ const EditString = ({ el }) => {
                 value={element.value}
                 autoComplete='off'
             />
-            {element.key !== '' && [element.key] in editKorisnik ? (
-                <input
-                    onClick={() => {
-                        let { [element.key]: item, ...rest } = editKorisnik;
-                        editUser(rest);
-                    }}
-                    className='btn btn-danger'
-                    type='button'
-                    value='Избриши'
-                />
+            {editKorisnik ? (
+                element.key !== '' && [element.key] in editKorisnik ? (
+                    <input
+                        onClick={() => {
+                            let { [element.key]: item, ...rest } = editKorisnik;
+                            editUser(rest);
+                        }}
+                        className='btn btn-danger'
+                        type='button'
+                        value='Избриши'
+                    />
+                ) : null
+            ) : null}
+            {editVraboten ? (
+                element.key !== '' && [element.key] in editVraboten ? (
+                    <input
+                        onClick={() => {
+                            let { [element.key]: item, ...rest } = editVraboten;
+                            editWorker(rest);
+                        }}
+                        className='btn btn-danger'
+                        type='button'
+                        value='Избриши'
+                    />
+                ) : null
             ) : null}
         </div>
     );

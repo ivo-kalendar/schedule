@@ -10,6 +10,7 @@
     --success-color: #28a745;
     --bg-react-color: #282c34;
     --orange-color: #f55507;
+    --purple-color: #ab0af0;
 }
 
 * {
@@ -91,6 +92,10 @@ img {
 
 .text-orange {
     color: var(--orange-color);
+}
+
+.text-purple {
+    color: var(--purple-color);
 }
 
 .text-success {

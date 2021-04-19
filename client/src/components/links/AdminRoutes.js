@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import KorisnikContext from '../../context/korisnikContext';
+import VraboteniContext from '../../context/vraboteniContext';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 
 import Home from '../pages/Home';
@@ -10,13 +11,19 @@ import About from '../pages/About';
 import Logout from '../auth/Logout';
 
 const AdminRoutes = () => {
-    const { pathname } = useLocation();
     const korisnikContext = useContext(KorisnikContext);
+    const vraboteniContext = useContext(VraboteniContext);
+    const { pathname } = useLocation();
     const { cleanUp } = korisnikContext;
+    const { cleanUpWorker } = vraboteniContext;
     const listPathNames = ['/lists', '/lists/korisnici', '/lists/vraboteni'];
 
     useEffect(() => {
-        if (pathname !== '/profile/edit') cleanUp();
+        if (pathname !== '/profile/edit') {
+            cleanUp();
+            cleanUpWorker();
+        }
+
         // eslint-disable-next-line
     }, [pathname]);
 

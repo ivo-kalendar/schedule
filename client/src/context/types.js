@@ -22,5 +22,11 @@ export const DELETE_KORISNIK = 'DELETE_KORISNIK';
 export const ERROR_SUBMIT = 'ERROR_SUBMIT';
 export const CLEANUP = 'CLEANUP';
 
-//  //
+// Vraboteni Types  //
 export const GET_VRABOTENI = 'GET_VRABOTENI';
+export const EDIT_WORKER = 'EDIT_WORKER';
+export const CLEANUP_WORKER = 'CLEANUP_WORKER';
+export const UPDATE_VRABOTEN = 'UPDATE_VRABOTEN';
+export const DELETE_VRABOTEN = 'DELETE_VRABOTEN';
+export const ERROR_SUBMIT_VRABOTEN = 'ERROR_SUBMIT_VRABOTEN';
+export const CREATE_WORKER = 'CREATE_WORKER';

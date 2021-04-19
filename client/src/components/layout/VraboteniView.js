@@ -1,30 +1,67 @@
-import { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import VraboteniContext from '../../context/vraboteniContext';
 import CardList from '../layout/CardList';
 import Spinner from '../layout/Spinner';
+import Spinner2 from './Spinner2';
 
 const VraboteniView = () => {
+    const history = useHistory();
     const vraboteniContext = useContext(VraboteniContext);
-    const { vraboteni, getVraboteni } = vraboteniContext;
+    const [waiting, setWaiting] = useState(false);
+    const {
+        editVraboten,
+        vraboteni,
+        getVraboteni,
+        editWorker,
+        createNewWorker,
+    } = vraboteniContext;
 
     useEffect(() => {
         getVraboteni();
         // eslint-disable-next-line
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (waiting && editVraboten) history.push('/profile/edit');
+        }, 1000);
+        // eslint-disable-next-line
+    }, [editVraboten]);
+
+    const novVraboten = () => {
+        setWaiting(true);
+        createNewWorker();
+    };
+
     return (
         <>
             {vraboteni !== null ? (
-                vraboteni.map((user) => (
+                <>
+                    <div className='origin'>
+                        вкупно {vraboteni.length} Вработени
+                    </div>
                     <Link
-                        // onClick={() => editUser(user)}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                        onClick={novVraboten}
                         className='card-list'
-                        to='/profile/edit'
-                        key={user._id}>
-                        <CardList user={user} />
+                        to={'#'}>
+                        {waiting ? <Spinner2 /> : <p>Нов Вработен!</p>}
                     </Link>
-                ))
+                    {vraboteni.map((user) => (
+                        <Link
+                            onClick={() => editWorker(user)}
+                            className='card-list'
+                            to='/profile/edit'
+                            key={user._id}>
+                            <CardList user={user} />
+                        </Link>
+                    ))}
+                </>
             ) : (
                 <>
                     <Spinner />

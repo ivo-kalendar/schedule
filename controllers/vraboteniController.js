@@ -10,29 +10,29 @@ exports.seeAll = async (req, res) => {
     }
 };
 
-exports.addOne = async (req, res) => {
+exports.addOneWorker = async (req, res) => {
     try {
-        await Vraboteni.add(req.body);
-        res.json(req.body);
-    } catch (error) {
-        console.log(error);
+        let vraboten = await Vraboteni.add(req);
+        res.status(200).json(vraboten);
+    } catch (err) {
+        res.status(400).json({ msg: 'Неможе да се креира нов вработен!' });
     }
 };
 
-exports.editOne = async (req, res) => {
+exports.editOneWorker = async (req, res) => {
     try {
-        await Vraboteni.edit(req.body.nameIn, req.body.nameOut);
-        res.json(req.body);
-    } catch (error) {
-        console.log(error);
+        await Vraboteni.edit(req);
+        res.status(200).json('Успешно променет вработен.');
+    } catch (err) {
+        res.status(400).json({ msg: 'Таков вработен не постои!' });
     }
 };
 
-exports.deleteOne = async (req, res) => {
+exports.deleteOneWorker = async (req, res) => {
     try {
-        await Vraboteni.delete(req.body.name);
-        res.json(req.body.name);
-    } catch (error) {
-        console.log(error);
+        await Vraboteni.delete(req.params.id);
+        res.status(200).json('Успешно избришан вработен.');
+    } catch (err) {
+        res.status(400).json({ msg: 'Таков вработен не постои!' });
     }
 };
