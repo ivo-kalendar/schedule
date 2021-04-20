@@ -14,7 +14,7 @@ const LocaleTime = () => {
                     'ss'
                 )}`
             );
-        }, 3000);
+        }, 1000);
     }, []);
 
     return (
