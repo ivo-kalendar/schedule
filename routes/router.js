@@ -3,7 +3,8 @@ const router = express.Router();
 
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-const { getUser } = require('../controllers/userController');
+const adminApproved = require('../middleware/adminApproved');
+const { getUser, getUserName } = require('../controllers/userController');
 const {
     register,
     login,
@@ -17,6 +18,13 @@ const {
     deleteOneWorker,
     addOneWorker,
 } = require('../controllers/vraboteniController');
+const {
+    getAllTables,
+    getOneTable,
+    getEditTable,
+    addNewTable,
+    editOneTable,
+} = require('../controllers/tablesControler');
 
 // Guest Routes
 router.post('/register', register);
@@ -25,6 +33,15 @@ router.post('/login', login);
 // Protected Routes -- Users //
 router.get('/user/:id', auth, getUser);
 router.get('/vraboteni', auth, seeAll);
+
+// Protected Routes -- Users // - // Tables //
+router.post('/table/new', auth, adminApproved, addNewTable);
+router.get('/tables', auth, adminApproved, getAllTables);
+router.get('/tableauthor/:id', auth, adminApproved, getUserName);
+router.get('/table/:id', auth, adminApproved, getOneTable);
+router.get('/edittable/:id', auth, adminApproved, getEditTable);
+
+router.put('/table/:id', auth, adminApproved, editOneTable);
 
 // Protected Routes -- Admin // - // Korisnici //
 router.get('/allusers', auth, admin, allUsers);
@@ -35,11 +52,5 @@ router.delete('/korisnik/:id', auth, admin, deleteOne);
 router.post('/vraboten/nov', auth, admin, addOneWorker);
 router.put('/vraboten/:id', auth, admin, editOneWorker);
 router.delete('/vraboten/:id', auth, admin, deleteOneWorker);
-
-// router.post('/vraboteni', vraboteniController.addOne);
-// router.put('/vraboteni', vraboteniController.editOne);
-// router.delete('/vraboteni', vraboteniController.deleteOne);
-
-// router.delete('/korisnik', korisnikController.deleteOne);
 
 module.exports = router;

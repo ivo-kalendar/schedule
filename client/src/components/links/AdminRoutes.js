@@ -4,6 +4,7 @@ import VraboteniContext from '../../context/vraboteniContext';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 
 import Home from '../pages/Home';
+import Table from '../pages/Table';
 import UserProfile from '../pages/UserProfile';
 import EditProfile from '../pages/EditProfile';
 import Lists from '../pages/Lists';
@@ -17,6 +18,12 @@ const AdminRoutes = () => {
     const { cleanUp } = korisnikContext;
     const { cleanUpWorker } = vraboteniContext;
     const listPathNames = ['/lists', '/lists/korisnici', '/lists/vraboteni'];
+    const tablePathNames = [
+        '/table',
+        '/table/edit',
+        '/table/firstroute',
+        '/table/secondroute',
+    ];
 
     useEffect(() => {
         if (pathname !== '/profile/edit') {
@@ -31,6 +38,7 @@ const AdminRoutes = () => {
         <div className='container'>
             <Switch>
                 <Route exact path='/home' component={Home} />
+                <Route exact path={tablePathNames} component={Table} />
                 <Route exact path='/profile/personal' component={UserProfile} />
                 <Route exact path='/profile/edit' component={EditProfile} />
                 <Route exact path={listPathNames} component={Lists} />

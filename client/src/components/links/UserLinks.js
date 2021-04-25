@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { FaRegUser, FaRegListAlt } from 'react-icons/fa';
 import { FiHome, FiLogOut } from 'react-icons/fi';
 import { ImInfo } from 'react-icons/im';
+import { RiFileExcel2Line } from 'react-icons/ri';
 
 const UserLinks = () => {
     const korisnikContext = useContext(KorisnikContext);
@@ -13,12 +14,19 @@ const UserLinks = () => {
     const phone = window.innerWidth < 700;
     const icons = { height: '1.5em', width: '1.5em' };
 
-    const homeLink = (
-        <li>
-            <NavLink exact to='/home'>
-                {phone ? <FiHome style={icons} /> : 'Дома'}
-            </NavLink>
-        </li>
+    const userLinks = (
+        <>
+            <li>
+                <NavLink exact to='/home'>
+                    {phone ? <FiHome style={icons} /> : 'Дома'}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink exact to='/table'>
+                    {phone ? <RiFileExcel2Line style={icons} /> : 'Табела'}
+                </NavLink>
+            </li>
+        </>
     );
 
     const aboutAndLogout = (
@@ -53,7 +61,7 @@ const UserLinks = () => {
 
     return (
         <ul className='list'>
-            {homeLink}
+            {userLinks}
             {user.ime !== 'admin' ? <></> : adminLinks}
             {aboutAndLogout}
         </ul>

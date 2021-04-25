@@ -349,6 +349,12 @@ img {
     border: #ccc solid 1px;
 }
 
+.table-btn {
+    margin: 1rem 0 0 75%;
+    padding: 0.5rem;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+}
+
 .btn:hover,
 .btn:focus {
     opacity: 0.8;
@@ -378,13 +384,32 @@ input[type='text'],
 input[type='email'],
 input[type='password'],
 input[type='date'],
-select,
 textarea {
     display: block;
     width: 100%;
     padding: 0.3rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
+}
+
+select {
+    /* appearance: none; */
+    display: inline-block;
+    padding: 0.3rem;
+    background: inherit;
+    /* border: 0; */
+    cursor: pointer;
+    width: 100%;
+    padding: 0.4rem 0.2rem;
+}
+
+option {
+    border: 1px solid red;
+    overflow: hidden;
+    background: #333333;
+    color: hsl(209, 100%, 60%);
+    display: inline-block;
+    margin: 1rem 1rem;
 }
 
 input[type='submit'],
@@ -431,10 +456,18 @@ table th {
     border: 2px solid rgba(0, 0, 0, 1);
     overflow: hidden;
     background: var(--light-color);
+    font-size: 0.7rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
 }
 
 .table-title {
-    padding: 1rem 6rem 1rem 0;
+    padding: 0 6rem 1rem 0;
+}
+
+.space-between {
+    margin: 0.3rem 0.7rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .table-header,
@@ -453,9 +486,9 @@ table th {
 
 .table-header-info,
 .table-item-info {
-    border-right: 1px solid rgba(0, 0, 0, 1);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
     display: grid;
-    grid-template-columns: 2fr 1fr 3fr 2fr;
+    grid-template-columns: 2fr 1fr 5fr;
 }
 
 .table-header-info,
@@ -469,7 +502,7 @@ table th {
 .table-item-comment {
     display: grid;
     align-content: center;
-    margin: 0.5rem 0.5rem;
+    margin: 0.5rem 0.1rem;
     overflow: hidden;
 }
 
@@ -486,10 +519,6 @@ table th {
         rgba(255, 0, 0, 0.5),
         rgba(0, 0, 255, 0.5)
     );
-}
-
-.hide {
-    display: none;
 }
 /* Tables ends here... */
 
@@ -664,20 +693,53 @@ table th {
     padding: 1em;
 }
 
-.card-list {
+.card-list,
+.table-card {
     font-size: 0.7em;
     font-weight: 100;
     margin: 0.5em;
     padding: 1em;
     border-radius: 15px;
+    background-color: transparent;
+}
+
+.small-letters {
+    font-size: 0.5rem;
+}
+
+.extra-small-letters {
+    font-size: 2px;
+}
+
+.table-card-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.card-list {
     background: linear-gradient(
         to right,
         rgba(0, 0, 0, 0.8),
         rgba(0, 0, 0, 0.1),
         transparent
     );
-    background-color: transparent;
     transition: background 1s ease-in;
+}
+
+.table-card {
+    overflow: hidden;
+    color: #000;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.1)
+    );
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
+    height: 10rem;
+    transition: box-shadow 1s, background 1s ease-in;
 }
 
 .list-links {
@@ -690,12 +752,20 @@ table th {
     left: 0;
     transition: top 1s ease-in;
 }
-/* .card-list:active, */
+/* .card-list:hovered, .table-card:hovered */
 
 .card-list:hover {
     background-color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
     transition: background 300ms ease-in;
+}
+
+.table-card:hover {
+    color: #000;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: box-shadow 300ms ease-in, background 300ms ease-in;
 }
 
 .navbar-scroll-down {

@@ -9,12 +9,8 @@ const LocaleTime = () => {
 
     useEffect(() => {
         setInterval(() => {
-            setTime(
-                `${moment().locale('mk').format('llll')}:${moment().format(
-                    'ss'
-                )}`
-            );
-        }, 1000);
+            setTime(`${moment().locale('mk').format('llll')}`);
+        }, 10000);
     }, []);
 
     return (

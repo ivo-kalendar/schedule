@@ -22,7 +22,7 @@ Korisnik.prototype.cleanUp = function () {
 Korisnik.prototype.extraData = function () {
     this.data.date = new Date();
     this.data.position = 'unknown';
-    this.data.adminApproval = false;
+    this.data.adminApproved = false;
     this.data.poslednaPromena = new Date();
 };
 

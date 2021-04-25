@@ -2,6 +2,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import AuthContext from '../../context/authContext';
 import KorisnikContext from '../../context/korisnikContext';
+import TablesContext from '../../context/tablesContext';
 
 import Spinner from './Spinner';
 import Navbar from './Navbar';
@@ -13,8 +14,10 @@ import UserRoutes from '../links/UserRoutes';
 const Permisions = () => {
     const authContext = useContext(AuthContext);
     const korisnikContext = useContext(KorisnikContext);
+    const tablesContext = useContext(TablesContext);
     const { logout, loadUser, checkExpiredToken, error, userID } = authContext;
     const { errorKorisnik, getUser, user, clearUser } = korisnikContext;
+    const { getSelectedTable, selectedTable } = tablesContext;
 
     useEffect(() => {
         if (errorKorisnik) logout();
@@ -26,6 +29,11 @@ const Permisions = () => {
         if (!userID) clearUser();
         // eslint-disable-next-line
     }, [userID, errorKorisnik]);
+
+    useEffect(() => {
+        if (!selectedTable) getSelectedTable();
+        // eslint-disable-next-line
+    }, [selectedTable]);
 
     return (
         <Router>

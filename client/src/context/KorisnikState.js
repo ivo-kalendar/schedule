@@ -32,7 +32,7 @@ const KorisnikState = (props) => {
 
             dispatch({ type: GET_USER, payload: res.data });
         } catch (error) {
-            dispatch({ type: CLEAR_USER, payload: error.response.data.msg });
+            dispatch({ type: CLEAR_USER, payload: error.response?.data?.msg });
         }
     };
 

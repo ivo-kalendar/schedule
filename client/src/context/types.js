@@ -12,6 +12,14 @@ export const DECODED_TOKEN = 'DECODED_TOKEN';
 export const SCROLLED_DOWN = 'SCROLLED_DOWN';
 export const SCROLLED_UP = 'SCROLLED_UP';
 
+// Tables Types //
+export const TABLE_ERROR = 'TABLE_ERROR';
+export const CREATE_NEW_TABLE = 'CREATE_NEW_TABLE';
+export const GET_ALL_TABLES = 'GET_ALL_TABLES';
+export const CLEAR_TABLES = 'CLEAR_TABLES';
+export const SELECTED_TABLE = 'SELECTED_TABLE';
+export const GET_EDIT_TABLE = 'GET_EDIT_TABLE';
+
 // Korisnik Types //
 export const GET_KORISNICI = 'GET_KORISNICI';
 export const GET_USER = 'GET_USER';

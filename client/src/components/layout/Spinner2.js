@@ -8,7 +8,7 @@ const Spinner2 = () => {
     };
 
     return (
-        <div className='container'>
+        <div>
             <img src={spinner} style={spinnerStyle} alt='Loading...' />
         </div>
     );
