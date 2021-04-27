@@ -17,7 +17,12 @@ const Permisions = () => {
     const tablesContext = useContext(TablesContext);
     const { logout, loadUser, checkExpiredToken, error, userID } = authContext;
     const { errorKorisnik, getUser, user, clearUser } = korisnikContext;
-    const { getSelectedTable, selectedTable } = tablesContext;
+    const {
+        clearTables,
+        getSelectedTable,
+        selectedTable,
+        getAllTables,
+    } = tablesContext;
 
     useEffect(() => {
         if (errorKorisnik) logout();
@@ -26,14 +31,18 @@ const Permisions = () => {
             loadUser();
         }
         if (userID && localStorage.token) getUser(userID);
-        if (!userID) clearUser();
+        if (userID) getAllTables();
+        if (!userID) {
+            clearUser();
+            clearTables();
+        }
         // eslint-disable-next-line
     }, [userID, errorKorisnik]);
 
     useEffect(() => {
-        if (!selectedTable) getSelectedTable();
+        if (userID && !selectedTable) getSelectedTable();
         // eslint-disable-next-line
-    }, [selectedTable]);
+    }, [userID, selectedTable]);
 
     return (
         <Router>

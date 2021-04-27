@@ -19,6 +19,9 @@ export const GET_ALL_TABLES = 'GET_ALL_TABLES';
 export const CLEAR_TABLES = 'CLEAR_TABLES';
 export const SELECTED_TABLE = 'SELECTED_TABLE';
 export const GET_EDIT_TABLE = 'GET_EDIT_TABLE';
+export const GO_TO_DELETE_SCREEN = 'GO_TO_DELETE_SCREEN';
+export const BACK_FROM_DELETE_SCREEN = 'BACK_FROM_DELETE_SCREEN';
+export const DELETE_TABLE = 'DELETE_TABLE';
 
 // Korisnik Types //
 export const GET_KORISNICI = 'GET_KORISNICI';

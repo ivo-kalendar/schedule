@@ -36,6 +36,7 @@ const TableView = () => {
         setWaiting(true);
         await createNewTable(userID);
         getSelectedTable();
+        getAllTables();
     };
 
     return (
@@ -71,11 +72,7 @@ const TableView = () => {
             ) : (
                 <>
                     <Spinner />
-                    <div></div>
                     <Spinner />
-                    <div></div>
-                    <Spinner />
-                    <div></div>
                     <Spinner />
                 </>
             )}

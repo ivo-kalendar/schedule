@@ -1,20 +1,20 @@
+import { useContext } from 'react';
 import { Route } from 'react-router-dom';
+import TablesContext from '../../context/tablesContext';
 import EditedTable from '../layout/EditedTable';
 import MainListView from '../layout/MainListView';
 import TableView from '../layout/TableView';
 
 const TableRoutes = () => {
-    // const phone = window.innerWidth < 700;
-    // const phoneRoutes = {
-    //     marginTop: '5em',
-    //     display: 'grid',
-    //     gridTemplateColumns: '1fr',
-    // };
+    const tablesContext = useContext(TablesContext);
+    const { allTables } = tablesContext;
+
     const tableRoutesStiles = {
         marginTop: '6em',
         display: 'grid',
-        gridTemplateColumns:
-            'repeat(auto-fill, [col-start] minmax(100px, 1fr) [col-end])',
+        gridTemplateColumns: allTables
+            ? 'repeat(auto-fill, [col-start] minmax(100px, 1fr) [col-end])'
+            : '1fr',
     };
 
     return (

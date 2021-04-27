@@ -349,8 +349,14 @@ img {
     border: #ccc solid 1px;
 }
 
+.btns-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .table-btn {
-    margin: 1rem 0 0 75%;
+    /* margin: 1rem 0 0 75%; */
     padding: 0.5rem;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
 }
@@ -367,6 +373,13 @@ img {
 
 .round-img {
     border-radius: 50%;
+}
+
+.border-danger {
+    border: 1px solid var(--danger-color);
+    border-radius: 5px;
+    padding: 0 0.3rem 0.1rem 0.3rem;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Forms */

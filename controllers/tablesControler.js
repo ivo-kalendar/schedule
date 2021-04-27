@@ -24,6 +24,18 @@ exports.getOneTable = async (req, res) => {
     }
 };
 
+exports.getAndCopyTable = async (req, res) => {
+    try {
+        let table = await Tables.copyTable(req);
+
+        res.status(200).json(table);
+    } catch (error) {
+        res.status(401).json({
+            msg: 'Табелата не постои или нема информации за истата.',
+        });
+    }
+};
+
 exports.getEditTable = async (req, res) => {
     try {
         let table = await Tables.getOnlyTableByID(req.params.id);
@@ -36,12 +48,23 @@ exports.getEditTable = async (req, res) => {
     }
 };
 
+exports.deleteTable = async (req, res) => {
+    try {
+        await Tables.delete(req.params.id);
+
+        res.status(200).json('Табелата е успешно избришана');
+    } catch (error) {
+        res.status(401).json({
+            msg: 'Табелата неможе да се избрише.',
+        });
+    }
+};
+
 exports.addNewTable = async (req, res) => {
     try {
         let table = await Tables.add(req);
-        res.status(200).json(table);
 
-        // console.log(table);
+        res.status(200).json(table);
     } catch (err) {
         res.status(400).json({ msg: 'Неможе да се креира табела!' });
     }

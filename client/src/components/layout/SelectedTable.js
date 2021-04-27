@@ -1,36 +1,162 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import AuthContext from '../../context/authContext';
+import KorisnikContext from '../../context/korisnikContext';
 import TablesContext from '../../context/tablesContext';
 import moment from 'moment';
 import 'moment/locale/mk';
 import Spinner2 from './Spinner2';
+import TableDelete from './TableDelete';
 
 const SelectedTable = () => {
     const tablesContext = useContext(TablesContext);
-    const { selectedTable, getEditTable } = tablesContext;
+    const authContext = useContext(AuthContext);
+    const korisnikContext = useContext(KorisnikContext);
+    const history = useHistory();
+    const { userID } = authContext;
+    const { user } = korisnikContext;
+    const {
+        getAllTables,
+        copyToNewTable,
+        backFromDelete,
+        tableOperation,
+        editTable,
+        selectedTable,
+        getEditTable,
+        allTables,
+        goToDeleteScreen,
+        getSelectedTable,
+    } = tablesContext;
+    const [ifLastDocument, setIfLastDocument] = useState(true);
+    const [waiting, setWaiting] = useState(false);
 
-    let today, sledenRabotenDen, denes;
+    useEffect(() => {
+        if (!allTables) setIfLastDocument(true);
+        if (
+            allTables &&
+            selectedTable &&
+            allTables[0]._id !== selectedTable._id
+        ) {
+            setIfLastDocument(false);
+        }
+        if (allTables && allTables[0]._id === selectedTable._id) {
+            setIfLastDocument(true);
+        }
+        // eslint-disable-next-line
+    }, [selectedTable, allTables, editTable]);
+
+    useEffect(() => {
+        if (tableOperation === 'table deleted') {
+            getAllTables();
+            setTimeout(() => {
+                history.push('/table');
+                backFromDelete();
+                getSelectedTable();
+            }, 1000);
+        }
+        // eslint-disable-next-line
+    }, [tableOperation]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (waiting) {
+                history.push('/table/edit');
+                getSelectedTable();
+                getAllTables();
+            }
+        }, 1000);
+        // eslint-disable-next-line
+    }, [editTable]);
+
+    const newTable = async () => {
+        setWaiting(true);
+        await copyToNewTable(userID, selectedTable._id);
+    };
+
+    let today, sledenRabotenDen, denes, sega;
     if (selectedTable) {
         today = moment(selectedTable.date).locale('mk').format('DD.MM.YYYY');
         denes = moment(selectedTable.date).locale('mk').format('dddd');
+        sega = moment(new Date()).locale('mk').format('dddd');
         let utre = moment(selectedTable.date)
             .add(1, 'days')
             .locale('mk')
             .format('dddd');
 
         denes = denes.charAt(0).toLocaleUpperCase() + denes.slice(1);
+        sega = sega.charAt(0).toLocaleUpperCase() + sega.slice(1);
         sledenRabotenDen = utre.charAt(0).toLocaleUpperCase() + utre.slice(1);
-        if (denes === 'Петок' || denes === 'Сабота')
+        if (denes === 'Петок' || denes === 'Сабота') {
             sledenRabotenDen = 'Понеделник';
+        }
     }
 
-    return (
+    return tableOperation === 'delete' ? (
+        <TableDelete />
+    ) : (
         <>
-            <Link
-                onClick={() => getEditTable(selectedTable._id)}
-                to='/table/edit'>
-                <div className='btn btn-success badge table-btn'>промени</div>
-            </Link>
+            <div className='origin'>
+                {ifLastDocument ? (
+                    selectedTable ? (
+                        <span>
+                            вкупно {selectedTable?.tableData?.length}{' '}
+                            дистрибутери
+                        </span>
+                    ) : null
+                ) : (
+                    <span className='text-danger border-danger'>
+                        има понов распоред
+                    </span>
+                )}
+            </div>
+            {tableOperation === 'table deleted' ? (
+                <h3
+                    className='text-success'
+                    style={{
+                        border: '3px solid #28a745',
+                        padding: '1rem',
+                        margin: '1rem',
+                    }}>
+                    Табелата е успешно избришана!
+                </h3>
+            ) : (
+                <div className='btns-group'>
+                    {user.ime === 'admin' ? (
+                        <Link onClick={() => goToDeleteScreen()} to='#'>
+                            <div className='btn btn-danger badge table-btn'>
+                                избриши
+                                <p> </p>
+                            </div>
+                        </Link>
+                    ) : null}
+                    {selectedTable &&
+                    selectedTable.author === userID &&
+                    sega === denes ? (
+                        <Link
+                            onClick={() => getEditTable(selectedTable._id)}
+                            to='/table/edit'>
+                            <div className='btn btn-success badge table-btn'>
+                                промени
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link onClick={newTable} to='#'>
+                            <div className='btn btn-success badge table-btn'>
+                                {!waiting ? (
+                                    <>
+                                        превземи
+                                        <p className='small-letters'>
+                                            во нов распоред
+                                        </p>
+                                    </>
+                                ) : (
+                                    <Spinner2 />
+                                )}
+                            </div>
+                        </Link>
+                    )}
+                </div>
+            )}
             <div className='empty'></div>
             <div className='table'>
                 <div className='space-between'>

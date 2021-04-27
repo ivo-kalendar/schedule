@@ -3,10 +3,13 @@ import axios from 'axios';
 import TablesContext from './tablesContext';
 import tablesReducer from './tablesReducer';
 import {
+    BACK_FROM_DELETE_SCREEN,
     CLEAR_TABLES,
     CREATE_NEW_TABLE,
+    DELETE_TABLE,
     GET_ALL_TABLES,
     GET_EDIT_TABLE,
+    GO_TO_DELETE_SCREEN,
     SELECTED_TABLE,
     TABLE_ERROR,
 } from './types';
@@ -65,46 +68,26 @@ const TablesState = (props) => {
         }
     };
 
+    // Delete Decision Screen //
+    const goToDeleteScreen = () => dispatch({ type: GO_TO_DELETE_SCREEN });
+    const backFromDelete = () => dispatch({ type: BACK_FROM_DELETE_SCREEN });
+
     // Clear Everything //
     const clearTables = () => dispatch({ type: CLEAR_TABLES });
 
-    // // Clean Up After //
-    // const cleanUpWorker = () => dispatch({ type: CLEANUP_WORKER });
+    // Delete table //
+    const deleteTable = async (tableID) => {
+        try {
+            const res = await axios.delete(`/api/deletetable/${tableID}`);
 
-    // // Edit Vraboten //
-    // const editWorker = (worker) =>
-    //     dispatch({ type: EDIT_WORKER, payload: worker });
-
-    // // Submit Worker //
-    // const updateWorker = async (vraboten) => {
-    //     const config = { headers: { 'Content-Type': 'application/json' } };
-    //     let { _id, ...worker } = vraboten;
-
-    //     try {
-    //         const res = await axios.put(`/api/vraboten/${_id}`, worker, config);
-
-    //         dispatch({ type: UPDATE_VRABOTEN, payload: res.data });
-    //     } catch (err) {
-    //         dispatch({
-    //             type: ERROR_SUBMIT_VRABOTEN,
-    //             payload: err.response.data.msg,
-    //         });
-    //     }
-    // };
-
-    // // Delete Worker //
-    // const deleteWorker = async (id) => {
-    //     try {
-    //         const res = await axios.delete(`/api/vraboten/${id}`);
-
-    //         dispatch({ type: DELETE_VRABOTEN, payload: res.data });
-    //     } catch (err) {
-    //         dispatch({
-    //             type: ERROR_SUBMIT_VRABOTEN,
-    //             payload: err.response.data.msg,
-    //         });
-    //     }
-    // };
+            dispatch({ type: DELETE_TABLE, payload: res.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
 
     // Create New Table with all active distributors //
     const createNewTable = async (author) => {
@@ -113,6 +96,26 @@ const TablesState = (props) => {
 
         try {
             const res = await axios.post('/api/table/new', table, config);
+
+            dispatch({ type: CREATE_NEW_TABLE, payload: res.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response.data.msg,
+            });
+        }
+    };
+
+    // Copy and Create New Table with all active distributors //
+    const copyToNewTable = async (author, tableID) => {
+        const config = { headers: { 'Content-Type': 'application/json' } };
+
+        try {
+            const res = await axios.post(
+                '/api/copytable/new',
+                { author, tableID },
+                config
+            );
 
             dispatch({ type: CREATE_NEW_TABLE, payload: res.data });
         } catch (err) {
@@ -137,6 +140,10 @@ const TablesState = (props) => {
                 getAllTables,
                 getEditTable,
                 clearTables,
+                goToDeleteScreen,
+                backFromDelete,
+                deleteTable,
+                copyToNewTable,
             }}>
             {props.children}
         </TablesContext.Provider>

@@ -65,6 +65,24 @@ Tables.getOnlyTableByID = async (id) => {
     return await tables.findOne({ _id: ObjectId(id) });
 };
 
+Tables.copyTable = async (req) => {
+    let filter = { _id: ObjectId(req.body.tableID) };
+    let options = { projection: { _id: 0, author: 0, date: 0 } };
+
+    let table = await tables.findOne(filter, options);
+
+    let newId;
+    table.date = new Date();
+    table.author = req.body.author;
+
+    await tables.insertOne(table).then(async (result) => {
+        newId = await tables.findOne({
+            _id: ObjectId(result.insertedId),
+        });
+    });
+    return newId;
+};
+
 Tables.add = async (req) => {
     let filter = { position: 'distributor', status: 'active' };
     const options = { projection: { _id: 1 } };
@@ -87,6 +105,10 @@ Tables.add = async (req) => {
         });
     });
     return newId;
+};
+
+Tables.delete = async (id) => {
+    await tables.deleteOne({ _id: ObjectId(id) });
 };
 
 module.exports = Tables;
