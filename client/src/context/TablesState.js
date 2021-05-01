@@ -4,12 +4,14 @@ import TablesContext from './tablesContext';
 import tablesReducer from './tablesReducer';
 import {
     BACK_FROM_DELETE_SCREEN,
+    CLEAR_EDIT_TABLE,
     CLEAR_TABLES,
     CREATE_NEW_TABLE,
     DELETE_TABLE,
     GET_ALL_TABLES,
     GET_EDIT_TABLE,
     GO_TO_DELETE_SCREEN,
+    PUT_DISTRIBUTOR_VALUES,
     SELECTED_TABLE,
     TABLE_ERROR,
 } from './types';
@@ -17,7 +19,6 @@ import {
 const TablesState = (props) => {
     const initialState = {
         selectedTable: null,
-        tablesData: null,
         editTable: null,
         allTables: null,
         tableError: null,
@@ -57,7 +58,7 @@ const TablesState = (props) => {
     // Get selected to edit screen //
     const getEditTable = async (tableID) => {
         try {
-            const res = await axios.get(`/api/edittable/${tableID}`);
+            const res = await axios.get(`/api/table/${tableID}`);
 
             dispatch({ type: GET_EDIT_TABLE, payload: res.data });
         } catch (err) {
@@ -68,9 +69,10 @@ const TablesState = (props) => {
         }
     };
 
-    // Delete Decision Screen //
+    // Delete and Clear Decisions Screen //
     const goToDeleteScreen = () => dispatch({ type: GO_TO_DELETE_SCREEN });
     const backFromDelete = () => dispatch({ type: BACK_FROM_DELETE_SCREEN });
+    const clearEditTable = () => dispatch({ type: CLEAR_EDIT_TABLE });
 
     // Clear Everything //
     const clearTables = () => dispatch({ type: CLEAR_TABLES });
@@ -89,6 +91,28 @@ const TablesState = (props) => {
         }
     };
 
+    // Update Table with distributor values //
+    const updateTable = async (tableID, distributorID, field, value) => {
+        const config = { headers: { 'Content-Type': 'application/json' } };
+        const table = { distributorID, field, value };
+
+        try {
+            const res = await axios.put(
+                `/api/updatetable/${tableID}`,
+                table,
+                config
+            );
+            const getRes = await axios.get(`/api/table/${res.data}`);
+
+            dispatch({ type: PUT_DISTRIBUTOR_VALUES, payload: getRes.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
+
     // Create New Table with all active distributors //
     const createNewTable = async (author) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
@@ -96,8 +120,9 @@ const TablesState = (props) => {
 
         try {
             const res = await axios.post('/api/table/new', table, config);
+            const getRes = await axios.get(`/api/table/${res.data._id}`);
 
-            dispatch({ type: CREATE_NEW_TABLE, payload: res.data });
+            dispatch({ type: CREATE_NEW_TABLE, payload: getRes.data });
         } catch (err) {
             dispatch({
                 type: TABLE_ERROR,
@@ -116,8 +141,9 @@ const TablesState = (props) => {
                 { author, tableID },
                 config
             );
+            const getRes = await axios.get(`/api/table/${res.data._id}`);
 
-            dispatch({ type: CREATE_NEW_TABLE, payload: res.data });
+            dispatch({ type: CREATE_NEW_TABLE, payload: getRes.data });
         } catch (err) {
             dispatch({
                 type: TABLE_ERROR,
@@ -134,7 +160,6 @@ const TablesState = (props) => {
                 selectedTable: state.selectedTable,
                 tableError: state.tableError,
                 tableOperation: state.tableOperation,
-                tablesData: state.tablesData,
                 getSelectedTable,
                 createNewTable,
                 getAllTables,
@@ -144,6 +169,8 @@ const TablesState = (props) => {
                 backFromDelete,
                 deleteTable,
                 copyToNewTable,
+                clearEditTable,
+                updateTable,
             }}>
             {props.children}
         </TablesContext.Provider>

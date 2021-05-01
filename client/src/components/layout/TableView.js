@@ -12,6 +12,7 @@ const TableView = () => {
     const authContext = useContext(AuthContext);
     const {
         allTables,
+        selectedTable,
         createNewTable,
         editTable,
         getAllTables,
@@ -19,6 +20,8 @@ const TableView = () => {
     } = tablesContext;
     const { userID } = authContext;
     const [waiting, setWaiting] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [nextTable, setNextTable] = useState(null);
 
     useEffect(() => {
         getAllTables();
@@ -26,11 +29,15 @@ const TableView = () => {
     }, []);
 
     useEffect(() => {
-        setTimeout(() => {
-            if (waiting && editTable) history.push('/table/edit');
-        }, 1000);
+        if (waiting && editTable) history.push('/table/edit');
         // eslint-disable-next-line
-    }, [editTable]);
+    }, [waiting, editTable]);
+
+    useEffect(() => {
+        setNextTable(selectedTable);
+        if (loading && nextTable) history.push('/home');
+        // eslint-disable-next-line
+    }, [selectedTable, nextTable]);
 
     const newTable = async () => {
         setWaiting(true);
@@ -61,11 +68,27 @@ const TableView = () => {
                     </Link>
                     {allTables.map((table) => (
                         <Link
-                            onClick={() => getSelectedTable(table._id)}
-                            className='table-card'
-                            to='/home'
+                            onClick={() => {
+                                getSelectedTable(table._id);
+                                setLoading(table._id);
+                            }}
+                            className={`table-card ${
+                                selectedTable && selectedTable._id === table._id
+                                    ? 'selected-table-card'
+                                    : ''
+                            }`}
+                            to='#'
                             key={table._id}>
-                            <TableCard table={table} />
+                            {loading === table._id ? (
+                                <>
+                                    <p style={{ marginBottom: '2rem' }}>
+                                        ...почекајте
+                                    </p>
+                                    <Spinner2 />
+                                </>
+                            ) : (
+                                <TableCard table={table} />
+                            )}
                         </Link>
                     ))}
                 </>

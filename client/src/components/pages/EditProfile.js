@@ -21,18 +21,7 @@ const EditProfile = () => {
             if (Array.isArray(value)) {
                 value = `[${value.join()}]`;
             }
-            // if (Array.isArray(value) || value === '[]' || value === 'Array') {
-            //     value = 'Array';
-            // }
-
             if (value?.constructor === Object) value = JSON.stringify(value);
-            // if (
-            //     typeof value === 'object' ||
-            //     value === '{}' ||
-            //     value === 'Object'
-            // ) {
-            //     value = 'Object';
-            // }
 
             userArr.push({ key, value });
         }

@@ -61,8 +61,24 @@ Tables.getOneByID = async (id) => {
     return tableObj;
 };
 
-Tables.getOnlyTableByID = async (id) => {
-    return await tables.findOne({ _id: ObjectId(id) });
+Tables.updateOne = async (req) => {
+    let { distributorID, field, value } = req.body;
+    let newTableData = [];
+    let query = { _id: ObjectId(req.params.id) };
+    let table = await tables.findOne(query);
+
+    table.tableData.forEach((e) => {
+        if (e._id.toString() === distributorID) {
+            e[field] = value;
+        }
+        newTableData.push(e);
+    });
+
+    await tables.updateOne(query, {
+        $set: { tableData: newTableData },
+    });
+
+    return req.params.id;
 };
 
 Tables.copyTable = async (req) => {

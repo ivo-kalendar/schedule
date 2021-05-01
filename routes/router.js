@@ -21,7 +21,7 @@ const {
 const {
     getAllTables,
     getOneTable,
-    getEditTable,
+    updateTable,
     addNewTable,
     editOneTable,
     deleteTable,
@@ -41,9 +41,8 @@ router.post('/table/new', auth, adminApproved, addNewTable);
 router.get('/tables', auth, adminApproved, getAllTables);
 router.get('/tableauthor/:id', auth, adminApproved, getUserName);
 router.get('/table/:id', auth, adminApproved, getOneTable);
-router.get('/edittable/:id', auth, adminApproved, getEditTable);
 router.post('/copytable/new', auth, adminApproved, getAndCopyTable);
-
+router.put('/updatetable/:id', auth, adminApproved, updateTable);
 router.put('/table/:id', auth, adminApproved, editOneTable);
 
 // Protected Routes -- Admin // - // Korisnici //

@@ -24,9 +24,9 @@ exports.getOneTable = async (req, res) => {
     }
 };
 
-exports.getAndCopyTable = async (req, res) => {
+exports.updateTable = async (req, res) => {
     try {
-        let table = await Tables.copyTable(req);
+        let table = await Tables.updateOne(req);
 
         res.status(200).json(table);
     } catch (error) {
@@ -36,9 +36,9 @@ exports.getAndCopyTable = async (req, res) => {
     }
 };
 
-exports.getEditTable = async (req, res) => {
+exports.getAndCopyTable = async (req, res) => {
     try {
-        let table = await Tables.getOnlyTableByID(req.params.id);
+        let table = await Tables.copyTable(req);
 
         res.status(200).json(table);
     } catch (error) {

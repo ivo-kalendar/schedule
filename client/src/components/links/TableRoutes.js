@@ -1,20 +1,22 @@
 import { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import TablesContext from '../../context/tablesContext';
 import EditedTable from '../layout/EditedTable';
 import MainListView from '../layout/MainListView';
 import TableView from '../layout/TableView';
 
 const TableRoutes = () => {
+    const { pathname } = useLocation();
     const tablesContext = useContext(TablesContext);
     const { allTables } = tablesContext;
 
     const tableRoutesStiles = {
         marginTop: '6em',
         display: 'grid',
-        gridTemplateColumns: allTables
-            ? 'repeat(auto-fill, [col-start] minmax(100px, 1fr) [col-end])'
-            : '1fr',
+        gridTemplateColumns:
+            pathname === '/table/edit' || !allTables
+                ? '1fr'
+                : 'repeat(auto-fill, [col-start] minmax(100px, 1fr) [col-end])',
     };
 
     return (

@@ -533,6 +533,20 @@ table th {
         rgba(0, 0, 255, 0.5)
     );
 }
+
+.selected-table-card {
+    background: transparent;
+    animation: borderChange 500ms ease-in-out alternate-reverse infinite;
+}
+
+@keyframes borderChange {
+    from {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    to {
+        background: transparent;
+    }
+}
 /* Tables ends here... */
 
 .fixed-btns {

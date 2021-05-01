@@ -31,6 +31,12 @@ const SelectedTable = () => {
     const [waiting, setWaiting] = useState(false);
 
     useEffect(() => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
         if (!allTables) setIfLastDocument(true);
         if (
             allTables &&
@@ -58,13 +64,11 @@ const SelectedTable = () => {
     }, [tableOperation]);
 
     useEffect(() => {
-        setTimeout(() => {
-            if (waiting) {
-                history.push('/table/edit');
-                getSelectedTable();
-                getAllTables();
-            }
-        }, 1000);
+        if (waiting) {
+            history.push('/table/edit');
+            // getSelectedTable();
+            getAllTables();
+        }
         // eslint-disable-next-line
     }, [editTable]);
 
@@ -133,10 +137,13 @@ const SelectedTable = () => {
                     selectedTable.author === userID &&
                     sega === denes ? (
                         <Link
-                            onClick={() => getEditTable(selectedTable._id)}
-                            to='/table/edit'>
+                            onClick={() => {
+                                setWaiting(true);
+                                getEditTable(selectedTable._id);
+                            }}
+                            to='#'>
                             <div className='btn btn-success badge table-btn'>
-                                промени
+                                {!waiting ? 'промени' : <Spinner2 />}
                             </div>
                         </Link>
                     ) : (
