@@ -10,6 +10,7 @@ import {
     DELETE_TABLE,
     GET_ALL_TABLES,
     GET_EDIT_TABLE,
+    GET_HOUR_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
     SELECTED_TABLE,
@@ -18,6 +19,7 @@ import {
 
 const TablesState = (props) => {
     const initialState = {
+        hour: [],
         selectedTable: null,
         editTable: null,
         allTables: null,
@@ -27,16 +29,45 @@ const TablesState = (props) => {
 
     const [state, dispatch] = useReducer(tablesReducer, initialState);
 
-    // Get All Tables //
-    const getAllTables = async () => {
+    // Get All Hour Options //
+    const getHourOptions = async () => {
         try {
-            const res = await axios.get('/api/tables');
+            const res = await axios.get('/api/options/hour');
+
+            dispatch({ type: GET_HOUR_OPTIONS, payload: res.data.hour });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data?.msg || err,
+            });
+        }
+    };
+
+    // Get All Tables Data //
+    const getAllTablesData = async () => {
+        try {
+            const res = await axios.get('/api/tables/users');
 
             dispatch({ type: GET_ALL_TABLES, payload: res.data });
         } catch (err) {
             dispatch({
                 type: TABLE_ERROR,
-                payload: err.response?.data?.msg,
+                payload: err.response?.data?.msg || err,
+            });
+        }
+    };
+
+    // Get All Tables //
+    const getAllTables = async () => {
+        try {
+            const res = await axios.get('/api/tables');
+            getAllTablesData();
+
+            dispatch({ type: GET_ALL_TABLES, payload: res.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data?.msg || err,
             });
         }
     };
@@ -155,11 +186,13 @@ const TablesState = (props) => {
     return (
         <TablesContext.Provider
             value={{
+                hour: state.hour,
                 editTable: state.editTable,
                 allTables: state.allTables,
                 selectedTable: state.selectedTable,
                 tableError: state.tableError,
                 tableOperation: state.tableOperation,
+                getHourOptions,
                 getSelectedTable,
                 createNewTable,
                 getAllTables,

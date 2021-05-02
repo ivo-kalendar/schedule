@@ -24,7 +24,7 @@ const TableView = () => {
     const [nextTable, setNextTable] = useState(null);
 
     useEffect(() => {
-        getAllTables();
+        if (!allTables) getAllTables();
         // eslint-disable-next-line
     }, []);
 

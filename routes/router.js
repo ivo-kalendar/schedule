@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const adminApproved = require('../middleware/adminApproved');
 const { getUser, getUserName } = require('../controllers/userController');
+const { getHourOptions } = require('../controllers/optionsController');
 const {
     register,
     login,
@@ -20,6 +21,7 @@ const {
 } = require('../controllers/vraboteniController');
 const {
     getAllTables,
+    getAllTablesData,
     getOneTable,
     updateTable,
     addNewTable,
@@ -39,11 +41,15 @@ router.get('/vraboteni', auth, seeAll);
 // Protected Routes -- Users // - // Tables //
 router.post('/table/new', auth, adminApproved, addNewTable);
 router.get('/tables', auth, adminApproved, getAllTables);
+router.get('/tables/users', auth, adminApproved, getAllTablesData);
 router.get('/tableauthor/:id', auth, adminApproved, getUserName);
 router.get('/table/:id', auth, adminApproved, getOneTable);
 router.post('/copytable/new', auth, adminApproved, getAndCopyTable);
 router.put('/updatetable/:id', auth, adminApproved, updateTable);
 router.put('/table/:id', auth, adminApproved, editOneTable);
+
+// Protected Routes -- Users // - // Options //
+router.get('/options/hour', auth, adminApproved, getHourOptions);
 
 // Protected Routes -- Admin // - // Korisnici //
 router.get('/allusers', auth, admin, allUsers);

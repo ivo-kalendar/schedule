@@ -45,7 +45,11 @@ const SelectedTable = () => {
         ) {
             setIfLastDocument(false);
         }
-        if (allTables && allTables[0]._id === selectedTable._id) {
+        if (
+            allTables &&
+            selectedTable &&
+            allTables[0]._id === selectedTable._id
+        ) {
             setIfLastDocument(true);
         }
         // eslint-disable-next-line
@@ -66,7 +70,6 @@ const SelectedTable = () => {
     useEffect(() => {
         if (waiting) {
             history.push('/table/edit');
-            // getSelectedTable();
             getAllTables();
         }
         // eslint-disable-next-line
@@ -75,6 +78,7 @@ const SelectedTable = () => {
     const newTable = async () => {
         setWaiting(true);
         await copyToNewTable(userID, selectedTable._id);
+        getSelectedTable();
     };
 
     let today, sledenRabotenDen, denes, sega;

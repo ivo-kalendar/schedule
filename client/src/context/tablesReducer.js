@@ -6,6 +6,7 @@ import {
     DELETE_TABLE,
     GET_ALL_TABLES,
     GET_EDIT_TABLE,
+    GET_HOUR_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
     SELECTED_TABLE,
@@ -26,6 +27,11 @@ export default (state, action) => {
             return {
                 ...state,
                 allTables: action.payload,
+            };
+        case GET_HOUR_OPTIONS:
+            return {
+                ...state,
+                hour: action.payload,
             };
         case SELECTED_TABLE:
             return {

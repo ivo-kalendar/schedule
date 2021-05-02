@@ -8,9 +8,17 @@ let Tables = function (data) {
     this.errors = [];
 };
 
+Tables.getOnlyTables = async () => {
+    let options = { projection: { tableData: 0 } };
+    return await tables.find({}, options).sort({ date: -1 }).toArray();
+};
+
 Tables.getAll = async () => {
     let tablesArr = [];
-    let allTables = await tables.find().sort({ date: -1 }).toArray();
+    let allTables = await tables
+        .find({}, { projection: { tableData: 0 } })
+        .sort({ date: -1 })
+        .toArray();
     for (let i = 0; i < allTables.length; i++) {
         let name = await korisnici.findOne(
             { _id: ObjectId(allTables[i].author) },
@@ -53,9 +61,15 @@ Tables.getOneByID = async (id) => {
                 },
             }
         );
+
         let obj = { ...tableObj.tableData[i], ...distributor };
         tableArr.push(obj);
     }
+    tableArr.sort(function (a, b) {
+        if (a.time < b.time) {
+            return -1;
+        }
+    });
 
     tableObj = { ...author, ...tableObj, tableArr };
     return tableObj;

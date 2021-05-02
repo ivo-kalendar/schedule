@@ -2,6 +2,16 @@ const Tables = require('../models/Tables');
 
 exports.getAllTables = async (req, res) => {
     try {
+        let allTables = await Tables.getOnlyTables();
+
+        res.status(200).json(allTables);
+    } catch (err) {
+        res.status(400).json({ msg: 'Неможеш да повлечеш податоци...' });
+    }
+};
+
+exports.getAllTablesData = async (req, res) => {
+    try {
         let allTables = await Tables.getAll();
 
         res.status(200).json(allTables);

@@ -133,6 +133,43 @@ img {
     white-space: nowrap;
 }
 
+.drive {
+    overflow: hidden;
+    width: 60vw;
+    position: relative;
+}
+
+.drive-left {
+    position: inherit;
+    left: 65vw;
+}
+
+.drive-short {
+    animation: moveLeftShort 15s linear infinite;
+}
+
+.drive-long {
+    animation: moveLeftLong 22s linear infinite;
+}
+
+@keyframes moveLeftLong {
+    from {
+        left: 65vw;
+    }
+    to {
+        left: -115ch;
+    }
+}
+
+@keyframes moveLeftShort {
+    from {
+        left: 65vw;
+    }
+    to {
+        left: -70ch;
+    }
+}
+
 /* Cards */
 .card {
     padding: 0.5rem;
@@ -382,6 +419,13 @@ img {
     background: rgba(0, 0, 0, 0.3);
 }
 
+.border-success {
+    border: 1px solid var(--success-color);
+    border-radius: 5px;
+    padding: 0 0.3rem 0.1rem 0.3rem;
+    background: rgba(0, 0, 0, 0.8);
+}
+
 /* Forms */
 input {
     margin: 1.2rem 0;
@@ -532,6 +576,18 @@ table th {
         rgba(255, 0, 0, 0.5),
         rgba(0, 0, 255, 0.5)
     );
+}
+
+.edit-table-item {
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.4)
+    );
+}
+
+.string-table-item {
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7));
 }
 
 .selected-table-card {
@@ -877,11 +933,11 @@ table th {
         padding: 0.5rem 0;
     }
 
-    .table-header,
+    /* .table-header,
     .table-item {
         grid-template-columns: 50% 50%;
         margin: 0 0.2rem;
-    }
+    } */
 
     .table-header-comment {
         padding: 0;
@@ -890,29 +946,22 @@ table th {
 
     .table-header-info,
     .table-item-info {
-        grid-template-columns: 3fr 1.2fr;
+        grid-template-columns: 2fr 1fr 3fr;
     }
 
-    .table-header-info > h3,
-    .table-item-info > div,
-    .table-header-comment,
-    .table-item-comment {
-        margin: 0.2rem;
-    }
-
-    .table-header-info > h3:nth-child(3),
+    /* .table-header-info > h3:nth-child(3),
     .table-header-info > h3:nth-child(4),
     .table-item-info > div:nth-child(3),
     .table-item-info > div:nth-child(4) {
         display: none;
-    }
+    } */
 
-    .table-item {
+    /* .table-item {
         background: linear-gradient(
             to right,
             rgba(0, 0, 255, 0.2),
             rgba(0, 255, 0, 0.5)
         );
-    }
+    } */
     /* Tables ends here... */
 }
