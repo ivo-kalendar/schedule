@@ -87,4 +87,4 @@ ClientRegister.prototype.authenticationSendToServer = function () {
     });
 };
 
-module.exports = ClientRegister;
+export default ClientRegister;
