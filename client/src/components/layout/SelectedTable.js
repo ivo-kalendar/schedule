@@ -29,6 +29,7 @@ const SelectedTable = () => {
     } = tablesContext;
     const [ifLastDocument, setIfLastDocument] = useState(true);
     const [waiting, setWaiting] = useState(false);
+    const [waitToRefresh, setWaitToRefresh] = useState(false);
 
     useEffect(() => {
         document.body.scrollTop = 0;
@@ -79,6 +80,13 @@ const SelectedTable = () => {
         setWaiting(true);
         await copyToNewTable(userID, selectedTable._id);
         getSelectedTable();
+    };
+
+    const refresh = async () => {
+        setWaitToRefresh(true);
+        await getAllTables();
+        await getSelectedTable();
+        setWaitToRefresh(false);
     };
 
     let today, sledenRabotenDen, denes, sega;
@@ -166,6 +174,11 @@ const SelectedTable = () => {
                             </div>
                         </Link>
                     )}
+                    <Link onClick={refresh} to='#'>
+                        <div className='btn btn-primary badge table-btn'>
+                            {!waitToRefresh ? 'освежи' : <Spinner2 />}
+                        </div>
+                    </Link>
                 </div>
             )}
             <div className='empty'></div>
