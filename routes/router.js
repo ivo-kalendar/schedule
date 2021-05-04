@@ -5,7 +5,11 @@ const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const adminApproved = require('../middleware/adminApproved');
 const { getUser, getUserName } = require('../controllers/userController');
-const { getHourOptions } = require('../controllers/optionsController');
+const {
+    getHourOptions,
+    getCommentOptions,
+    getKomercialOptions,
+} = require('../controllers/optionsController');
 const {
     register,
     login,
@@ -50,6 +54,8 @@ router.put('/table/:id', auth, adminApproved, editOneTable);
 
 // Protected Routes -- Users // - // Options //
 router.get('/options/hour', auth, adminApproved, getHourOptions);
+router.get('/options/comment', auth, adminApproved, getCommentOptions);
+router.get('/options/komercial', auth, adminApproved, getKomercialOptions);
 
 // Protected Routes -- Admin // - // Korisnici //
 router.get('/allusers', auth, admin, allUsers);

@@ -4,36 +4,10 @@ import Spinner2 from './Spinner2';
 
 const EditTableString = ({ d, tableID }) => {
     const tableContext = useContext(TableContext);
-    const { updateTable, hour, editTable } = tableContext;
+    const { updateTable, hour, komercija, komentar, editTable } = tableContext;
     const [hideComment, setHideComment] = useState(false);
     const [hideKomercial, setHideKomercial] = useState(false);
     const [hourChange, setHourChange] = useState(false);
-
-    const grad = [
-        'Скопје',
-        'Тетово',
-        'Гостивар',
-        'Куманово',
-        'Велес',
-        'Кавадарци',
-        'Штип',
-        'Кочани',
-    ];
-    let komercija = [
-        'Горан Митровски',
-        'Бенјамин Хајредин',
-        'Тони Трајковски',
-        'Нико Меле',
-    ];
-    komercija = [...grad, ...komercija];
-
-    const komentar = [
-        'Товарен',
-        'Свежо Месо',
-        'Монтенегровци',
-        'Фунги',
-        'товарен,втора тура (кам замрз.)',
-    ];
 
     useEffect(() => {
         if (hideComment) setHideComment(false);

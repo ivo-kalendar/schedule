@@ -9,8 +9,10 @@ import {
     CREATE_NEW_TABLE,
     DELETE_TABLE,
     GET_ALL_TABLES,
+    GET_COMMENT_OPTIONS,
     GET_EDIT_TABLE,
     GET_HOUR_OPTIONS,
+    GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
     SELECTED_TABLE,
@@ -20,6 +22,8 @@ import {
 const TablesState = (props) => {
     const initialState = {
         hour: [],
+        komentar: [],
+        komercija: [],
         selectedTable: null,
         editTable: null,
         allTables: null,
@@ -35,6 +39,37 @@ const TablesState = (props) => {
             const res = await axios.get('/api/options/hour');
 
             dispatch({ type: GET_HOUR_OPTIONS, payload: res.data.hour });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data?.msg || err,
+            });
+        }
+    };
+
+    // Get All Comment Options //
+    const getCommentOptions = async () => {
+        try {
+            const res = await axios.get('/api/options/comment');
+
+            dispatch({ type: GET_COMMENT_OPTIONS, payload: res.data.komentar });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data?.msg || err,
+            });
+        }
+    };
+
+    // Get All Komercijal and Reon Options //
+    const getKomercialOptions = async () => {
+        try {
+            const res = await axios.get('/api/options/komercial');
+
+            dispatch({
+                type: GET_KOMERCIAL_OPTIONS,
+                payload: res.data,
+            });
         } catch (err) {
             dispatch({
                 type: TABLE_ERROR,
@@ -192,6 +227,8 @@ const TablesState = (props) => {
                 selectedTable: state.selectedTable,
                 tableError: state.tableError,
                 tableOperation: state.tableOperation,
+                komentar: state.komentar,
+                komercija: state.komercija,
                 getHourOptions,
                 getSelectedTable,
                 createNewTable,
@@ -204,6 +241,8 @@ const TablesState = (props) => {
                 copyToNewTable,
                 clearEditTable,
                 updateTable,
+                getKomercialOptions,
+                getCommentOptions,
             }}>
             {props.children}
         </TablesContext.Provider>

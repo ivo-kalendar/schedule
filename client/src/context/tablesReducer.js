@@ -5,8 +5,10 @@ import {
     CREATE_NEW_TABLE,
     DELETE_TABLE,
     GET_ALL_TABLES,
+    GET_COMMENT_OPTIONS,
     GET_EDIT_TABLE,
     GET_HOUR_OPTIONS,
+    GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
     SELECTED_TABLE,
@@ -32,6 +34,16 @@ export default (state, action) => {
             return {
                 ...state,
                 hour: action.payload,
+            };
+        case GET_COMMENT_OPTIONS:
+            return {
+                ...state,
+                komentar: action.payload,
+            };
+        case GET_KOMERCIAL_OPTIONS:
+            return {
+                ...state,
+                komercija: action.payload,
             };
         case SELECTED_TABLE:
             return {

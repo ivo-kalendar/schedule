@@ -9,7 +9,13 @@ import TableString from './TableString';
 
 const EditedTable = () => {
     const tableContext = useContext(TableContext);
-    const { getHourOptions, editTable, clearEditTable } = tableContext;
+    const {
+        getHourOptions,
+        getCommentOptions,
+        getKomercialOptions,
+        editTable,
+        clearEditTable,
+    } = tableContext;
     const [id, setId] = useState(null);
     const [msg, setMsg] = useState('...');
     const [drive, setDrive] = useState('drive-short');
@@ -32,6 +38,8 @@ const EditedTable = () => {
 
     useEffect(() => {
         getHourOptions();
+        getCommentOptions();
+        getKomercialOptions();
         return () => clearEditTable();
         // eslint-disable-next-line
     }, []);
