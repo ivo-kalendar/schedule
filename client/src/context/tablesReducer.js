@@ -1,5 +1,7 @@
 import {
+    ADD_DRIVERS,
     BACK_FROM_DELETE_SCREEN,
+    CHECK_ACTIVE_DRIVERS,
     CLEAR_EDIT_TABLE,
     CLEAR_TABLES,
     CREATE_NEW_TABLE,
@@ -11,6 +13,7 @@ import {
     GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
+    REMOVE_DRIVERS,
     SELECTED_TABLE,
     TABLE_ERROR,
 } from './types';
@@ -50,19 +53,20 @@ export default (state, action) => {
                 ...state,
                 selectedTable: action.payload,
             };
+        case REMOVE_DRIVERS:
+        case ADD_DRIVERS:
         case TABLE_ERROR:
             return {
                 ...state,
+                activeDistributors: [],
+                inActiveDistributors: [],
                 tableError: action.payload,
             };
-        case CLEAR_TABLES:
+        case CHECK_ACTIVE_DRIVERS:
             return {
                 ...state,
-                selectedTable: null,
-                editTable: null,
-                allTables: null,
-                tableError: null,
-                tableOperation: null,
+                activeDistributors: action.payload.active,
+                inActiveDistributors: action.payload.inactive,
             };
         case PUT_DISTRIBUTOR_VALUES:
             return {
@@ -91,6 +95,25 @@ export default (state, action) => {
             return {
                 ...state,
                 editTable: null,
+                hour: [],
+                komentar: [],
+                komercija: [],
+                activeDistributors: [],
+                inActiveDistributors: [],
+            };
+        case CLEAR_TABLES:
+            return {
+                ...state,
+                hour: [],
+                komentar: [],
+                komercija: [],
+                activeDistributors: [],
+                inActiveDistributors: [],
+                selectedTable: null,
+                editTable: null,
+                allTables: null,
+                tableError: null,
+                tableOperation: null,
             };
         default:
             return state;

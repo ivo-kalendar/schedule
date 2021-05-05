@@ -46,6 +46,30 @@ exports.updateTable = async (req, res) => {
     }
 };
 
+exports.removeDrivers = async (req, res) => {
+    try {
+        let table = await Tables.removeDriversFromTable(req);
+
+        res.status(200).json(table);
+    } catch (error) {
+        res.status(401).json({
+            msg: 'Табелата не постои или нема информации за истата.',
+        });
+    }
+};
+
+exports.addDrivers = async (req, res) => {
+    try {
+        let table = await Tables.addDriversToTable(req);
+
+        res.status(200).json(table);
+    } catch (error) {
+        res.status(401).json({
+            msg: 'Табелата не постои или нема информации за истата.',
+        });
+    }
+};
+
 exports.getAndCopyTable = async (req, res) => {
     try {
         let table = await Tables.copyTable(req);

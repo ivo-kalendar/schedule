@@ -29,3 +29,13 @@ exports.getKomercialOptions = async (req, res) => {
         res.status(400).json({ msg: 'Неможеш да повлечеш податоци...' });
     }
 };
+
+exports.getDriverOptions = async (req, res) => {
+    try {
+        let drivers = await Options.getDifferenceDrivers(req.params.id);
+
+        res.status(200).json(drivers);
+    } catch (err) {
+        res.status(400).json({ msg: 'Неможеш да повлечеш податоци...' });
+    }
+};

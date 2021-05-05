@@ -55,7 +55,6 @@ Tables.getOneByID = async (id) => {
                 projection: {
                     time: 1,
                     komercial: 1,
-                    city: 1,
                     comment: 1,
                     ime: 1,
                 },
@@ -95,6 +94,39 @@ Tables.updateOne = async (req) => {
     return req.params.id;
 };
 
+Tables.removeDriversFromTable = async (req) => {
+    let query = { _id: ObjectId(req.params.id) };
+    let newTableData = [];
+    let table = await tables.findOne(query);
+    table.tableData.forEach((d) => {
+        if (!req.body.drivers.includes(d._id.toString())) {
+            newTableData.push(d);
+        }
+    });
+
+    await tables.updateOne(query, {
+        $set: { tableData: newTableData },
+    });
+
+    return req.params.id;
+};
+
+Tables.addDriversToTable = async (req) => {
+    let query = { _id: ObjectId(req.params.id) };
+    let newTableData = [];
+    req.body.drivers.forEach((d) => {
+        newTableData.push({ _id: d, time: '', komercial: '', comment: '' });
+    });
+    let { tableData } = await tables.findOne(query);
+    newTableData = [...tableData, ...newTableData];
+
+    await tables.updateOne(query, {
+        $set: { tableData: newTableData },
+    });
+
+    return req.params.id;
+};
+
 Tables.copyTable = async (req) => {
     let filter = { _id: ObjectId(req.body.tableID) };
     let options = { projection: { _id: 0, author: 0, date: 0 } };
@@ -121,7 +153,6 @@ Tables.add = async (req) => {
     distributors.map((d) => {
         d.time = '';
         d.komercial = '';
-        d.city = '';
         d.comment = '';
     });
 

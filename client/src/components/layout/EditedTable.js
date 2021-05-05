@@ -10,15 +10,25 @@ import TableString from './TableString';
 const EditedTable = () => {
     const tableContext = useContext(TableContext);
     const {
+        checkActiveDistributors,
+        selectedTable,
+        getSelectedTable,
+        getEditTable,
         getHourOptions,
         getCommentOptions,
         getKomercialOptions,
+        removeDrivers,
+        addDrivers,
         editTable,
         clearEditTable,
+        activeDistributors,
+        inActiveDistributors,
     } = tableContext;
     const [id, setId] = useState(null);
     const [msg, setMsg] = useState('...');
     const [drive, setDrive] = useState('drive-short');
+    const [waitingActive, setWaitingActive] = useState(false);
+    const [waitingInactive, setWaitingInactive] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -37,12 +47,29 @@ const EditedTable = () => {
     }, [id, msg]);
 
     useEffect(() => {
+        if (editTable) checkActiveDistributors(editTable._id);
         getHourOptions();
         getCommentOptions();
         getKomercialOptions();
         return () => clearEditTable();
         // eslint-disable-next-line
     }, []);
+
+    const removeInactiveDrivers = async () => {
+        setWaitingInactive(true);
+        await removeDrivers(editTable._id, inActiveDistributors);
+        await getSelectedTable(selectedTable._id);
+        getEditTable(selectedTable._id);
+        checkActiveDistributors(editTable._id);
+    };
+
+    const addActiveDrivers = async () => {
+        setWaitingActive(true);
+        await addDrivers(editTable._id, activeDistributors);
+        await getSelectedTable(selectedTable._id);
+        getEditTable(selectedTable._id);
+        checkActiveDistributors(editTable._id);
+    };
 
     let sledenRabotenDen, denes;
     if (editTable) {
@@ -70,6 +97,42 @@ const EditedTable = () => {
                 <div className='drive'>
                     <div className={`drive-left ${drive}`}>{msg}</div>
                 </div>
+            </div>
+
+            <div className='btns-group'>
+                {inActiveDistributors.length ? (
+                    <Link onClick={removeInactiveDrivers} to='#'>
+                        <div className='btn btn-danger badge table-btn'>
+                            {!waitingInactive ? (
+                                <>
+                                    отстрани ги
+                                    <p className='small-letters'>
+                                        неактивните дистрибутери
+                                    </p>
+                                </>
+                            ) : (
+                                <Spinner2 />
+                            )}
+                        </div>
+                    </Link>
+                ) : null}
+
+                {activeDistributors.length ? (
+                    <Link onClick={addActiveDrivers} to='#'>
+                        <div className='btn btn-success badge table-btn'>
+                            {!waitingActive ? (
+                                <>
+                                    дополни
+                                    <p className='small-letters'>
+                                        со активни дистрибутери
+                                    </p>
+                                </>
+                            ) : (
+                                <Spinner2 />
+                            )}
+                        </div>
+                    </Link>
+                ) : null}
             </div>
 
             <div className='empty'></div>

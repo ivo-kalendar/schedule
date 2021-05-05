@@ -3,7 +3,9 @@ import axios from 'axios';
 import TablesContext from './tablesContext';
 import tablesReducer from './tablesReducer';
 import {
+    ADD_DRIVERS,
     BACK_FROM_DELETE_SCREEN,
+    CHECK_ACTIVE_DRIVERS,
     CLEAR_EDIT_TABLE,
     CLEAR_TABLES,
     CREATE_NEW_TABLE,
@@ -15,6 +17,7 @@ import {
     GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
     PUT_DISTRIBUTOR_VALUES,
+    REMOVE_DRIVERS,
     SELECTED_TABLE,
     TABLE_ERROR,
 } from './types';
@@ -24,6 +27,8 @@ const TablesState = (props) => {
         hour: [],
         komentar: [],
         komercija: [],
+        activeDistributors: [],
+        inActiveDistributors: [],
         selectedTable: null,
         editTable: null,
         allTables: null,
@@ -218,6 +223,60 @@ const TablesState = (props) => {
         }
     };
 
+    // Check for more active or inactive distributors //
+    const checkActiveDistributors = async (tableID) => {
+        try {
+            const res = await axios.get(`/api/options/drivers/${tableID}`);
+
+            dispatch({ type: CHECK_ACTIVE_DRIVERS, payload: res.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
+
+    const removeDrivers = async (tableID, drivers) => {
+        const config = { headers: { 'Content-Type': 'application/json' } };
+
+        try {
+            const res = await axios.put(
+                `/api/table/removedrivers/${tableID}`,
+                { drivers },
+                config
+            );
+            const getRes = await axios.get(`/api/table/${res.data}`);
+
+            dispatch({ type: REMOVE_DRIVERS, payload: getRes.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
+
+    const addDrivers = async (tableID, drivers) => {
+        const config = { headers: { 'Content-Type': 'application/json' } };
+
+        try {
+            const res = await axios.put(
+                `/api/table/adddrivers/${tableID}`,
+                { drivers },
+                config
+            );
+            const getRes = await axios.get(`/api/table/${res.data}`);
+
+            dispatch({ type: ADD_DRIVERS, payload: getRes.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
+
     return (
         <TablesContext.Provider
             value={{
@@ -229,6 +288,10 @@ const TablesState = (props) => {
                 tableOperation: state.tableOperation,
                 komentar: state.komentar,
                 komercija: state.komercija,
+                activeDistributors: state.activeDistributors,
+                inActiveDistributors: state.inActiveDistributors,
+                removeDrivers,
+                addDrivers,
                 getHourOptions,
                 getSelectedTable,
                 createNewTable,
@@ -243,6 +306,7 @@ const TablesState = (props) => {
                 updateTable,
                 getKomercialOptions,
                 getCommentOptions,
+                checkActiveDistributors,
             }}>
             {props.children}
         </TablesContext.Provider>

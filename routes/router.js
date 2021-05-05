@@ -9,6 +9,7 @@ const {
     getHourOptions,
     getCommentOptions,
     getKomercialOptions,
+    getDriverOptions,
 } = require('../controllers/optionsController');
 const {
     register,
@@ -32,6 +33,8 @@ const {
     editOneTable,
     deleteTable,
     getAndCopyTable,
+    removeDrivers,
+    addDrivers,
 } = require('../controllers/tablesControler');
 
 // Guest Routes
@@ -51,11 +54,14 @@ router.get('/table/:id', auth, adminApproved, getOneTable);
 router.post('/copytable/new', auth, adminApproved, getAndCopyTable);
 router.put('/updatetable/:id', auth, adminApproved, updateTable);
 router.put('/table/:id', auth, adminApproved, editOneTable);
+router.put('/table/removedrivers/:id', auth, adminApproved, removeDrivers);
+router.put('/table/adddrivers/:id', auth, adminApproved, addDrivers);
 
 // Protected Routes -- Users // - // Options //
 router.get('/options/hour', auth, adminApproved, getHourOptions);
 router.get('/options/comment', auth, adminApproved, getCommentOptions);
 router.get('/options/komercial', auth, adminApproved, getKomercialOptions);
+router.get('/options/drivers/:id', auth, adminApproved, getDriverOptions);
 
 // Protected Routes -- Admin // - // Korisnici //
 router.get('/allusers', auth, admin, allUsers);
