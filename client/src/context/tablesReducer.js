@@ -53,14 +53,19 @@ export default (state, action) => {
                 ...state,
                 selectedTable: action.payload,
             };
-        case REMOVE_DRIVERS:
-        case ADD_DRIVERS:
         case TABLE_ERROR:
             return {
                 ...state,
                 activeDistributors: [],
                 inActiveDistributors: [],
                 tableError: action.payload,
+            };
+        case REMOVE_DRIVERS:
+        case ADD_DRIVERS:
+            return {
+                ...state,
+                activeDistributors: [],
+                inActiveDistributors: [],
             };
         case CHECK_ACTIVE_DRIVERS:
             return {

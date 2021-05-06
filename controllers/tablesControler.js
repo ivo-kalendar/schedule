@@ -94,6 +94,18 @@ exports.deleteTable = async (req, res) => {
     }
 };
 
+exports.removeAllComments = async (req, res) => {
+    try {
+        await Tables.removeTableComments(req.params.id);
+
+        res.status(200).json('Коментарите се успешно избришани');
+    } catch (error) {
+        res.status(401).json({
+            msg: 'Табелата неможе да се избрише.',
+        });
+    }
+};
+
 exports.addNewTable = async (req, res) => {
     try {
         let table = await Tables.add(req);

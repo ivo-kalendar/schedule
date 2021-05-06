@@ -35,6 +35,7 @@ const {
     getAndCopyTable,
     removeDrivers,
     addDrivers,
+    removeAllComments,
 } = require('../controllers/tablesControler');
 
 // Guest Routes
@@ -56,6 +57,7 @@ router.put('/updatetable/:id', auth, adminApproved, updateTable);
 router.put('/table/:id', auth, adminApproved, editOneTable);
 router.put('/table/removedrivers/:id', auth, adminApproved, removeDrivers);
 router.put('/table/adddrivers/:id', auth, adminApproved, addDrivers);
+router.put('/table/removecomments/:id', auth, adminApproved, removeAllComments);
 
 // Protected Routes -- Users // - // Options //
 router.get('/options/hour', auth, adminApproved, getHourOptions);

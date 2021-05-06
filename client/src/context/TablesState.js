@@ -237,6 +237,7 @@ const TablesState = (props) => {
         }
     };
 
+    // Remove Inactive drivers //
     const removeDrivers = async (tableID, drivers) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
@@ -257,6 +258,7 @@ const TablesState = (props) => {
         }
     };
 
+    // Fill Table with all Active Drivers //
     const addDrivers = async (tableID, drivers) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
@@ -269,6 +271,18 @@ const TablesState = (props) => {
             const getRes = await axios.get(`/api/table/${res.data}`);
 
             dispatch({ type: ADD_DRIVERS, payload: getRes.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response?.data.msg || err,
+            });
+        }
+    };
+
+    // Remove All Comments from Table //
+    const removeTableComments = async (tableID) => {
+        try {
+            await axios.put(`/api/table/removecomments/${tableID}`);
         } catch (err) {
             dispatch({
                 type: TABLE_ERROR,
@@ -290,6 +304,7 @@ const TablesState = (props) => {
                 komercija: state.komercija,
                 activeDistributors: state.activeDistributors,
                 inActiveDistributors: state.inActiveDistributors,
+                removeTableComments,
                 removeDrivers,
                 addDrivers,
                 getHourOptions,

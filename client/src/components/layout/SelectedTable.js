@@ -7,6 +7,7 @@ import moment from 'moment';
 import 'moment/locale/mk';
 import Spinner2 from './Spinner2';
 import TableDelete from './TableDelete';
+import SelectedItem from './SelectedItem';
 
 const SelectedTable = () => {
     const tablesContext = useContext(TablesContext);
@@ -210,18 +211,7 @@ const SelectedTable = () => {
 
                 {selectedTable ? (
                     selectedTable.tableArr.map((d) => (
-                        <div key={d._id} className='table-item'>
-                            <div className='table-item-info'>
-                                <div className='table-item-name'>{d.ime}</div>
-                                <div className='table-item-hour'>{d.time}</div>
-                                <div className='table-item-comercial'>
-                                    {d.komercial} {d.city}
-                                </div>
-                            </div>
-                            <div className='table-item-comment'>
-                                {d.comment}
-                            </div>
-                        </div>
+                        <SelectedItem key={d._id} distributor={d} />
                     ))
                 ) : (
                     <Spinner2 />

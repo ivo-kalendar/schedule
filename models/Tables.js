@@ -127,6 +127,20 @@ Tables.addDriversToTable = async (req) => {
     return req.params.id;
 };
 
+Tables.removeTableComments = async (id) => {
+    let newTableData = [];
+    let table = await tables.findOne({ _id: ObjectId(id) });
+    table.tableData.forEach((d) => {
+        d.comment = '';
+        newTableData.push(d);
+    });
+
+    await tables.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { tableData: newTableData } }
+    );
+};
+
 Tables.copyTable = async (req) => {
     let filter = { _id: ObjectId(req.body.tableID) };
     let options = { projection: { _id: 0, author: 0, date: 0 } };

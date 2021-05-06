@@ -11,6 +11,7 @@ const EditedTable = () => {
     const tableContext = useContext(TableContext);
     const {
         checkActiveDistributors,
+        removeTableComments,
         selectedTable,
         getSelectedTable,
         getEditTable,
@@ -29,6 +30,7 @@ const EditedTable = () => {
     const [drive, setDrive] = useState('drive-short');
     const [waitingActive, setWaitingActive] = useState(false);
     const [waitingInactive, setWaitingInactive] = useState(false);
+    const [waitingComments, setWaitingComments] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -59,15 +61,24 @@ const EditedTable = () => {
         setWaitingInactive(true);
         await removeDrivers(editTable._id, inActiveDistributors);
         await getSelectedTable(selectedTable._id);
-        getEditTable(selectedTable._id);
+        await getEditTable(selectedTable._id);
         checkActiveDistributors(editTable._id);
+    };
+
+    const removeAllComments = async () => {
+        setWaitingComments(true);
+        await removeTableComments(selectedTable._id);
+        await getSelectedTable(selectedTable._id);
+        await getEditTable(selectedTable._id);
+        checkActiveDistributors(editTable._id);
+        setWaitingComments(false);
     };
 
     const addActiveDrivers = async () => {
         setWaitingActive(true);
         await addDrivers(editTable._id, activeDistributors);
         await getSelectedTable(selectedTable._id);
-        getEditTable(selectedTable._id);
+        await getEditTable(selectedTable._id);
         checkActiveDistributors(editTable._id);
     };
 
@@ -133,6 +144,19 @@ const EditedTable = () => {
                         </div>
                     </Link>
                 ) : null}
+
+                <Link onClick={removeAllComments} to='#'>
+                    <div className='btn btn-primary badge table-btn'>
+                        {!waitingComments ? (
+                            <>
+                                избриши ги
+                                <p className='small-letters'>сите коментари</p>
+                            </>
+                        ) : (
+                            <Spinner2 />
+                        )}
+                    </div>
+                </Link>
             </div>
 
             <div className='empty'></div>
