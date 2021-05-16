@@ -387,6 +387,8 @@ img {
 }
 
 .btns-group {
+    /* position: fixed; */
+    /* right: 0; */
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -986,4 +988,66 @@ table th {
     }
 
     /* Tables ends here... */
+}
+
+/* Other Media Types */
+@media all {
+    .page-break {
+        display: none;
+    }
+}
+
+@media print {
+    html,
+    body {
+        height: initial !important;
+        overflow: initial !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .bcg-normal,
+    .bcg-icecream,
+    .bcg-inactive,
+    .bcg-ka,
+    .bcg-provincial,
+    .bcg-truck {
+        /* border: 1px solid #000; */
+        color: #000;
+        background: #fff;
+    }
+}
+
+@media print {
+    .element-break {
+        /* margin-top: 1rem; */
+        display: block;
+        page-break-inside: avoid;
+    }
+
+    .page-break {
+        page-break-before: always;
+        page-break-after: always;
+    }
+
+    .table {
+        position: relative;
+        height: 275.4mm;
+        border: 0.2mm solid #000;
+        box-shadow: unset;
+    }
+
+    .space-between {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .bottom {
+        position: absolute;
+        width: 97%;
+        bottom: 0;
+    }
+}
+
+@page {
+    size: auto;
+    margin: 2mm;
 }

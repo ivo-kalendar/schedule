@@ -1,47 +1,16 @@
+import {
+    iceCreamArr,
+    provintialArr,
+    notWorkingArr,
+} from '../../models/variables';
+
 const SelectedItem = ({ distributor }) => {
     const { ime, komercial, comment, time } = distributor;
-    let iceCreamArr = [
-        'Сладолед',
-        'Идриз Исмаили',
-        'Петре Станчевски',
-        'Алмир Тахировиќ',
-        'Иван Николиќ',
-        'Горан Трипуновски',
-        'Методија Арсов',
-        'Дејан Нивички',
-    ];
-
-    let provintialArr = [
-        'Тетово',
-        'Гостивар',
-        'Куманово',
-        'Паланка',
-        'Велес',
-        'Кавадарци',
-        'Неготино',
-        'Штип',
-        'Кочани',
-        'Струмица',
-        'Битола',
-        'Марков Маријан',
-        'Тони Лавовски',
-        'Предраг Радиќ',
-        'Дејан Наунов',
-        'Јане Гицев',
-        'Ивица Милевски',
-        'Прилеп',
-        'Охрид',
-        'Кичево',
-        'Дебар',
-        'Монтенегровци',
-    ];
 
     return (
         <div
             className={`table-item ${
-                ['на Одмор', 'Слободен Ден', 'Не Работи Повеќе'].includes(
-                    comment.trim()
-                )
+                notWorkingArr.includes(comment.trim())
                     ? 'bcg-inactive'
                     : ime === 'Ељхан Ајдари' || ime === 'Владимир Ѓошевски'
                     ? 'bcg-truck'

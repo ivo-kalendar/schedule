@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
+import ComponentToPrint from './ComponentToPrint';
 import AuthContext from '../../context/authContext';
 import KorisnikContext from '../../context/korisnikContext';
 import TablesContext from '../../context/tablesContext';
@@ -10,6 +12,10 @@ import TableDelete from './TableDelete';
 import SelectedItem from './SelectedItem';
 
 const SelectedTable = () => {
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
     const tablesContext = useContext(TablesContext);
     const authContext = useContext(AuthContext);
     const korisnikContext = useContext(KorisnikContext);
@@ -180,9 +186,19 @@ const SelectedTable = () => {
                             {!waitToRefresh ? 'освежи' : <Spinner2 />}
                         </div>
                     </Link>
+                    <Link onClick={handlePrint} to='#'>
+                        <div className='btn btn-primary badge table-btn'>
+                            принти
+                        </div>
+                    </Link>
                 </div>
             )}
             <div className='empty'></div>
+            <div style={{ display: 'none' }}>
+                <div ref={componentRef}>
+                    <ComponentToPrint />
+                </div>
+            </div>
             <div className='table'>
                 <div className='space-between'>
                     {selectedTable ? (
