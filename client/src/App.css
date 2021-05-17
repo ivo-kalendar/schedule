@@ -386,6 +386,14 @@ img {
     border: #ccc solid 1px;
 }
 
+.btn-purple,
+.bg-purple,
+.badge-purple,
+.alert-purple {
+    background: var(--purple-color);
+    color: #fff;
+}
+
 .btns-group {
     /* position: fixed; */
     /* right: 0; */
@@ -625,13 +633,29 @@ table th {
 .edit-table-item {
     background: linear-gradient(
         to right,
-        rgba(0, 0, 0, 0.7),
-        rgba(0, 0, 0, 0.4)
+        rgba(0, 10, 20, 1),
+        rgba(0, 40, 60, 1) 12%,
+        rgba(0, 40, 60, 0.4) 20%,
+        rgba(0, 40, 60, 0.1)
     );
+    animation: borderSelect 300ms alternate-reverse infinite;
+}
+
+@keyframes borderSelect {
+    from {
+        outline: 1px solid var(--primary-color);
+    }
+    to {
+        outline: 4px solid var(--primary-color);
+    }
 }
 
 .string-table-item {
     background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7));
+}
+
+.table > a:nth-child(even) > .string-table-item {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1));
 }
 
 .selected-table-card {
@@ -1031,23 +1055,40 @@ table th {
 
     .table {
         position: relative;
-        height: 275.4mm;
+        /* height: 275.4mm; */
+        height: 293.2mm;
         border: 0.2mm solid #000;
         box-shadow: unset;
     }
 
     .space-between {
+        margin: 4mm 7mm 0 7mm;
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    .table-header {
         color: rgba(0, 0, 0, 0.6);
     }
 
+    .table-header-info > h3,
+    .table-item-info > div,
+    .table-header-comment,
+    .table-item-comment {
+        margin: 0.4rem 0.1rem;
+    }
+
     .bottom {
+        display: flex;
+        justify-content: space-between;
+        color: rgba(0, 0, 0, 0.4);
+        margin: 0 7mm 4mm 7mm;
         position: absolute;
-        width: 97%;
+        width: calc(100% - 14mm);
         bottom: 0;
     }
 }
 
 @page {
-    size: auto;
+    size: A4 portrait;
     margin: 2mm;
 }

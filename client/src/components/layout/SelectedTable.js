@@ -96,9 +96,10 @@ const SelectedTable = () => {
         setWaitToRefresh(false);
     };
 
-    let today, sledenRabotenDen, denes, sega;
+    let today, sledenRabotenDen, denes, sega, denesnaData;
     if (selectedTable) {
         today = moment(selectedTable.date).locale('mk').format('DD.MM.YYYY');
+        denesnaData = moment().locale('mk').format('DD.MM.YYYY');
         denes = moment(selectedTable.date).locale('mk').format('dddd');
         sega = moment(new Date()).locale('mk').format('dddd');
         let utre = moment(selectedTable.date)
@@ -154,30 +155,22 @@ const SelectedTable = () => {
                     ) : null}
                     {selectedTable &&
                     selectedTable.author === userID &&
-                    sega === denes ? (
+                    sega === denes &&
+                    today === denesnaData ? (
                         <Link
                             onClick={() => {
                                 setWaiting(true);
                                 getEditTable(selectedTable._id);
                             }}
                             to='#'>
-                            <div className='btn btn-success badge table-btn'>
+                            <div className='btn btn-dark badge table-btn'>
                                 {!waiting ? 'промени' : <Spinner2 />}
                             </div>
                         </Link>
                     ) : (
                         <Link onClick={newTable} to='#'>
                             <div className='btn btn-success badge table-btn'>
-                                {!waiting ? (
-                                    <>
-                                        превземи
-                                        <p className='small-letters'>
-                                            во нов распоред
-                                        </p>
-                                    </>
-                                ) : (
-                                    <Spinner2 />
-                                )}
+                                {!waiting ? 'превземи' : <Spinner2 />}
                             </div>
                         </Link>
                     )}
@@ -187,7 +180,7 @@ const SelectedTable = () => {
                         </div>
                     </Link>
                     <Link onClick={handlePrint} to='#'>
-                        <div className='btn btn-primary badge table-btn'>
+                        <div className='btn btn-purple badge table-btn'>
                             принти
                         </div>
                     </Link>
