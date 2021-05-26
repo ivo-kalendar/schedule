@@ -53,13 +53,23 @@ const ComponentToPrint = () => {
                     <h3 className='table-header-comment'>Коментар</h3>
                 </div>
 
-                {selectedTable
-                    ? selectedTable.tableArr.map((d) => (
-                          <div key={d._id} className='element-break'>
-                              <SelectedItem distributor={d} />
-                          </div>
-                      ))
-                    : 'Нема информации за Табелата...'}
+                <div className='table-content'>
+                    {selectedTable ? (
+                        <>
+                            {selectedTable.tableArr.map((d) => (
+                                <div key={d._id} className='element-break'>
+                                    <SelectedItem distributor={d} />
+                                </div>
+                            ))}
+
+                            {/* <div className='table-user-comment'>
+                                Место за Коментари...
+                            </div> */}
+                        </>
+                    ) : (
+                        'Нема информации за Табелата...'
+                    )}
+                </div>
 
                 <div className='space-between bottom'>
                     <p>{moment().locale('mk').format('llll')}</p>
@@ -67,7 +77,6 @@ const ComponentToPrint = () => {
                 </div>
                 <div style={{ margin: '0.2rem' }}></div>
             </div>
-            <div className='page-break'></div>
         </>
     );
 };

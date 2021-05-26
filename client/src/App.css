@@ -573,6 +573,14 @@ table th {
     overflow: hidden;
 }
 
+.table-user-comment {
+    font-size: 0.9rem;
+    align-content: center;
+    margin: 0.7rem;
+    overflow: hidden;
+    justify-content: stretch;
+}
+
 .table-item-info > div,
 .table-item-comment {
     justify-content: stretch;
@@ -1046,19 +1054,53 @@ table th {
         /* margin-top: 1rem; */
         display: block;
         page-break-inside: avoid;
+        /* page-break-after: always; */
     }
 
-    .page-break {
+    /* .page-break {
         page-break-before: always;
+        page-break-after: always;
+    } */
+
+    .table {
+        width: 206mm;
+        height: 293mm;
+
+        position: relative;
+        border: 0.5mm solid #000;
+        box-shadow: unset;
+        margin: 1mm;
+        padding: 0 2mm;
         page-break-after: always;
     }
 
-    .table {
-        position: relative;
-        /* height: 275.4mm; */
-        height: 293.2mm;
-        border: 0.2mm solid #000;
-        box-shadow: unset;
+    /* .test-page {
+        width: 206mm;   
+        height: 293mm;
+
+        border: 10mm solid #000;
+        background: #721c24;
+        padding: 2rem;
+        page-break-after: always;
+        margin: 1mm;
+    } */
+
+    .table-item,
+    .table-user-comment {
+        font-size: 0.6rem;
+        background: #fff;
+    }
+
+    .table-user-comment {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+        margin: 0.2rem;
+    }
+
+    .table-content {
+        height: 250mm;
+        page-break-after: always;
+        overflow: hidden;
     }
 
     .space-between {
@@ -1090,5 +1132,5 @@ table th {
 
 @page {
     size: A4 portrait;
-    margin: 2mm;
+    margin: 1mm;
 }
