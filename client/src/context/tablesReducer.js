@@ -12,6 +12,7 @@ import {
     GET_HOUR_OPTIONS,
     GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
+    POST_TABLE_COMMENT,
     PUT_DISTRIBUTOR_VALUES,
     REMOVE_DRIVERS,
     SELECTED_TABLE,
@@ -52,6 +53,12 @@ export default (state, action) => {
             return {
                 ...state,
                 selectedTable: action.payload,
+            };
+        case POST_TABLE_COMMENT:
+            return {
+                ...state,
+                selectedTable: action.payload,
+                editTable: action.payload,
             };
         case TABLE_ERROR:
             return {

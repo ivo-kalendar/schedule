@@ -223,9 +223,11 @@ const SelectedTable = () => {
                         {selectedTable.tableArr.map((d) => (
                             <SelectedItem key={d._id} distributor={d} />
                         ))}
-                        {/* <div className='table-user-comment'>
-                            Место за Коментари...
-                        </div> */}
+                        {selectedTable.tableComment && (
+                            <div className='table-user-comment'>
+                                {selectedTable.tableComment}
+                            </div>
+                        )}
                     </>
                 ) : (
                     <Spinner2 />

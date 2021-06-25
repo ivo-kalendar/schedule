@@ -62,9 +62,11 @@ const ComponentToPrint = () => {
                                 </div>
                             ))}
 
-                            {/* <div className='table-user-comment'>
-                                Место за Коментари...
-                            </div> */}
+                            {selectedTable.tableComment && (
+                                <div className='table-user-comment'>
+                                    {selectedTable.tableComment}
+                                </div>
+                            )}
                         </>
                     ) : (
                         'Нема информации за Табелата...'

@@ -116,6 +116,18 @@ exports.addNewTable = async (req, res) => {
     }
 };
 
+exports.addTableComment = async (req, res) => {
+    try {
+        let table = await Tables.postComment(req);
+
+        res.status(200).json(table);
+    } catch (err) {
+        res.status(400).json({
+            msg: 'Неможете да коментирате на оваа табела!',
+        });
+    }
+};
+
 exports.editOneTable = async (req, res) => {
     return null;
 };

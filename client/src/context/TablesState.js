@@ -16,6 +16,7 @@ import {
     GET_HOUR_OPTIONS,
     GET_KOMERCIAL_OPTIONS,
     GO_TO_DELETE_SCREEN,
+    POST_TABLE_COMMENT,
     PUT_DISTRIBUTOR_VALUES,
     REMOVE_DRIVERS,
     SELECTED_TABLE,
@@ -202,6 +203,27 @@ const TablesState = (props) => {
         }
     };
 
+    // add table comment //
+    const addTableComment = async (id, comment) => {
+        const config = { headers: { 'Content-Type': 'application/json' } };
+
+        try {
+            const res = await axios.put(
+                `/api/table-comment/${id}`,
+                { comment },
+                config
+            );
+            const getRes = await axios.get(`/api/table/${res.data._id}`);
+
+            dispatch({ type: POST_TABLE_COMMENT, payload: getRes.data });
+        } catch (err) {
+            dispatch({
+                type: TABLE_ERROR,
+                payload: err.response.data.msg,
+            });
+        }
+    };
+
     // Copy and Create New Table with all active distributors //
     const copyToNewTable = async (author, tableID) => {
         const config = { headers: { 'Content-Type': 'application/json' } };
@@ -322,6 +344,7 @@ const TablesState = (props) => {
                 getKomercialOptions,
                 getCommentOptions,
                 checkActiveDistributors,
+                addTableComment,
             }}>
             {props.children}
         </TablesContext.Provider>

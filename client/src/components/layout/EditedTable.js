@@ -24,6 +24,7 @@ const EditedTable = () => {
         clearEditTable,
         activeDistributors,
         inActiveDistributors,
+        addTableComment,
     } = tableContext;
     const [id, setId] = useState(null);
     const [msg, setMsg] = useState('...');
@@ -31,6 +32,7 @@ const EditedTable = () => {
     const [waitingActive, setWaitingActive] = useState(false);
     const [waitingInactive, setWaitingInactive] = useState(false);
     const [waitingComments, setWaitingComments] = useState(false);
+    const [userComment, setUserComment] = useState('Додај Коментар');
 
     useEffect(() => {
         if (id) {
@@ -49,7 +51,14 @@ const EditedTable = () => {
     }, [id, msg]);
 
     useEffect(() => {
-        if (editTable) checkActiveDistributors(editTable._id);
+        if (editTable) {
+            setUserComment(
+                editTable.tableComment && editTable.tablecomment !== ''
+                    ? editTable.tableComment
+                    : 'Додај Коментар'
+            );
+            checkActiveDistributors(editTable._id);
+        }
         getHourOptions();
         getCommentOptions();
         getKomercialOptions();
@@ -175,18 +184,74 @@ const EditedTable = () => {
                 </div>
 
                 {editTable ? (
-                    editTable.tableArr.map((d) => (
-                        <Link onClick={() => setId(d._id)} to='#' key={d._id}>
-                            {id && id === d._id ? (
-                                <EditTableString
-                                    d={d}
-                                    tableID={editTable._id}
-                                />
-                            ) : (
-                                <TableString d={d} />
-                            )}
-                        </Link>
-                    ))
+                    <>
+                        {editTable.tableArr.map((d) => (
+                            <Link
+                                onClick={() => setId(d._id)}
+                                to='#'
+                                key={d._id}>
+                                {id && id === d._id ? (
+                                    <EditTableString
+                                        d={d}
+                                        tableID={editTable._id}
+                                    />
+                                ) : (
+                                    <TableString d={d} />
+                                )}
+                            </Link>
+                        ))}
+                        {id && id === 'user-comment' ? (
+                            <div className='edit-table-item table-user-comment string-table-item p-2'>
+                                <form
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        if (userComment === 'Додај Коментар') {
+                                            setUserComment('');
+                                        }
+                                        setId(null);
+                                        addTableComment(
+                                            editTable._id,
+                                            userComment
+                                        );
+                                        if (userComment === '') {
+                                            setUserComment('Додај Коментар');
+                                        }
+                                    }}>
+                                    <input
+                                        autoFocus
+                                        type='text'
+                                        name='table-comment'
+                                        value={userComment}
+                                        onChange={(e) =>
+                                            setUserComment(e.target.value)
+                                        }
+                                    />
+                                    <input
+                                        type='submit'
+                                        value='Зачувај Коментар'
+                                    />
+                                </form>
+                            </div>
+                        ) : (
+                            <Link
+                                onClick={() => {
+                                    setId('user-comment');
+                                    if (userComment === 'Додај Коментар') {
+                                        setUserComment('');
+                                    }
+                                }}
+                                to='#'>
+                                <div className='table-user-comment string-table-item p-2'>
+                                    {/* {editTable.tableComment
+                                        ? editTable.tableComment
+                                        : userComment
+                                        ? userComment
+                                        : 'Додај Коментар'} */}
+                                    {userComment}
+                                </div>
+                            </Link>
+                        )}
+                    </>
                 ) : (
                     <Spinner2 />
                 )}

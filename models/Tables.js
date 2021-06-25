@@ -182,6 +182,16 @@ Tables.add = async (req) => {
     return newId;
 };
 
+Tables.postComment = async (req) => {
+    let query = { _id: ObjectId(req.params.id) };
+    let table = await tables.findOne(query);
+    await tables.updateOne(query, {
+        $set: { ...table, tableComment: req.body.comment },
+    });
+
+    return req.params.id;
+};
+
 Tables.delete = async (id) => {
     await tables.deleteOne({ _id: ObjectId(id) });
 };
