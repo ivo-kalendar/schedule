@@ -22,7 +22,8 @@ const About = () => {
                 </a>{' '}
                 .
             </p>
-            <p className='bg-light-2 p-1'>Верзија: 3.31.1</p>
+            <p className='bg-light-2 p-1'>Верзија: 4.0.0</p>
+            <p className='bg-light-2 p-1'>Дата: 30.07.2022</p>
             <Copyright />
         </div>
     );
