@@ -1,5 +1,5 @@
 require('dotenv').config();
 
-const { DB_CONNECTIONSTRING: connectionString } = process.env;
+const connectionString = process.env.DB_CONNECTIONSTRING;
 
 module.exports = connectionString;

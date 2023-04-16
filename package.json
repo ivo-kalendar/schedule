@@ -11,7 +11,8 @@
         "dev_windows": "concurrently \"npm run server\" \"npm run client\"",
         "dev_linux": "npm run server & npm run client",
         "dev": "npm run dev_linux",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+        "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+        "heroku-postbuild": "npm run build"
     },
     "keywords": [],
     "author": "Ivo Kalendar <ivokalendar@icloud.com>",
