@@ -1,13 +1,13 @@
 const mongodb = require("mongodb");
 const connectionString = require("./config/connectionString");
+const dbName = require("./config/dbName");
 
 mongodb.connect(
     connectionString, 
-    { useUnifiedTopology: true, dbName: "CompassData" }, 
+    { useUnifiedTopology: true, dbName }, 
     (err, client) => {
         if (err) throw err;
 
-        console.log(client.db().databaseName);
         module.exports = client;
         require("./config/app");
     }
