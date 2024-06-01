@@ -1,9 +1,17 @@
 const { ObjectId } = require('mongodb');
 const korisnici = require('../server').db().collection('korisnici');
+const db = require('../server').db()
 
 let User = function (data) {
     this.data = data;
     this.errors = [];
+};
+
+User.getTest = async (req, res) => {
+
+    const test = JSON.stringify(db)
+    res.json(test)
+    // return await korisnici
 };
 
 User.getOneByID = async (reqID) => {

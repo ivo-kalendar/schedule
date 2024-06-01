@@ -38,6 +38,10 @@ const {
     removeAllComments,
     addTableComment,
 } = require('../controllers/tablesControler');
+const { getTest } = require('../models/User');
+
+// Test Request
+router.get('/test', getTest);
 
 // Guest Routes
 router.post('/register', register);
